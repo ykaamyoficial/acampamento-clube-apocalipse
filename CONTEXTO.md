@@ -156,6 +156,7 @@ supabase/01_estrutura.sql · supabase/02_cronograma.sql · supabase/03_editores.
 **Funções do site:**
 - Abas: Programação, Requisitos e Antes e depois (a aba Rodízios foi removida, já que não existe mais estação).
 - A aba **Requisitos** agora agrupa os itens **por classe** (Amigo, Amigo da Natureza, Companheiro, Companheiro de Excursionismo, Pesquisador, Pesquisador de Campo e Bosque, Pioneiro, Pioneiro de Novas Fronteiras, Excursionista, Excursionista na Mata, Guia, Guia de Exploração), mostrando quantos itens cada classe tem.
+- Cada requisito tem um **guia do instrutor** (campo `guia_instrutor`): o que falar, passo a passo e como avaliar. Aparece ao tocar em "ver guia do instrutor" na aba Requisitos e pode ser editado pelos líderes.
 - Faixa "Agora / Depois" com a atividade do momento (usa o relógio do celular). Antes do acampamento mostra a contagem regressiva.
 - Busca em todos os dias.
 - Status que muda com um toque.

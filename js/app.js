@@ -353,9 +353,15 @@
             ${Object.entries(STATUS).map(([k, v]) => `<option value="${k}" ${k === st ? 'selected' : ''}>${v}</option>`).join('')}
            </select><button class="btn-icone" data-acao="editar" data-tabela="requisitos" data-id="${r.id}" aria-label="Editar">✎</button></div>`
         : `<span class="status ${st}">${STATUS[st]}</span>`;
-      return `<div class="linha-req">
-        <div class="titulo"><span class="tipo">${esc(r.tipo)}</span>${esc(r.item)}</div>${lado}
-        <div class="meta"><span>🕒 ${esc(r.quando) || '—'}</span></div>
+      const cabecalho = `<div class="titulo"><span class="tipo">${esc(r.tipo)}</span>${esc(r.item)}</div>${lado}
+        <div class="meta"><span>🕒 ${esc(r.quando) || '—'}</span></div>`;
+      if (!r.guia_instrutor) {
+        return `<div class="linha-req">${cabecalho}</div>`;
+      }
+      return `<div class="linha-req linha-req-guia">
+        <details><summary>${cabecalho}<div class="ativ-seta"></div></summary>
+          <div class="bloco"><h4>Guia do instrutor</h4><p>${nl(r.guia_instrutor)}</p></div>
+        </details>
       </div>`;
     };
 
@@ -435,6 +441,7 @@
       { k: 'status', l: 'Status', t: 'status', meia: 1 },
       { k: 'quando', l: 'Quando', ph: 'Dom 14:00' },
       { k: 'classes', l: 'Classe(s) (AM, AM+, CO, CO+, PE, PE+, PI, PI+, EX, EX+, GU, GU+)', ph: 'AM, EX+' },
+      { k: 'guia_instrutor', l: 'Guia do instrutor (passo a passo + o que falar)', t: 'area' },
       { k: 'instrutor', l: 'Instrutor' },
       { k: 'ordem', l: 'Ordem na lista', t: 'number' },
     ] },
