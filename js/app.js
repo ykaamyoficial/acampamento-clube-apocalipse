@@ -43,7 +43,8 @@
   const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   const nl = s => esc(s).replace(/\n/g, '<br>');
   const fmtGuia = s => esc(s)
-    .replace(/^(Material e preparo|Tempo sugerido|O que falar|Passo a passo|Erros comuns|Segurança|Como avaliar):/gm, '<strong>$1:</strong>')
+    .replace(/^(Material e preparo|Tempo sugerido|Conteúdo pronto|O que falar|Passo a passo|Erros comuns|Segurança|Como avaliar|Fontes):/gm, '<strong>$1:</strong>')
+    .replace(/(https?:\/\/[^\s<]+)/g, '<a href="$1" target="_blank" rel="noopener">$1</a>')
     .replace(/\n/g, '<br>');
   const porOrdem = (a, b) => (a.ordem ?? 0) - (b.ordem ?? 0) || a.id - b.id;
   const pad = n => String(n).padStart(2, '0');
