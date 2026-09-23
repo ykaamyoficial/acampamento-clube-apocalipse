@@ -42,6 +42,9 @@
   const $ = (s, el = document) => el.querySelector(s);
   const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   const nl = s => esc(s).replace(/\n/g, '<br>');
+  const fmtGuia = s => esc(s)
+    .replace(/^(Material e preparo|Tempo sugerido|O que falar|Passo a passo|Erros comuns|Segurança|Como avaliar):/gm, '<strong>$1:</strong>')
+    .replace(/\n/g, '<br>');
   const porOrdem = (a, b) => (a.ordem ?? 0) - (b.ordem ?? 0) || a.id - b.id;
   const pad = n => String(n).padStart(2, '0');
   const hojeISO = () => { const d = new Date(); return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`; };
@@ -360,7 +363,7 @@
       }
       return `<div class="linha-req linha-req-guia">
         <details><summary>${cabecalho}<div class="ativ-seta"></div></summary>
-          <div class="bloco"><h4>Guia do instrutor</h4><p>${nl(r.guia_instrutor)}</p></div>
+          <div class="bloco"><h4>Guia do instrutor</h4><p>${fmtGuia(r.guia_instrutor)}</p></div>
         </details>
       </div>`;
     };

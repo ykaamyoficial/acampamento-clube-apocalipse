@@ -137,309 +137,681 @@ insert into public.requisitos (id, item, tipo, quando, classes, instrutor, statu
   (42, 'Projetar 3 tipos de abrigo e usar 1 (parcial)', 'Especialidade', 'Seg 11:20', 'GU+', '', 'pendente', 42);
 select setval(pg_get_serial_sequence('public.requisitos','id'), (select max(id) from public.requisitos));
 
--- Guia do instrutor de cada requisito (passo a passo + o que falar)
-update public.requisitos set guia_instrutor = $$O que falar: "Antes de bater a primeira estaca, vamos escolher onde a barraca vai ficar."
+-- Guia do instrutor de cada requisito (material, tempo, o que falar, passo a passo, erros, segurança, como avaliar)
+update public.requisitos set guia_instrutor = $$Material e preparo: 1 barraca por unidade (lona, varas, estacas, sobreteto), martelo ou pedra para as estacas, lanternas. Combine antes com os Guias quem leva cada barraca.
+Tempo sugerido: 30 a 40 min por unidade.
+
+O que falar: "Antes de bater a primeira estaca, vamos escolher onde a barraca vai ficar. O lugar certo evita chuva dentro e noite ruim."
 
 Passo a passo:
-1. Ande pelo terreno com o grupo e mostre 3 exemplos de local ruim: baixada que alaga, embaixo de galho seco, perto de formigueiro.
-2. Escolham juntos um local plano e limpo.
-3. Montem a barraca: estique bem a lona e cravem as estacas na diagonal.
+1. Ande pelo terreno com o grupo e mostre 3 locais ruins: baixada onde a água empoça, embaixo de galho seco e perto de formigueiro.
+2. Escolham juntos um local plano, limpo de pedras e galhos.
+3. Estenda a lona do chão e posicione a barraca com a porta contra o vento.
+4. Encaixem as varas e levantem a estrutura em 2 pessoas.
+5. Cravem as estacas inclinadas (uns 45 graus, apontando para fora) e prendam os tensores.
+6. Estiquem o sobreteto sem encostar na barraca de dentro.
+7. Organizem o interior: mochilas ao fundo, calçados na entrada, lanterna ao alcance.
 
-Como avaliar: o desbravador escolhe o local e monta a barraca sem você apontar onde.$$ where id = 1;
-update public.requisitos set guia_instrutor = $$O que falar: "Se um dia você se perder na mata, essas 10 regras podem salvar sua vida."
+Erros comuns: estaca cravada reta (sai com o vento); sobreteto encostando na parede interna (pinga na chuva); montar em baixada.
+
+Segurança: olhar para cima antes de armar: galho seco pode cair.
+
+Como avaliar: o desbravador escolhe o local e monta a barraca sem você apontar onde. Assine o requisito quando a barraca estiver firme e esticada.$$ where id = 1;
+update public.requisitos set guia_instrutor = $$Material e preparo: Cartaz ou folha com as 10 regras (imprimir antes), apito por unidade, lanterna.
+Tempo sugerido: 10 a 15 min (na Roda sob as estrelas).
+
+O que falar: "Se um dia você se perder na mata, essas regras podem salvar sua vida. A principal é: não entre em pânico e fique onde está."
 
 Passo a passo:
-1. Leia as 10 regras com o grupo (ficar parado, apitar 3 vezes, se abrigar, não andar à noite...).
-2. Peça a cada um que repita 2 regras de cabeça, sem olhar.
+1. Leia as 10 regras do cartão do Amigo, uma por vez, explicando o porquê de cada uma.
+2. Destaque as mais importantes: parar e respirar, ficar no lugar, apitar 3 vezes (sinal de socorro), se abrigar, não andar à noite e não beber água suspeita.
+3. Faça o teste: dê um cenário ('você se perdeu na trilha, o que faz primeiro?') e deixe o grupo responder.
+4. Peça a cada desbravador que repita 2 regras sem olhar.
+
+Erros comuns: achar que 'andar mais um pouco' resolve; gritar sem parar em vez de usar o apito (cansa e não se ouve longe).
 
 Como avaliar: o desbravador recita pelo menos 5 das 10 regras e explica por que ficar parado é importante.$$ where id = 2;
-update public.requisitos set guia_instrutor = $$O que falar: "Toda fogueira segue a mesma ordem: isca, graveto fino, graveto grosso, lenha."
+update public.requisitos set guia_instrutor = $$Material e preparo: Lenha seca de vários tamanhos (isca, gravetos de lápis, gravetos de dedo, lenha grossa), fósforos, balde de água e pá por unidade, área de fogueira limpa.
+Tempo sugerido: 20 a 30 min.
+
+O que falar: "Toda fogueira segue a mesma ordem: isca, graveto fino, graveto grosso, lenha. Fogo bem-feito é fogo seguro."
 
 Passo a passo:
-1. Mostre as camadas de material, da mais fina para a mais grossa.
-2. Monte um tipo de fogueira (pirâmide ou cabana) junto com o grupo.
-3. Acenda com segurança: longe de mato seco e com balde de água por perto.
+1. Limpe um círculo de 2 m no chão, sem folhas nem mato seco, e deixe o balde de água por perto.
+2. Separe o material em 4 montinhos: isca (folha seca, casca fina, palha), gravetos finos, gravetos médios e lenha.
+3. Monte a fogueira escolhida: pirâmide (varas apoiadas em pirâmide sobre a isca) ou cabana (lenha em formato de casinha com a isca dentro).
+4. Deixe uma abertura para o ar entrar e acenda pelo lado contrário ao vento.
+5. Vá acrescentando gravetos finos, depois médios, depois lenha, sem abafar as chamas.
+6. No fim, apague com água, mexa as cinzas e confira com as costas da mão se esfriou.
 
-Como avaliar: o desbravador monta a estrutura da fogueira sozinho, na ordem certa.$$ where id = 3;
-update public.requisitos set guia_instrutor = $$O que falar: "Vamos revisar os nós que vocês já treinaram nas reuniões."
+Erros comuns: usar lenha grossa logo de início; deixar a isca úmida; empilhar sem espaço para o ar.
+
+Segurança: sempre com um adulto por perto; nunca deixar fogueira sem vigia; ninguém joga líquido inflamável.
+
+Como avaliar: o desbravador monta a estrutura sozinho, na ordem certa, e sabe apagar corretamente.$$ where id = 3;
+update public.requisitos set guia_instrutor = $$Material e preparo: 1 corda de 1,5 m por desbravador (sisal ou náilon), cartão com a lista dos nós do Amigo impresso.
+Tempo sugerido: 20 a 30 min.
+
+O que falar: "Nó é como uma ferramenta: cada um serve para uma coisa. Hoje é revisão: vou ver quem já domina."
 
 Passo a passo:
-1. Peça a cada um que faça os 14 nós numa corda, sem ajuda.
-2. Corrija na hora: mostre de novo o nó que saiu errado e deixe repetir.
+1. Pegue a lista de 14 nós do cartão do Amigo e chame de 3 a 4 por vez.
+2. Peça que cada um faça o nó na própria corda enquanto você observa. Não faça por ele.
+3. Se errar, mostre o nó devagar, 1 vez, e deixe repetir sozinho.
+4. Pergunte pra que serve cada nó (ex.: 'nó direito serve para emendar cordas de mesma grossura').
+5. Marque em uma lista quem fez todos e quem precisa treinar mais.
 
-Como avaliar: o desbravador faz os 14 nós corretamente, mesmo que devagar.$$ where id = 4;
-update public.requisitos set guia_instrutor = $$O que falar: "Uma pista de sinais é um jeito de deixar mensagens no chão para quem vem atrás de você."
+Erros comuns: confundir nó direito com nó de vovó (dá a 2ª laçada para o lado errado); nó solto que desfaz ao puxar.
+
+Como avaliar: o desbravador faz os 14 nós corretamente e diz pra que servem os principais. Os nós são treinados antes do acampamento, aqui é só conferir.$$ where id = 4;
+update public.requisitos set guia_instrutor = $$Material e preparo: Cartão com os 10 sinais de pista impresso, gravetos, pedras, giz ou carvão, folhas.
+Tempo sugerido: 20 min (junto com o percurso de azimutes).
+
+O que falar: "Pista é um jeito de deixar mensagens no chão para quem vem atrás de você, sem usar palavra nenhuma."
 
 Passo a passo:
-1. Mostre os 10 sinais (setas de galho, pedras empilhadas, nó na grama etc.).
-2. Peça ao grupo que monte uma pista curta e que outro grupo decifre.
+1. Mostre os 10 sinais do cartão do Amigo (ex.: seta de gravetos, pedras empilhadas para 'direção certa', X de gravetos para 'caminho errado').
+2. Faça o exemplo: monte 3 sinais no chão e peça que o grupo diga o que cada um quer dizer.
+3. Divida em duplas: uma dupla monta uma pista curta com 5 a 10 sinais; a outra decifra.
+4. Troquem os papéis.
+
+Erros comuns: usar material vivo (galhos verdes, flores); deixar a pista sem limpar depois.
+
+Segurança: recolher tudo no final e deixar a natureza como estava.
 
 Como avaliar: o desbravador reconhece e monta pelo menos 8 dos 10 sinais.$$ where id = 5;
-update public.requisitos set guia_instrutor = $$O que falar: "Arte de Acampar é saber deixar o acampamento organizado e confortável."
+update public.requisitos set guia_instrutor = $$Material e preparo: Cartão da especialidade Arte de Acampar impresso, caneta, prancheta.
+Tempo sugerido: 10 min por desbravador (pode ser feito em conjunto no fim do acampamento).
+
+O que falar: "Arte de Acampar é saber deixar o acampamento organizado e confortável. Vamos ver o que você já fez aqui."
 
 Passo a passo:
-1. Revise com o desbravador os itens da especialidade que já foram feitos na montagem (sexta) e na desmontagem (segunda).
-2. Marque juntos o que ainda falta.
+1. Abra o cartão da especialidade e leia cada item.
+2. Marque o que foi cumprido no acampamento (escolher local, montar barraca, organizar a área, deixar o local limpo).
+3. Anote o que ainda falta e combine quando será feito (em reunião ou em outra saída).
+4. Assine somente os itens realmente cumpridos.
 
-Como avaliar: conferência do cartão da especialidade, marcando o que foi cumprido no acampamento.$$ where id = 6;
-update public.requisitos set guia_instrutor = $$O que falar: "Agora o desafio: acender com UM fósforo só."
+Erros comuns: assinar item que só foi explicado e não praticado.
+
+Como avaliar: conferência do cartão da especialidade. Neste acampamento cobre parte dela, não necessariamente tudo.$$ where id = 6;
+update public.requisitos set guia_instrutor = $$Material e preparo: 1 caixa de fósforos (só 1 fósforo por tentativa), isca bem seca guardada em saco plástico, gravetos finos, lenha, balde de água.
+Tempo sugerido: 15 a 20 min.
+
+O que falar: "Agora o desafio: acender a fogueira com UM fósforo. Quem prepara bem, acende fácil."
 
 Passo a passo:
-1. Reforce que a isca precisa estar bem seca e protegida do vento.
-2. Deixe cada um tentar, corrigindo a montagem antes de acender.
+1. Explique que 80% do sucesso está na preparação: isca bem seca e protegida do vento.
+2. Cada um monta a sua fogueira (cabana ou pirâmide) com a isca embaixo e bastante gravetos finos.
+3. Confira a montagem ANTES de acender e corrija: tem espaço para o ar? A isca está no centro?
+4. Entregue 1 fósforo. Proteja a chama com as mãos ao acender e encoste na isca pelo lado de onde vem o vento.
+5. Deixe cada um tentar. Se errar, ele remonta e tenta de novo com outro fósforo.
 
-Como avaliar: o desbravador acende com 1 fósforo (se errar, pode remontar e tentar de novo com outro fósforo, mas cada tentativa é 1 só).$$ where id = 7;
-update public.requisitos set guia_instrutor = $$O que falar: "Vamos observar a natureza sem machucar nada."
+Erros comuns: isca úmida; mexer na fogueira depois de acender (abafa); fósforo riscado com pressa e quebrado.
+
+Segurança: adulto junto; cabelos presos; balde por perto.
+
+Como avaliar: o desbravador acende com 1 fósforo. Registre quantas tentativas foram necessárias.$$ where id = 7;
+update public.requisitos set guia_instrutor = $$Material e preparo: Caderno e lápis por unidade, lupa, guia de campo impresso ou celular para pesquisar depois. Não coletar nada vivo.
+Tempo sugerido: Durante toda a caminhada de sábado, com paradas de 5 min.
+
+O que falar: "Vamos observar a natureza sem machucar nada. Quem observa bem descobre um mundo inteiro."
 
 Passo a passo:
-1. Durante a caminhada, faça paradas combinadas.
-2. Peça a cada desbravador que aponte e nomeie (ou descreva) uma flor ou um inseto diferente.
+1. Na trilha, faça paradas combinadas a cada 15 a 20 min.
+2. Peça a um desbravador diferente que aponte uma flor ou um inseto. Ele diz o nome ou descreve (cor, tamanho, onde estava).
+3. Cada um anota no caderno: nome (ou descrição), local e uma característica.
+4. Se não souberem o nome, desenhem e pesquisem depois; anote 'a identificar'.
+5. No fim, conte quantas flores e insetos cada um já registrou.
+
+Erros comuns: colher flores ou matar insetos; chegar perto demais de abelhas e vespas.
+
+Segurança: quem tiver alergia a picada avisa antes; nunca tocar em lagartas ou aranhas.
 
 Como avaliar: o desbravador identifica 10 flores e 10 insetos ao longo do dia (não precisa ser tudo de uma vez).$$ where id = 8;
-update public.requisitos set guia_instrutor = $$O que falar: "Antes de cortar qualquer coisa, vamos falar de segurança. Isso é o mais importante hoje."
+update public.requisitos set guia_instrutor = $$Material e preparo: Faca, facão e machadinha em bom estado, luvas, toco para cortar, varas de madeira, área livre. Só o instrutor entrega a ferramenta.
+Tempo sugerido: 45 min, em 2 grupos que trocam a cada 20 min.
+
+O que falar: "Antes de cortar qualquer coisa, vamos falar de segurança. Isso é o mais importante hoje. Ferramenta é séria."
 
 Passo a passo:
-1. Explique as 10 regras de segurança: círculo de segurança, entregar pelo cabo, guardar na bainha.
-2. Demonstre o corte correto você mesmo primeiro.
-3. Supervisione de perto cada desbravador cortando, um de cada vez.
+1. Explique as 10 regras de segurança: círculo de segurança (o espaço de um braço esticado de cada lado), corte sempre para longe do corpo, entregar pelo cabo, guardar na bainha, nunca correr com a ferramenta.
+2. Demonstre você mesmo o corte correto, devagar, primeiro.
+3. Chame 1 desbravador por vez. Ele repete os passos enquanto você olha só para ele.
+4. Só passe para o próximo quando o anterior devolver a ferramenta na bainha.
+
+Erros comuns: cortar em direção às pernas; segurar a peça com a outra mão perto da lâmina; distração com colegas em volta.
+
+Segurança: máximo de 5 a 6 desbravadores por adulto; luva obrigatória; ninguém entra no círculo de segurança de quem está cortando.
 
 Como avaliar: o desbravador usa a ferramenta corretamente e sabe repetir as regras de segurança.$$ where id = 9;
-update public.requisitos set guia_instrutor = $$O que falar: "Na mata, nem toda água que parece limpa é segura para beber."
+update public.requisitos set guia_instrutor = $$Material e preparo: 1 panela e fogareiro (ou fogueira), garrafa PET transparente, água turva para mostrar o efeito do filtro, água sanitária pura (sem perfume) e conta-gotas.
+Tempo sugerido: Faz parte dos 40 min de Purificação de água (segunda 08:30).
+
+O que falar: "Na mata, nem toda água que parece limpa é segura para beber. Vamos aprender como tornar a água segura."
 
 Passo a passo:
-1. Escolha 1 método (fervura é o mais simples de mostrar) e faça a demonstração.
-2. Explique por que funciona: o calor mata os microrganismos.
+1. Mostre a água de aparência suja e a limpa: as duas podem ter microrganismos.
+2. Escolha 1 método para o requisito do Amigo. O mais simples é ferver: leve a água até ferver forte e conte 1 minuto (3 minutos se estiver acima de 2.000 m).
+3. Deixe esfriar tampada e explique: o calor mata os microrganismos.
+4. Pergunte: 'por que só filtrar não basta?' (o filtro tira sujeira, mas não elimina tudo).
+
+Erros comuns: beber água sem esperar esfriar; achar que água clara já é segura.
+
+Segurança: cuidado com água fervente: só o adulto retira a panela do fogo.
 
 Como avaliar: o desbravador explica com as próprias palavras como e por que aquele método funciona.$$ where id = 10;
-update public.requisitos set guia_instrutor = $$O que falar: "Dá para descobrir onde fica o Norte sem bússola nenhuma, só olhando para o céu ou para o sol."
+update public.requisitos set guia_instrutor = $$Material e preparo: Sexta à noite: lanterna com feixe forte para apontar o céu. Segunda de manhã: 1 graveto reto (1 m) e pedras, papel e lápis de cor.
+Tempo sugerido: 15 min na sexta + 40 min na segunda.
+
+O que falar: "Dá para descobrir onde fica o Norte sem bússola nenhuma, só olhando para o céu ou para o sol."
 
 Passo a passo:
-1. Sexta à noite: mostre o Cruzeiro do Sul e como achar o Sul a partir dele.
-2. Segunda de manhã: método da sombra do graveto para achar Leste e Oeste.
-3. Peça que desenhem a rosa dos ventos com os 8 pontos.
+1. SEXTA (Cruzeiro do Sul): encontre a constelação em formato de cruz. Prolongue o braço maior da cruz por cerca de 4 vezes e meia o comprimento dela.
+2. Desça uma linha imaginária na vertical desse ponto até o horizonte: ali é o Sul. De frente para o Sul, o Norte fica às suas costas.
+3. SEGUNDA (sombra do graveto): finque o graveto reto no chão, num lugar de sol. Marque a ponta da sombra com uma pedra.
+4. Espere 15 minutos e marque a nova ponta da sombra. A 1ª marca é Oeste, a 2ª é Leste.
+5. Fique com o pé esquerdo na 1ª marca e o direito na 2ª: você está olhando para o Norte.
+6. Cada um desenha a rosa dos ventos com os 8 pontos (N, NE, L, SE, S, SO, O, NO).
+
+Erros comuns: graveto torto; esperar menos de 15 min; confundir Leste com Oeste.
 
 Como avaliar: o desbravador acha os 4 pontos cardeais sem ajuda e desenha a rosa dos ventos correta.$$ where id = 11;
-update public.requisitos set guia_instrutor = $$O que falar: "Vamos revisar os nós do nível Companheiro."
+update public.requisitos set guia_instrutor = $$Material e preparo: 1 corda de 1,5 m por desbravador, cartão com os nós do Companheiro impresso.
+Tempo sugerido: 20 min.
+
+O que falar: "Vamos revisar os nós do nível Companheiro. Quem já treinou vai tirar de letra."
 
 Passo a passo:
-1. Peça a cada um que faça os 9 nós numa corda.
-2. Corrija na hora, mostrando de novo o que saiu errado.
+1. Leia a lista dos 9 nós do cartão do Companheiro.
+2. Chame de 3 em 3: cada um faz o nó na própria corda enquanto você observa.
+3. Corrija errando o mínimo: mostre o nó 1 vez, devagar, e deixe repetir sozinho.
+4. Pergunte pra que serve cada nó e em qual situação usaria.
+
+Erros comuns: fazer o nó por ele; aceitar nó que desfaz quando puxa.
 
 Como avaliar: o desbravador faz os 9 nós corretamente.$$ where id = 12;
-update public.requisitos set guia_instrutor = $$O que falar: "Vamos ver o que já foi feito da especialidade de Acampamento II durante o fim de semana."
+update public.requisitos set guia_instrutor = $$Material e preparo: Cartão da especialidade Acampamento II impresso, caneta.
+Tempo sugerido: 10 min por desbravador (pode ser em conjunto).
+
+O que falar: "Vamos ver o que você já fez da especialidade de Acampamento II durante o fim de semana."
 
 Passo a passo:
-1. Revise com o desbravador os itens já cobertos na montagem, na inspeção e na desmontagem.
-2. Marque juntos o que falta.
+1. Abra o cartão e leia cada item em voz alta.
+2. Marque o que foi cumprido (montagem, organização, inspeção, desmontagem).
+3. Anote o que falta para completar depois em reunião ou outra saída.
+4. Assine só os itens praticados de fato.
 
-Como avaliar: conferência do cartão da especialidade.$$ where id = 13;
-update public.requisitos set guia_instrutor = $$O que falar: "Guarde na cabeça (ou no caderninho) o que mais marcou você aqui, porque isso vira o seu relatório."
+Erros comuns: assinar item apenas 'explicado'.
+
+Como avaliar: conferência do cartão. Cobre parte da especialidade, não necessariamente tudo.$$ where id = 13;
+update public.requisitos set guia_instrutor = $$Material e preparo: Caderno e caneta para cada desbravador (ou folha para o relatório).
+Tempo sugerido: 5 min falando no culto + relatório escrito depois do acampamento.
+
+O que falar: "Guarde na cabeça (ou no caderninho) o que mais marcou você aqui, porque isso vira o seu relatório."
 
 Passo a passo:
-1. No culto de domingo à noite, peça que cada um fale em voz alta o que mais gostou.
-2. Explique que isso é a base do relatório escrito que ele vai entregar depois do acampamento.
+1. No culto de domingo à noite, peça a cada unidade que fale o que mais impressionou.
+2. Explique como o relatório deve ficar: 1 página com o que fizeram, o que aprenderam e o que mais gostaram.
+3. Combine o prazo de entrega (ex.: na primeira reunião depois do acampamento).
+4. Guarde os relatórios na pasta do desbravador.
+
+Erros comuns: deixar para escrever semanas depois (esquece os detalhes).
 
 Como avaliar: relatório escrito entregue depois do acampamento.$$ where id = 14;
-update public.requisitos set guia_instrutor = $$O que falar: "Cozinhar na fogueira é diferente de cozinhar em casa: o fogo não é constante."
+update public.requisitos set guia_instrutor = $$Material e preparo: Panelas, lenha para brasas, luvas de couro, pegadores, ingredientes da unidade, balde de água.
+Tempo sugerido: 60 a 75 min (almoço de domingo).
+
+O que falar: "Cozinhar na fogueira é diferente de cozinhar em casa: o fogo não é constante. O segredo são as brasas."
 
 Passo a passo:
-1. Ajude a unidade a montar as brasas (cozinha-se nas brasas, não na chama direta).
-2. Acompanhe o preparo do almoço de domingo sem fazer por eles.
+1. Ajude a unidade a acender a fogueira uns 40 min antes de cozinhar, para formar brasas.
+2. Mostre como espalhar as brasas e apoiar a panela sobre elas (ou sobre 2 toras), sem chama alta embaixo.
+3. Deixe a unidade dividir tarefas: fogo, corte, tempero, panela e limpeza.
+4. Acompanhe sem fazer por eles: só intervenha em segurança.
+5. Na hora de servir, lavem as mãos e sirvam com concha e prato limpo.
+6. Ao final, apaguem o fogo com água e lavem as panelas.
+
+Erros comuns: cozinhar em chama alta (queima por fora e crua por dentro); esquecer de separar lixo.
+
+Segurança: só quem usa luva mexe em panela quente; crianças menores longe do fogo.
 
 Como avaliar: a unidade cozinha e serve a refeição sem depender do conselheiro para tudo.$$ where id = 15;
-update public.requisitos set guia_instrutor = $$O que falar: "Esse quadro vai ficar exposto na sala do clube, então capriche."
+update public.requisitos set guia_instrutor = $$Material e preparo: 1 tábua ou papelão grosso por unidade, cordas de vários tipos, cola quente e pistola, etiquetas e caneta, cartaz com o nome dos nós.
+Tempo sugerido: 40 min (segunda 09:50).
+
+O que falar: "Esse quadro vai ficar exposto na sala do clube, então capriche. Cada nó vai ter o seu nome."
 
 Passo a passo:
-1. Distribua tábua, corda e cola quente para cada unidade.
-2. Ajude a organizar 15 nós diferentes, cada um com uma etiqueta com o nome.
+1. Distribua o material para cada unidade e mostre um exemplo pronto, se possível.
+2. Cada unidade escolhe 15 nós diferentes (os do Amigo e os do Companheiro servem).
+3. Faça o nó, fixe na tábua com cola quente ou prego e escreva a etiqueta com o nome.
+4. Organizem em linhas, do mais fácil para o mais difícil.
+5. Confira no final: 15 nós, todos identificados e firmes.
+
+Erros comuns: colar nó desfeito; etiqueta com nome errado; repetir o mesmo nó.
+
+Segurança: cola quente queima: adulto opera a pistola.
 
 Como avaliar: quadro pronto com 15 nós corretos e identificados.$$ where id = 16;
-update public.requisitos set guia_instrutor = $$O que falar: "Cada unidade vai contar ao clube o que anotou durante a caminhada de hoje."
+update public.requisitos set guia_instrutor = $$Material e preparo: Caderno de campo de cada unidade (anotações da caminhada), fogueira do conselho.
+Tempo sugerido: 10 min no Fogo do conselho + relatório de 1 página depois.
+
+O que falar: "Cada unidade vai contar ao clube o que anotou durante a caminhada de hoje."
 
 Passo a passo:
-1. No fogo do conselho, chame cada unidade para contar uma descoberta da caminhada.
-2. Lembre que depois será entregue um relatório de uma página.
+1. Durante a caminhada, lembre cada unidade de anotar no caderno: o que viu, ouviu e aprendeu.
+2. No Fogo do conselho, chame cada unidade para contar uma descoberta (2 a 3 min).
+3. Diga que depois cada desbravador entrega um relatório de 1 página.
+4. Recolha os cadernos para conferir o que anotaram.
 
-Como avaliar: relatório de uma página da caminhada entregue depois do acampamento.$$ where id = 17;
-update public.requisitos set guia_instrutor = $$O que falar: "Todo bom campista conhece 6 segredos. Vamos descobrir juntos."
+Erros comuns: só um da unidade falar; relato sem ligação com a caminhada.
+
+Como avaliar: relato oral no conselho e relatório de 1 página entregue depois.$$ where id = 17;
+update public.requisitos set guia_instrutor = $$Material e preparo: Cartaz e caneta para escrever os 6 segredos.
+Tempo sugerido: 10 a 15 min (na Roda sob as estrelas).
+
+O que falar: "Todo bom campista conhece 6 segredos. Vamos descobrir juntos."
 
 Passo a passo:
-1. Puxe uma roda de conversa e vá completando um segredo por vez com a contribuição do grupo.
-2. Anote os 6 num cartaz para todo mundo ver.
+1. Puxe a conversa: 'o que um bom campista precisa saber?'.
+2. Cada unidade fala 1 segredo. Vá completando até 6 e anote no cartaz.
+3. Confira com o cartão do Pesquisador para ver se os 6 coincidem.
+4. Releia todos em voz alta e peça que repitam sem olhar.
+
+Erros comuns: aceitar resposta vaga; não conferir com o cartão.
 
 Como avaliar: o desbravador cita os 6 segredos sem olhar.$$ where id = 18;
-update public.requisitos set guia_instrutor = $$O que falar: "Vamos ver o que já foi feito da especialidade de Acampamento III durante o fim de semana."
+update public.requisitos set guia_instrutor = $$Material e preparo: Cartão da especialidade Acampamento III impresso, caneta.
+Tempo sugerido: 10 min por desbravador (pode ser em conjunto).
+
+O que falar: "Vamos ver o que você já fez da especialidade de Acampamento III durante o fim de semana."
 
 Passo a passo:
-1. Revise com o desbravador os itens já cobertos na montagem, na inspeção e na desmontagem.
-2. Marque juntos o que falta.
+1. Abra o cartão e leia cada item em voz alta.
+2. Marque o que foi cumprido (montagem, organização, inspeção, desmontagem).
+3. Anote o que falta para completar em outra oportunidade.
+4. Assine só o que foi praticado.
 
-Como avaliar: conferência do cartão da especialidade.$$ where id = 19;
-update public.requisitos set guia_instrutor = $$O que falar: "Hoje vamos aprender o básico para agir bem nos primeiros minutos de uma emergência, sem precisar ser médico."
+Erros comuns: assinar item apenas 'explicado'.
+
+Como avaliar: conferência do cartão. Cobre parte da especialidade.$$ where id = 19;
+update public.requisitos set guia_instrutor = $$Material e preparo: Kit de primeiros socorros (gaze, atadura, esparadrapo, tesoura, luvas), 2 talas improvisadas (galhos retos), pano ou camiseta, boneco ou almofada. Cartaz com telefones 192 (SAMU) e 193 (Bombeiros).
+Tempo sugerido: 50 min (domingo 14:00).
+
+O que falar: "Hoje vamos aprender o básico para agir bem nos primeiros minutos de uma emergência, sem precisar ser médico. O mais importante é não piorar a situação e chamar ajuda."
 
 Passo a passo:
-1. Explique a avaliação da cena (é seguro chegar?) e quando ligar 192/193.
-2. Demonstre um curativo simples e uma imobilização com tala improvisada.
-3. Deixe cada um praticar em dupla, com você supervisionando.
+1. Avalie a cena antes de tudo: 'é seguro chegar?'. Depois chame ajuda: 192 (SAMU) ou 193 (Bombeiros).
+2. SANGRAMENTO: coloque gaze ou pano limpo sobre o ferimento e pressione com a mão por 10 minutos, sem levantar para olhar.
+3. CURATIVO: depois de estancar, cubra com gaze limpa e prenda com atadura, sem apertar demais.
+4. IMOBILIZAÇÃO: coloque 1 tala de cada lado do membro machucado, acolchoe com pano e amarre acima e abaixo do ferimento, nunca em cima. Confira se os dedos continuam com cor e calor normais.
+5. QUEIMADURA: água corrente fria por 10 a 20 min; não estourar bolhas nem passar pasta ou manteiga.
+6. PICADA DE COBRA: manter a pessoa calma e deitada, imobilizar o membro, NÃO cortar, NÃO sugar, NÃO fazer torniquete; levar a um hospital rápido.
+7. RCP: só demonstre no boneco ou na almofada: mãos sobrepostas no centro do peito, 100 a 120 compressões por minuto. Não pratique pressão em colega.
+8. Deixe cada um praticar curativo e tala em dupla, com você olhando.
 
-Como avaliar: o desbravador faz um curativo e uma imobilização corretamente e sabe quando pedir ajuda.$$ where id = 20;
-update public.requisitos set guia_instrutor = $$O que falar: "Vamos cozinhar o almoço de hoje juntos, cada um com uma função."
+Erros comuns: amarrar a tala em cima do ferimento; apertar demais e cortar a circulação; esquecer de ligar 192.
+
+Segurança: se alguém quiser aprofundar, indique curso com socorrista qualificado. Os líderes aqui ensinam noções básicas, não substituem um profissional.
+
+Como avaliar: o desbravador faz um curativo e uma imobilização corretamente e sabe quando e como pedir ajuda.$$ where id = 20;
+update public.requisitos set guia_instrutor = $$Material e preparo: Ingredientes da unidade, panelas, facas de cozinha, tábuas, luvas, fogueira com brasas.
+Tempo sugerido: 60 a 75 min.
+
+O que falar: "Vamos cozinhar o almoço de hoje juntos, cada um com uma função. Equipe boa cozinha rápido e sem bagunça."
 
 Passo a passo:
-1. Divida tarefas: fogo, corte, tempero e panela.
-2. Acompanhe o preparo do início ao fim.
+1. Antes, a unidade decide o cardápio e a lista de compras (tarefa 'antes' no site).
+2. Divida funções: fogo, corte de legumes, tempero, panela e limpeza.
+3. Todos lavam as mãos antes de mexer nos alimentos.
+4. Acompanhe do início ao fim, dando dicas de tempo e temperatura.
+5. Sirvam juntos e limpem tudo no fim.
+
+Erros comuns: todos querendo fazer a mesma coisa; esquecer de higiene das mãos.
+
+Segurança: faca de cozinha só com supervisão; panela quente só com luva.
 
 Como avaliar: o desbravador participa ativamente do preparo da refeição.$$ where id = 21;
-update public.requisitos set guia_instrutor = $$O que falar: "Antes do acampamento cada um organiza a própria mochila. Vamos conferir o que veio."
+update public.requisitos set guia_instrutor = $$Material e preparo: Lista de equipamento impressa (a mesma enviada aos pais), prancheta e caneta.
+Tempo sugerido: 3 a 5 min por mochila (na chegada, sexta 19:00).
+
+O que falar: "Antes do acampamento cada um organiza a própria mochila. Vamos conferir o que veio."
 
 Passo a passo:
-1. Confira a mochila na chegada com a lista de equipamento impressa.
-2. Aponte o que falta ou o que está sobrando.
+1. Peça a cada desbravador que abra a mochila e espalhe o conteúdo em um pano.
+2. Vá riscando cada item da lista: roupa, calçado, higiene, saco de dormir, lanterna, garrafa, capa de chuva, apito.
+3. Anote o que faltou e resolva na hora (empréstimo do clube, quando possível).
+4. Ajude a guardar de novo do jeito certo (item 25).
+
+Erros comuns: levar mochila cheia de coisa desnecessária; esquecer agasalho.
 
 Como avaliar: mochila com todos os itens da lista de equipamento pessoal.$$ where id = 22;
-update public.requisitos set guia_instrutor = $$O que falar: "Amarra é diferente de nó: ela junta duas varas, não só uma corda."
+update public.requisitos set guia_instrutor = $$Material e preparo: Varas de bambu de 1,5 m (2 por dupla), sisal, cartão com a explicação das amarras.
+Tempo sugerido: 45 min (domingo 08:45), junto com nós.
+
+O que falar: "Amarra é diferente de nó: ela junta duas varas, não só uma corda. É a base de toda pioneiria."
 
 Passo a passo:
-1. Demonstre as 4 amarras: quadrada, diagonal, paralela e redonda.
-2. Peça que use pelo menos 1 amarra na construção do móvel da Grande Pioneiria.
+1. Mostre as 4 amarras do cartão: quadrada, diagonal, paralela e redonda.
+2. Regra geral de todas: começa com um nó (volta do fiel), dá voltas firmes e apertadas, faz a 'cintagem' (voltas entre as varas que apertam tudo) e termina com outro nó.
+3. Demonstre cada uma devagar e peça que a dupla repita na sequência.
+4. Deixe todos testarem puxando: amarra boa não balança.
+5. Escolha pelo menos 1 amarra para usar na Grande Pioneiria (móvel da unidade).
 
-Como avaliar: o desbravador faz as 4 amarras e usa pelo menos 1 na prática.$$ where id = 23;
-update public.requisitos set guia_instrutor = $$O que falar: "O fogo refletor joga o calor para um lado só, ótimo para esquentar sem gastar tanta lenha."
+Erros comuns: voltas frouxas; esquecer a cintagem; terminar sem nó e a amarra desfaz.
+
+Como avaliar: o desbravador faz as 4 amarras e usa pelo menos 1 na construção do móvel.$$ where id = 23;
+update public.requisitos set guia_instrutor = $$Material e preparo: Toras grossas (2 a 4 empilhadas, ~1 m de largura), estacas, fósforos, lenha, balde de água.
+Tempo sugerido: 20 a 30 min (na Oficina do Fogo).
+
+O que falar: "O fogo refletor joga o calor para um lado só, ótimo para esquentar sem gastar tanta lenha."
 
 Passo a passo:
-1. Monte uma parede de toras atrás da fogueira.
-2. Mostre como o calor é refletido para a frente.
+1. Escolha o lugar e limpe a área ao redor.
+2. Empilhe 3 ou 4 toras verdes ou grossas em forma de parede atrás de onde vai ficar o fogo, com cerca de 1 m de altura; prenda com estacas dos lados.
+3. Acenda a fogueira na frente da parede (30 a 50 cm de distância).
+4. Mostre o efeito: fique na frente da parede e sinta o calor refletido; depois fique atrás e sinta a diferença.
+5. Explique onde usar: dormir ao ar livre ou esquentar uma barraca ou lona.
 
-Como avaliar: o desbravador monta a estrutura sozinho e explica como ela funciona.$$ where id = 24;
-update public.requisitos set guia_instrutor = $$O que falar: "Arrumar a mochila do jeito certo evita dor nas costas e coisa perdida no meio do mato."
+Erros comuns: parede muito perto do fogo (queima); toras muito finas (não refletem).
+
+Segurança: só adulto acende; ninguém encosta na parede quente.
+
+Como avaliar: o desbravador monta a estrutura e explica como ela funciona.$$ where id = 24;
+update public.requisitos set guia_instrutor = $$Material e preparo: Balança ou uma mochila de exemplo bem arrumada, lista de equipamento.
+Tempo sugerido: 3 a 5 min por mochila (na chegada).
+
+O que falar: "Arrumar a mochila do jeito certo evita dor nas costas e coisa perdida no meio do mato."
 
 Passo a passo:
-1. Confira o peso e a distribuição: coisas pesadas embaixo e perto das costas.
-2. Corrija junto com o desbravador, sem fazer por ele.
+1. Regra do peso: coisas pesadas embaixo e perto das costas; leves em cima e nas laterais.
+2. Saco de dormir no fundo (ou embaixo); roupas em sacos plásticos; itens que usa mais (capa, água, lanterna) em cima ou em bolsos.
+3. Confira o peso: idealmente até 10 a 15% do peso do desbravador.
+4. Ajuste alças e cinto: o peso deve ficar nos quadris, não só nos ombros.
+
+Erros comuns: mochila pesada demais; deixar coisa solta pendurada por fora.
 
 Como avaliar: mochila arrumada corretamente na chegada.$$ where id = 25;
-update public.requisitos set guia_instrutor = $$O que falar: "Hoje vamos praticar um cenário de resgate: imobilizar e transportar um colega numa maca."
+update public.requisitos set guia_instrutor = $$Material e preparo: 2 varas retas de ~2 m, 1 cobertor (ou 2 a 3 casacos), 2 talas improvisadas, faixas de pano ou ataduras, 1 desbravador voluntário leve (a 'vítima'), terreno plano e sem obstáculos.
+Tempo sugerido: 50 min (domingo 14:55).
+
+O que falar: "Hoje vamos praticar um cenário de resgate: imobilizar e transportar um colega numa maca. É treino, com calma e segurança."
 
 Passo a passo:
-1. Explique por que, numa emergência de verdade, não se mexe numa vítima sem avaliar antes. Aqui é treino.
-2. Monte a maca com 2 varas e um cobertor ou agasalhos.
-3. Pratique imobilizar a 'perna' do colega com uma tala improvisada.
-4. Revezem carregando um colega na maca: peso leve, terreno plano e supervisão direta o tempo todo.
+1. Explique que numa emergência de verdade, quem não sabe socorrer NÃO move a vítima: chama 192/193 e espera. O treino é para conhecer a técnica.
+2. MACA (cobertor): estenda o cobertor no chão, coloque uma vara no meio e dobre o cobertor sobre ela; coloque a segunda vara a cerca de 30 cm da dobra e dobre o resto. O peso da vítima prende as varas.
+3. MACA (casacos): abotoe/feche 2 ou 3 casacos, vire as mangas para dentro e passe as varas pelas mangas.
+4. IMOBILIZAÇÃO: a 'vítima' simula machucar a perna: 1 tala de cada lado, acolchoada, amarrada acima e abaixo do ferimento com as faixas.
+5. TRANSPORTE: 4 carregadores, 2 por vara. Levantam juntos ao comando 'já!', andam em passo curto (pés na frente) sobre terreno plano.
+6. Revezem os papéis para todos passarem por vítima, socorrista e carregador.
+7. Comente: o que faria diferente numa trilha de verdade?
 
-Como avaliar: o grupo monta a maca, imobiliza e transporta com segurança. Lembre: essa atividade cobre só parte da especialidade de Resgate Básico.$$ where id = 26;
-update public.requisitos set guia_instrutor = $$O que falar: "Como o dilúvio bíblico explica as camadas de rocha e os fósseis que encontramos hoje?"
+Erros comuns: levantar sem combinar (a maca balança); carregar em terreno irregular; amarrar a tala sobre o machucado.
+
+Segurança: vítima leve; carregar só em terreno plano e por poucos metros; supervisão direta o tempo todo; ninguém 'brinca' de cair.
+
+Como avaliar: o grupo monta a maca, imobiliza e transporta com segurança. Essa atividade cobre só parte da especialidade de Resgate Básico.$$ where id = 26;
+update public.requisitos set guia_instrutor = $$Material e preparo: Imagens impressas (camadas de rocha, fósseis) ou um fóssil real, Bíblia aberta em Gênesis 6 a 8.
+Tempo sugerido: 30 a 35 min (sábado 17:15).
+
+O que falar: "Como o dilúvio bíblico explica as camadas de rocha e os fósseis que encontramos hoje?"
 
 Passo a passo:
-1. Mostre imagens ou um fóssil real.
-2. Conecte com o relato bíblico do dilúvio e explique a fossilização.
+1. Mostre as imagens ou o fóssil e pergunte: 'como isso foi parar aqui?'.
+2. Leia trechos de Gênesis 6 a 8 sobre o dilúvio.
+3. Explique a fossilização: um ser vivo é soterrado rápido, sem tempo de decompor, e os minerais preenchem o organismo.
+4. Conecte: um evento de grande escala explicaria muitas camadas empilhadas com fósseis.
+5. Abra para perguntas e respeite as dúvidas do grupo.
+
+Erros comuns: responder com certeza absoluta a tudo; desprezar perguntas.
 
 Como avaliar: o desbravador explica com as próprias palavras a ligação entre o dilúvio e os fósseis.$$ where id = 27;
-update public.requisitos set guia_instrutor = $$O que falar: "A machadinha exige ainda mais cuidado que a faca. Vamos com calma."
+update public.requisitos set guia_instrutor = $$Material e preparo: Machadinha em bom estado, toco baixo, varas de madeira, luvas, área livre de 3 m.
+Tempo sugerido: 45 min (junto com a faca e o facão, domingo 08:45).
+
+O que falar: "A machadinha exige ainda mais cuidado que a faca. Vamos com calma."
 
 Passo a passo:
-1. Explique as regras específicas: área livre de dois braços de distância, corte sempre longe do corpo.
-2. Demonstre o corte primeiro e supervisione de perto cada um.
+1. Marque o círculo de segurança: um raio de cerca de 2 m livre de pessoas.
+2. Segurar com as duas mãos: uma perto da cabeça e outra no fim do cabo, com o joelho levemente dobrado.
+3. Corte a peça apoiada no toco, batendo em ângulo, sempre para longe das pernas.
+4. Demonstre 2 cortes primeiro, devagar.
+5. Cada desbravador tenta 2 ou 3 cortes com supervisão direta.
+6. Ao terminar, guarde com a lâmina coberta.
+
+Erros comuns: cortar com a peça segurada na mão; usar madeira muito grossa; distração.
+
+Segurança: 1 adulto por desbravador cortando; luva; ninguém dentro do círculo.
 
 Como avaliar: o desbravador usa a machadinha com segurança e correção.$$ where id = 28;
-update public.requisitos set guia_instrutor = $$O que falar: "Na chuva de verdade a fogueira não pode falhar. Vamos aprender o truque."
+update public.requisitos set guia_instrutor = $$Material e preparo: Lenha úmida (ou molhada com um pouco de água), faca ou facão (só o adulto usa), saco plástico para a isca, gravetos, fósforos.
+Tempo sugerido: 20 min (na Oficina do Fogo).
+
+O que falar: "Na chuva de verdade a fogueira não pode falhar. Vamos aprender o truque."
 
 Passo a passo:
-1. Mostre como tirar a casca molhada e lascar a madeira até achar a parte seca por dentro.
-2. Monte a base elevada do chão e guarde a isca em saco plástico.
+1. Pegue um galho grosso molhado: por dentro a madeira ainda está seca.
+2. O adulto tira a casca e racha a madeira em lascas finas até achar o miolo seco.
+3. Faça lascas bem finas, ou 'penas' (lascas que ficam presas na vara, em forma de pena), que pegam fogo fácil.
+4. Monte uma base elevada com gravetos (não coloque no chão molhado).
+5. Guarde a isca seca num saco plástico até a hora de acender.
+6. Acenda e vá acrescentando lascas finas, depois maiores.
+
+Erros comuns: usar lenha molhada por fora; montar no chão molhado; acender sem isca seca.
+
+Segurança: só o adulto usa a faca; fogo sob abrigo, sem árvores por cima.
 
 Como avaliar: o desbravador consegue montar a fogueira e explicar a técnica.$$ where id = 29;
-update public.requisitos set guia_instrutor = $$O que falar: "Um azimute é um ângulo que leva você a um rumo certo, mesmo sem enxergar o destino."
+update public.requisitos set guia_instrutor = $$Material e preparo: 1 bússola por dupla, estacas numeradas ou fitas, cartão do percurso (ex.: 40 graus / 20 passos), terreno aberto e seguro. O percurso é montado antes do acampamento.
+Tempo sugerido: 40 min (segunda 10:30, junto com a pista).
+
+O que falar: "Um azimute é um ângulo que leva você a um rumo certo, mesmo sem enxergar o destino."
 
 Passo a passo:
-1. Ensine a segurar a bússola e girar o corpo até alinhar a agulha.
-2. Marque 1 azimute e peça que conte os passos até o ponto combinado.
+1. Segure a bússola na altura da cintura, na horizontal.
+2. Gire o limbo (a parte com os graus) até o número do azimute ficar alinhado com a linha de fé (a seta de direção).
+3. Gire o corpo até a agulha (a ponta que aponta o Norte) ficar dentro da seta de orientação: a seta de direção agora aponta o rumo.
+4. Escolha um ponto fixo à frente (árvore, pedra) nessa direção e caminhe até ele.
+5. Conte os passos indicados no cartão e pare na estaca.
+6. Repita 1 azimute no percurso e volte contando os passos.
+
+Erros comuns: segurar a bússola inclinada; andar com ferro ou celular perto (desvia a agulha); perder a contagem.
+
+Segurança: o percurso é conferido antes; ninguém sai sozinho do percurso.
 
 Como avaliar: o desbravador chega ao ponto marcado seguindo o azimute. Cobre só 1 azimute, não os 3 da especialidade completa.$$ where id = 30;
-update public.requisitos set guia_instrutor = $$O que falar: "Pioneiria é construir coisas úteis de acampamento com bambu, corda e nó, sem prego."
+update public.requisitos set guia_instrutor = $$Material e preparo: Varas de bambu, sisal, serrote, luvas, projeto do móvel escolhido pela unidade (desenho a lápis).
+Tempo sugerido: 2h30 na Grande Pioneiria (domingo 09:30).
+
+O que falar: "Pioneiria é construir coisas úteis de acampamento com bambu, corda e nó, sem prego. Cada amarra conta."
 
 Passo a passo:
-1. Explique o projeto do móvel da unidade.
-2. Acompanhe a amarração e a montagem sem fazer por eles.
+1. Cada unidade desenha o móvel (mesa, porta-panelas, cozinha elevada, sapateira, lavatório ou varal) antes de começar.
+2. Separe as varas por tamanho e corte o que precisar (só o adulto usa o serrote).
+3. Monte a estrutura básica primeiro (pernas e travessas) com amarras firmes.
+4. Acrescente o tampo ou os apoios.
+5. Teste: sente, apoie peso ou balance para ver se aguenta.
+6. Se sobrar tempo, ajude no portal do clube.
+
+Erros comuns: amarra frouxa; móvel torto; deixar sem reforço diagonal.
+
+Segurança: serrote só com adulto; luva ao carregar bambu (farpas).
 
 Como avaliar: móvel construído e funcional, que aguenta o uso.$$ where id = 31;
-update public.requisitos set guia_instrutor = $$O que falar: "Vamos aprender a observar a natureza sem interferir nela."
+update public.requisitos set guia_instrutor = $$Material e preparo: Caderno de campo, lupa, garrafas PET, panela, água sanitária pura (sem perfume), guia de campo.
+Tempo sugerido: Parte na caminhada de sábado e parte em Purificação de água (segunda 08:30).
+
+O que falar: "Vamos aprender a observar a natureza sem interferir nela e a tornar a água segura para beber."
 
 Passo a passo:
-1. Na caminhada de sábado, aponte e identifique flora e fauna.
-2. Na segunda, mostre 2 ou 3 métodos de purificar água.
+1. Na caminhada de sábado, faça paradas e peça que identifiquem flora e fauna, sem coletar.
+2. Na segunda, demonstre 2 ou 3 formas de purificar água: ferver por 1 min; filtro de garrafa PET (pano, carvão, areia fina, areia grossa/cascalho, de cima para baixo na garrafa cortada); hipoclorito (2 gotas por litro, esperar 30 min); SODIS (garrafa PET transparente ao sol por 6 h).
+3. Deixe cada desbravador demonstrar 1 método para outro colega.
+4. Reforce: filtrar NÃO elimina microrganismos; sempre ferver ou tratar depois.
+
+Erros comuns: usar água sanitária com perfume; expor a garrafa ao sol sem estar transparente; beber sem tratar depois do filtro.
+
+Segurança: água fervendo só com adulto.
 
 Como avaliar: o desbravador identifica elementos da natureza e demonstra pelo menos 2 métodos de purificar água. É cobertura parcial da especialidade.$$ where id = 32;
-update public.requisitos set guia_instrutor = $$O que falar: "Ordem Unida é disciplina em grupo: todo mundo no mesmo tempo, no mesmo passo."
+update public.requisitos set guia_instrutor = $$Material e preparo: Espaço plano e livre, apito, ordem de formação (por unidade).
+Tempo sugerido: 30 min de treino (domingo 06:45) + 30 min de apresentação (segunda 08:00).
+
+O que falar: "Ordem Unida é disciplina em grupo: todo mundo no mesmo tempo, no mesmo passo. É respeito e atenção."
 
 Passo a passo:
-1. Treine os comandos básicos (sentido, descansar, volver) no domingo de manhã.
-2. Apresente a formatura na segunda de manhã.
+1. Forme o clube em fileiras por unidade.
+2. Treine 1 comando por vez: 'Sentido!' (corpo firme), 'Descansar!', 'À direita, volver!', 'À esquerda, volver!', 'Meia-volta, volver!'.
+3. Treine marcha no lugar e em deslocamento, sempre com voz de comando clara.
+4. Repita a sequência até ficar sincronizada.
+5. Segunda: apresente a formatura completa a pais e liderança.
+
+Erros comuns: comandos sem clareza; grupo desatento; apressar sem sincronizar.
 
 Como avaliar: apresentação coordenada do grupo na formatura.$$ where id = 33;
-update public.requisitos set guia_instrutor = $$O que falar: "Já cada unidade faz um móvel; juntos fazemos o portal do clube."
+update public.requisitos set guia_instrutor = $$Material e preparo: Bambus grandes (2 postes de 2,5 m e 1 travessa de 2 m), sisal, cordas de vento, estacas, serrote, luvas.
+Tempo sugerido: Parte da Grande Pioneiria (domingo 09:30 a 12:00), continuando até a hora possível.
+
+O que falar: "Cada unidade faz um móvel; juntos fazemos o portal do clube. É a nossa entrada oficial."
 
 Passo a passo:
-1. Cada unidade termina 1 móvel.
-2. As unidades juntam esforço para levantar o portal.
+1. Cada unidade termina o seu móvel (veja o guia da Pioneiria).
+2. Para o portal: enterre 2 postes bem fundos, de cada lado, a cerca de 2 m de distância.
+3. Levante a travessa e amarre nos postes, no alto, com amarras firmes.
+4. Reforce com cordas de vento presas nas estacas para o portal não cair.
+5. Decore com o nome e o símbolo do clube.
 
-Como avaliar: portal de pé e pelo menos 1 móvel por unidade. É cobertura parcial: a especialidade pede 5 móveis.$$ where id = 34;
-update public.requisitos set guia_instrutor = $$O que falar: "Sábado à tarde é hora de atividade de natureza, sem fogo e sem construção."
+Erros comuns: postes pouco enterrados; amarra da travessa frouxa; sem cordas de vento.
+
+Segurança: todo mundo longe enquanto se levanta o portal; trabalho em altura só com apoio.
+
+Como avaliar: portal de pé e pelo menos 1 móvel por unidade. Cobertura parcial: a especialidade pede 5 móveis.$$ where id = 34;
+update public.requisitos set guia_instrutor = $$Material e preparo: Materiais simples de cada atividade (definidos pela unidade antes). Cartaz com as 5 atividades.
+Tempo sugerido: 45 min (sábado 16:30), cada unidade 5 a 8 min.
+
+O que falar: "Sábado à tarde é hora de atividade de natureza, sem fogo e sem construção."
 
 Passo a passo:
-1. Cada unidade prepara com antecedência uma atividade curta de 5 a 8 minutos.
-2. Apresente em sequência para o clube todo.
+1. Antes do acampamento, cada unidade escolhe uma atividade curta de natureza (jogo de observação, escutar sons, caça ao tesouro de folhas etc.).
+2. Ela prepara em uma folha: objetivo, material e como conduzir.
+3. No sábado, cada unidade apresenta em sequência ao clube todo.
+4. Depois de cada apresentação, faça 1 pergunta sobre o que aprenderam.
+
+Erros comuns: atividade com fogo ou construção (não combina com o sábado); passar do tempo.
 
 Como avaliar: 5 atividades apresentadas, uma por unidade.$$ where id = 35;
-update public.requisitos set guia_instrutor = $$O que falar: "Andar em trilha tem técnica: cada tipo de terreno pede um jeito diferente de pisar."
+update public.requisitos set guia_instrutor = $$Material e preparo: Calçado fechado, água, apito, kit de primeiros socorros na caminhada de sábado.
+Tempo sugerido: Durante a caminhada (14:00 a 16:30).
+
+O que falar: "Andar em trilha tem técnica: cada tipo de terreno pede um jeito diferente de pisar."
 
 Passo a passo:
-1. Durante a caminhada, mostre como andar em subida, descida, mata fechada e travessia de riacho.
-2. Deixe cada um repetir a técnica no trecho seguinte.
+1. SUBIDA: passos curtos, corpo levemente inclinado para frente, ritmo constante.
+2. DESCIDA: joelhos dobrados, pés levemente de lado, passos curtos, sem correr.
+3. MATA FECHADA: braço na frente do rosto, o líder da fila segura os galhos para o de trás.
+4. TRAVESSIA DE RIACHO: escolha pedras firmes, desafivele o cinto da mochila, teste com uma vara e passe em fila.
+5. Mostre a técnica em cada trecho e peça que cada um repita no trecho seguinte.
+
+Erros comuns: correr na descida; atravessar riacho de chinelo; puxar galho e soltar no colega.
+
+Segurança: só atravessar riacho raso e com adulto no início e no fim da fila.
 
 Como avaliar: o desbravador aplica a técnica certa em cada tipo de terreno.$$ where id = 36;
-update public.requisitos set guia_instrutor = $$O que falar: "Toda expedição termina com uma conversa: o que aprendemos e o que faríamos diferente?"
+update public.requisitos set guia_instrutor = $$Material e preparo: Fogueira do culto, cadeiras ou bancos, pauta com 3 perguntas.
+Tempo sugerido: 20 a 30 min (domingo 17:45).
+
+O que falar: "Toda expedição termina com uma conversa: o que aprendemos e o que faríamos diferente?"
 
 Passo a passo:
-1. No culto de domingo à noite, faça perguntas reflexivas sobre a caminhada e o acampamento.
-2. Deixe várias pessoas responderem.
+1. Sente o grupo em círculo.
+2. Faça 3 perguntas: 'o que mais gostei?', 'o que foi difícil?', 'o que faria diferente?'.
+3. Deixe cada unidade responder e evite interromper.
+4. Anote 2 ou 3 lições e agradeça a participação.
+
+Erros comuns: responder pelos desbravadores; conversa dominada por poucos.
 
 Como avaliar: participação do desbravador na discussão.$$ where id = 37;
-update public.requisitos set guia_instrutor = $$O que falar: "Hoje vocês vão cozinhar de verdade, do fogo ao prato."
+update public.requisitos set guia_instrutor = $$Material e preparo: Ingredientes e panelas de cada unidade, luvas, fogueira com brasas, balde de água.
+Tempo sugerido: 60 a 75 min (almoço de domingo).
+
+O que falar: "Hoje vocês vão cozinhar de verdade, do fogo ao prato. E vocês, Guias, lideram a equipe."
 
 Passo a passo:
-1. Supervisione a unidade cozinhando o almoço de domingo (a única refeição das unidades neste acampamento).
-2. Deixe os Guias liderarem a organização da cozinha.
+1. O Guia da unidade divide funções (fogo, corte, tempero, panela, limpeza).
+2. Acompanhe o preparo sem fazer por eles: só ajuda em segurança.
+3. Confira higiene: mãos lavadas e alimentos cobertos.
+4. Sirvam e limpem juntos.
+5. Lembre: como só há 1 refeição neste acampamento, ela representa as 3 do requisito.
 
-Como avaliar: refeição preparada e servida pela própria unidade. Como só há uma refeição, ela representa as 3 do requisito.$$ where id = 38;
-update public.requisitos set guia_instrutor = $$O que falar: "Um móvel de tamanho real precisa aguentar uso de verdade, não só ficar bonito."
+Erros comuns: Guia fazendo tudo sozinho em vez de liderar; esquecer de apagar o fogo.
+
+Segurança: luva para panela quente; balde de água ao lado.
+
+Como avaliar: refeição preparada e servida pela própria unidade.$$ where id = 38;
+update public.requisitos set guia_instrutor = $$Material e preparo: Varas de bambu, sisal, serrote, luvas, projeto do móvel.
+Tempo sugerido: Durante a Grande Pioneiria (domingo 09:30).
+
+O que falar: "Um móvel de tamanho real precisa aguentar uso de verdade, não só ficar bonito."
 
 Passo a passo:
-1. Acompanhe a Grande Pioneiria com foco em amarração correta e segurança estrutural.
-2. Teste o móvel antes de liberar para o uso.
+1. O Guia da unidade organiza a equipe e o projeto.
+2. Acompanhe as amarras: firmes e com reforço diagonal onde precisar.
+3. Antes de liberar, teste: sente, apoie peso ou balance.
+4. Corrija o que estiver fraco e teste de novo.
+5. Use o móvel no almoço de domingo (é a prova real).
+
+Erros comuns: móvel bonito mas que balança; esquecer o teste.
+
+Segurança: teste com cuidado e sem subir em cima da estrutura.
 
 Como avaliar: móvel de pé e aguentando uso real.$$ where id = 39;
-update public.requisitos set guia_instrutor = $$O que falar: "Os Guias são quem planejam isso tudo. Vocês são os líderes aqui."
+update public.requisitos set guia_instrutor = $$Material e preparo: Este roteiro impresso, lista de equipamento, papel e caneta.
+Tempo sugerido: Reunião de planejamento antes do acampamento (30 a 45 min).
+
+O que falar: "Os Guias são quem planejam isso tudo. Vocês são os líderes aqui."
 
 Passo a passo:
-1. Antes do acampamento, reúna os Guias para planejar com a liderança.
-2. No acampamento, acompanhe se o planejado está acontecendo.
+1. Reúna os Guias e apresente o roteiro do acampamento.
+2. Peça que discutam: o que levar, quem faz o quê e como cada unidade vai se organizar.
+3. Anote as decisões (lista de material, tarefas, responsáveis).
+4. No acampamento, veja se o planejado está acontecendo e ajude a ajustar.
+
+Erros comuns: planejar de última hora; líder decidindo por eles.
 
 Como avaliar: participação ativa dos Guias no planejamento, registrada antes do acampamento.$$ where id = 40;
-update public.requisitos set guia_instrutor = $$O que falar: "Guia também lidera na cozinha: quem organiza a equipe garante que todos comam bem."
+update public.requisitos set guia_instrutor = $$Material e preparo: Ingredientes, panelas, luvas, fogueira com brasas.
+Tempo sugerido: 60 a 75 min (almoço de domingo).
+
+O que falar: "Guia também lidera na cozinha: quem organiza a equipe garante que todos comam bem."
 
 Passo a passo:
-1. Deixe o Guia coordenar a divisão de tarefas na unidade.
-2. Acompanhe o preparo do almoço de domingo.
+1. O Guia divide as funções da unidade.
+2. Ele confere se tudo está pronto antes de acender o fogo.
+3. Acompanhe sem fazer por ele: dê dicas de tempo e temperatura.
+4. Ele coordena o serviço e a limpeza no fim.
+
+Erros comuns: não delegar; ficar só cozinhando.
+
+Segurança: luva para panela quente.
 
 Como avaliar: o Guia coordena o preparo da refeição da unidade.$$ where id = 41;
-update public.requisitos set guia_instrutor = $$O que falar: "Um abrigo bem feito pode ser a diferença entre uma noite segura e uma noite ruim."
+update public.requisitos set guia_instrutor = $$Material e preparo: 2 a 3 lonas ou plásticos grandes, cordas de 5 m, estacas, galhos e folhas secas, terreno plano e sem galhos secos por cima.
+Tempo sugerido: 50 min (segunda 11:20), antes da desmontagem.
+
+O que falar: "Um abrigo bem feito pode ser a diferença entre uma noite segura e uma noite ruim."
 
 Passo a passo:
-1. Mostre os 3 tipos: lona em A, meia-água (lean-to) e galhos e folhas encostado numa árvore caída.
+1. Mostre os 3 tipos: (1) lona em A: corda esticada entre duas árvores a ~1 m de altura, lona por cima e estacas nas laterais; (2) meia-água (lean-to): uma só água inclinada, apoiada numa corda alta; (3) galhos e folhas: vara principal apoiada numa árvore caída, com costelas de galhos e folhas em camadas.
 2. Escolham 1 tipo para construir de verdade.
-3. Testem ficando 5 minutos dentro, avaliando a proteção contra vento e chuva.
+3. Montem em grupos: 1 cuida da corda, 1 da lona, 2 das estacas.
+4. Testem ficando 5 minutos dentro, com um colega jogando um pouco de água por cima para simular chuva.
+5. Desmontem e guardem o material antes da desmontagem do acampamento.
 
-Como avaliar: o grupo constrói 1 abrigo funcional e sabe descrever os outros 2 tipos. É cobertura parcial: a especialidade pede projetar e usar.$$ where id = 42;
+Erros comuns: lona muito baixa (não cabe ninguém); armar embaixo de galho seco; esquecer a inclinação para a água escorrer.
+
+Segurança: checar o terreno antes: sem galhos soltos por cima.
+
+Como avaliar: o grupo constrói 1 abrigo funcional e sabe descrever os outros 2 tipos. Cobertura parcial: a especialidade pede projetar e usar.$$ where id = 42;
 
 insert into public.tarefas (id, fase, descricao, requisitos, feito, ordem) values
   (1, 'ANTES', 'Cada unidade planeja o cardápio da única refeição que vai cozinhar (almoço de domingo) e faz a lista de compras.', 'Planejar a refeição (Pesquisador, Guia)', false, 1),
