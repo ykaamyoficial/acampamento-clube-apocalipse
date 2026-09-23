@@ -43,7 +43,8 @@
   const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   const nl = s => esc(s).replace(/\n/g, '<br>');
   const fmtGuia = s => esc(s)
-    .replace(/^(Material e preparo|Tempo sugerido|Conteúdo pronto|O que falar|Passo a passo|Erros comuns|Segurança|Como avaliar|Fontes):/gm, '<strong>$1:</strong>')
+    .replace(/^(Requisitos cumpridos nesta atividade|Material e preparo|Tempo sugerido|Conteúdo pronto|O que falar|Passo a passo|Erros comuns|Segurança|Como avaliar|Fontes):/gm, '<strong>$1:</strong>')
+    .replace(/^(▶ .*)$/gm, '<strong class="guia-req">$1</strong>')
     .replace(/(https?:\/\/[^\s<]+)/g, '<a href="$1" target="_blank" rel="noopener">$1</a>')
     .replace(/\n/g, '<br>');
   const porOrdem = (a, b) => (a.ordem ?? 0) - (b.ordem ?? 0) || a.id - b.id;
@@ -223,7 +224,7 @@
   }
 
   function cardAtividade(a, { agoraId, mostrarDia = false } = {}) {
-    const temDetalhe = a.conducao || a.requisitos || a.material || a.responsavel;
+    const temDetalhe = a.conducao || a.requisitos || a.material || a.responsavel || a.guia_instrutor;
     const eAgora = a.id === agoraId;
     const classes = ['ativ', a.sabado ? 'sabado' : '', eAgora ? 'agora' : '', 'st-' + (a.status || 'pendente'), temDetalhe ? '' : 'simples'].join(' ');
     const dia = mostrarDia ? `<div class="ativ-dia">${esc(diaPorId(a.dia_id)?.rotulo || '')}</div>` : '';
@@ -245,6 +246,7 @@
           ${bloco('Requisitos e especialidades', a.requisitos, 'req')}
           ${bloco('Material', a.material)}
           ${bloco('Responsável', a.responsavel)}
+          ${a.guia_instrutor ? `<div class="bloco guia"><h4>Guia do instrutor</h4><p>${fmtGuia(a.guia_instrutor)}</p></div>` : ''}
           ${acoes}
         </div>
       </details>
@@ -357,15 +359,9 @@
             ${Object.entries(STATUS).map(([k, v]) => `<option value="${k}" ${k === st ? 'selected' : ''}>${v}</option>`).join('')}
            </select><button class="btn-icone" data-acao="editar" data-tabela="requisitos" data-id="${r.id}" aria-label="Editar">✎</button></div>`
         : `<span class="status ${st}">${STATUS[st]}</span>`;
-      const cabecalho = `<div class="titulo"><span class="tipo">${esc(r.tipo)}</span>${esc(r.item)}</div>${lado}
-        <div class="meta"><span>🕒 ${esc(r.quando) || '—'}</span></div>`;
-      if (!r.guia_instrutor) {
-        return `<div class="linha-req">${cabecalho}</div>`;
-      }
-      return `<div class="linha-req linha-req-guia">
-        <details><summary>${cabecalho}<div class="ativ-seta"></div></summary>
-          <div class="bloco"><h4>Guia do instrutor</h4><p>${fmtGuia(r.guia_instrutor)}</p></div>
-        </details>
+      return `<div class="linha-req">
+        <div class="titulo"><span class="tipo">${esc(r.tipo)}</span>${esc(r.item)}</div>${lado}
+        <div class="meta"><span>🕒 Cumprido em: ${esc(r.quando) || '—'} (veja o guia do instrutor na Programação)</span></div>
       </div>`;
     };
 
@@ -419,6 +415,7 @@
       { k: 'requisitos', l: 'Requisitos e especialidades trabalhados', t: 'area' },
       { k: 'classes', l: 'Classes atendidas (AM, CO, PE, PI, EX, GU; "+" = avançada)', ph: 'AM, CO+, PI' },
       { k: 'material', l: 'Material', t: 'area' },
+      { k: 'guia_instrutor', l: 'Guia do instrutor (material, o que falar, passo a passo, como avaliar)', t: 'area' },
       { k: 'responsavel', l: 'Responsável', meia: 1 },
       { k: 'status', l: 'Status', t: 'status', meia: 1 },
       { k: 'sabado', l: 'Horário de sábado (destaque amarelo)', t: 'check' },
@@ -445,7 +442,6 @@
       { k: 'status', l: 'Status', t: 'status', meia: 1 },
       { k: 'quando', l: 'Quando', ph: 'Dom 14:00' },
       { k: 'classes', l: 'Classe(s) (AM, AM+, CO, CO+, PE, PE+, PI, PI+, EX, EX+, GU, GU+)', ph: 'AM, EX+' },
-      { k: 'guia_instrutor', l: 'Guia do instrutor (passo a passo + o que falar)', t: 'area' },
       { k: 'instrutor', l: 'Instrutor' },
       { k: 'ordem', l: 'Ordem na lista', t: 'number' },
     ] },

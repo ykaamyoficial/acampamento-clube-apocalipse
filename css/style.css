@@ -235,20 +235,10 @@ table.grade { border-collapse: collapse; width: 100%; min-width: 460px; font-siz
 .sel-status { border-radius: 99px; padding: 4px 8px; font-size: 12px; font-weight: 800; border: 1px solid var(--linha); background: var(--card); }
 .lado { display: flex; gap: 6px; align-items: center; }
 
-.linha-req-guia { padding: 0; }
-.linha-req-guia > details { padding: 10px 14px; }
-.linha-req-guia > details > summary {
-  display: grid; grid-template-columns: 1fr auto auto; gap: 6px 12px; align-items: center;
-  list-style: none; cursor: pointer;
-}
-.linha-req-guia > details > summary::-webkit-details-marker { display: none; }
-.linha-req-guia > details > summary .meta { grid-column: 1 / -1; }
-.linha-req-guia .ativ-seta { grid-column: 3; }
-.linha-req-guia details[open] .ativ-seta::after { content: "ocultar guia ▲"; }
-.linha-req-guia details:not([open]) .ativ-seta::after { content: "ver guia do instrutor ▼"; }
-.linha-req-guia .bloco { margin-top: 10px; }
-.linha-req-guia .bloco h4 { margin: 0 0 4px; font-size: 11px; text-transform: uppercase; letter-spacing: .06em; color: var(--txt-2); }
-.linha-req-guia .bloco p { margin: 0; }
+.bloco.guia { background: var(--card-2); border: 1px solid var(--linha); border-left: 4px solid var(--pri); border-radius: 10px; padding: 10px 12px; }
+.bloco.guia p { font-size: 14px; line-height: 1.55; }
+.bloco.guia .guia-req { display: inline-block; margin-top: 6px; color: var(--pri); font-size: 15px; }
+.bloco.guia a { color: var(--pri); word-break: break-all; }
 
 .fase { margin-bottom: 22px; }
 .fase h3 { font-size: 16px; font-weight: 800; margin-bottom: 8px; }
