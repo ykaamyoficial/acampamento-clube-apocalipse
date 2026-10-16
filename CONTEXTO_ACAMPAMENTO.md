@@ -64,51 +64,56 @@ Fonte: cartões das classes no MDAWiki (mda.wiki.br).
 
 > Nesta versão as atividades que antes eram feitas em grupos simultâneos (estações) viraram uma sequência única, com o clube inteiro fazendo cada coisa junto, uma de cada vez. Isso porque com 9 líderes e sem ninguém com formação técnica em saúde/resgate, ficou mais simples e seguro concentrar a atenção de todo mundo numa atividade por vez, em vez de dividir os 9 líderes em 3 estações simultâneas. Duas atividades que estavam em domingo à tarde (Azimutes e Abrigos) foram para a segunda-feira, porque domingo estava muito cheio.
 
+> **Revisão de 09/10/2026.** O roteiro foi conferido com os cartões de classe e com o Manual Administrativo do Clube de Desbravadores (DSA, ed. 2020). A grade de horários continua a mesma. O que mudou:
+> - Nas horas do sábado não há instrução técnica (Manual, "O sábado no acampamento"). A antiga "Roda sob as estrelas" virou culto, e o conteúdo dela foi para uma roda de conversa no domingo às 19:30.
+> - O Manual também pede chegar e montar o acampamento antes do pôr do sol de sexta. Neste acampamento a chegada é à noite, então monta-se só o essencial. **Nos próximos, planejar a chegada antes do pôr do sol.**
+> - Requisito parcial não é assinado (Manual, 4.1.4). O almoço das unidades conta como 1 das 2 refeições do Pesquisador e 1 das 3 do Guia.
+> - Classes corrigidas: purificar água é do Amigo; anotações e discussão da expedição são do Excursionista (e aqui são só treino, porque o requisito pede 20 km); abrigos é só do Guia de Exploração.
+> - Em outubro o Cruzeiro do Sul não aparece no começo da noite; os pontos cardeais são feitos pelo sol, na segunda.
+>
+> **Fonte do conteúdo:** a pasta `pdf/fonte/` (cronograma.js, guias-1.js, guias-2.js). O comando `node pdf/fonte/gerar.js` gera de uma vez o `js/dados-exemplo.js`, o `supabase/02_cronograma.sql` e os dois PDFs da pasta `pdf/`.
+
 ### Sexta 09/10: chegada à noite (já é sábado)
-- **19:00** Chegada e check-in. Conferir a mochila de cada um (mochila PI; lista de equipamento PE+).
-- **19:30** Montagem das barracas por unidade (montar barraca AM; Acampamento I, II e III; Arte de Acampar).
+- **19:00** Chegada e check-in: autorizações, fichas de saúde e o essencial para a noite. Sem avaliação de requisito.
+- **19:30** Montagem das barracas, só o essencial para dormir.
 - **21:00** Lanche e culto de recepção do sábado.
-- **21:45** Roda sob as estrelas:
-  - achar o Sul pelo Cruzeiro do Sul (CO);
-  - 10 regras de caminhada e o que fazer se estiver perdido (AM);
-  - 6 segredos de um bom acampamento (PE).
+- **21:45** Culto sob as estrelas (Salmo 19 e Salmo 8).
 - **22:30** Silêncio.
 
 ### Sábado 10/10
-- **Manhã:** 07:00 alvorada, devocional, café, abertura, Escola Sabatina e culto.
-- **14:00–16:30** Caminhada ecológica de ~6 km (Vida Silvestre; flores e insetos; plantas; anotações de terreno, flora e fauna; técnicas de trilha).
+- **Manhã:** 07:00 alvorada, devocional, café, cerimônia de abertura, Escola Sabatina e culto.
+- **14:00–16:30** Caminhada ecológica de ~6 km, em ritmo leve (AM, AM+, CO, CO+, EX+; treino para o EX).
 - **16:30** Cada unidade apresenta uma atividade de natureza para o sábado à tarde (EX+).
 - **17:15** Estudo do dilúvio e dos fósseis (PI).
-- **17:50** Despedida do sábado.
-- **18:20** Oficina do Fogo: tipos de fogueira, fogueira com 1 fósforo, fogo refletor e lenha úmida.
-- **19:15** Jantar (cozinha do clube — as unidades não cozinham essa refeição).
-- **20:30** Fogo do conselho.
+- **17:50** Culto do pôr do sol.
+- **18:20** Oficina do Fogo, só depois do pôr do sol (AM, AM+, PE, PI, PI+).
+- **19:15** Jantar (cozinha do clube).
+- **20:30** Fogo do conselho, com os relatos da caminhada (CO, CO+).
 - **22:00** Silêncio.
 
 ### Domingo 11/10: dia de prática
-- **06:45** Treino de Ordem Unida (EX+).
-- **08:30** Inspeção.
+- **06:45** Treino de Ordem Unida (PE+, EX+).
+- **08:30** Inspeção e revisão das barracas: aqui se avalia a montagem (AM, AM+, CO, PE).
 - **08:45** Segurança com faca, facão e machadinha + nós e amarras (2 grupos trocam).
 - **09:30–12:00** Grande pioneiria: móveis de acampamento e portal do clube.
-- **12:00** Almoço das unidades — **única refeição cozinhada pelas próprias unidades** no acampamento inteiro; conta pelas 3 refeições ao ar livre do Guia.
-- **14:00–14:50** Primeiros socorros (PE).
-- **14:55–15:45** Resgate básico (PI) — parcial: só o cenário de maca, imobilização e transporte.
-- **15:45** Banho.
-- **16:30** Jantar (cozinha do clube).
-- **17:45–19:30** Culto e relatos.
-- *(tempo livre até o silêncio)*
+- **12:00** Almoço das unidades: única refeição cozinhada pelas unidades (1 de 2 do Pesquisador, 1 de 3 do Guia).
+- **14:00–14:50** Primeiros socorros (PE, EX+).
+- **14:55–15:45** Resgate básico (PI), parcial.
+- **15:45** Banho. **16:30** Jantar (cozinha do clube).
+- **17:45–19:30** Culto ao redor da fogueira e noite de relatos (CO; treino para o EX).
+- **19:30–20:15** Roda de conversa: 10 regras de caminhada, o que fazer se perdido, 6 segredos do bom acampamento e técnicas de trilha (AM, CO, PE, EX+).
 - **22:00** Silêncio.
 
 ### Segunda 12/10: encerramento (saída às 18h)
-- **08:00** Apresentação de Ordem Unida (EX+).
-- **08:30–09:10** Purificação de água (AM+, EX+).
+- **08:00** Apresentação de Ordem Unida (PE+, EX+).
+- **08:30–09:10** Purificação de água (AM; EX+ pela Vida Silvestre).
 - **09:10–09:50** Orientação pelo sol e rosa dos ventos (CO).
 - **09:50–10:30** Quadro de 15 nós (CO+).
-- **10:30–11:20** Azimutes e pista *(veio de domingo)*.
-- **11:20–12:10** Abrigos *(veio de domingo)* — antes da desmontagem, pra ainda ter lona e corda à mão.
-- **12:10–14:10** Desmontagem e limpeza do local.
+- **10:30–11:20** Azimutes e pista (AM, PE, PI+, EX+).
+- **11:20–12:10** Abrigos (GU+): o abrigo fica montado e é usado no almoço.
+- **12:10–14:10** Desmontagem e limpeza; mochila do Pioneiro e lista de equipamento do PE+.
 - **14:10–17:15** Almoço e tempo livre (espera dos pais).
-- **17:15–18:00** Encerramento e assinatura dos cartões.
+- **17:15–18:00** Encerramento e assinatura dos requisitos cumpridos por inteiro.
 - **18:00** Saída.
 
 ### Antes e depois
@@ -188,7 +193,8 @@ supabase/01_estrutura.sql · supabase/02_cronograma.sql · supabase/03_editores.
 - [ ] Confirmar o horário do pôr do sol na cidade do acampamento (afeta a Oficina do Fogo às 18h20 de sábado).
 - [ ] Confirmar a estrutura do local: trilha de 6 km e se pode fazer fogo no chão.
 - [ ] Publicar o site: criar o projeto no Supabase, rodar os SQL, cadastrar os editores e subir no GitHub.
-- [ ] Possíveis melhorias no site: gerar PDF do cronograma, página de avisos e controle por desbravador.
+- [ ] Possíveis melhorias no site: página de avisos e controle por desbravador. (Os PDFs do cronograma já existem na pasta `pdf/`.)
+- [ ] Rodar o novo `02_cronograma.sql` no Supabase para o site publicado mostrar o roteiro revisado (isso zera status e edições feitas pelo site).
 
 **Já resolvido nesta versão:** abrigo e purificação de água foram corrigidos para a classe certa (Guia de Exploração e Amigo/Excursionista na Mata, não Pioneiro); Ordem Unida corrigida para Excursionista na Mata; número de grupos e estações não é mais necessário, já que o rodízio foi removido; instrutores de Primeiros Socorros e Resgate são os próprios 9 líderes, sem formação técnica — por isso essas atividades ficaram só com 1-2 requisitos práticos, não a especialidade inteira.
 

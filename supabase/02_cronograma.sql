@@ -4,76 +4,79 @@
 --  ATENÇÃO: este script APAGA o cronograma atual e recoloca o original.
 --  (A tabela de editores NÃO é apagada.)
 --
---  Versão sem rodízio de estações: as atividades que antes eram feitas
---  em grupos simultâneos agora são feitas em sequência, com o clube
---  inteiro junto. Só a Segurança/técnica de domingo (faca/facão/machadinha
---  x nós) continua em 2 grupos que trocam entre si.
+--  Revisão de 09/10/2026: conferido com os cartões de classe e com o
+--  Manual Administrativo do Clube de Desbravadores (DSA, ed. 2020).
+--  Nas horas do sábado não há instrução técnica; o clube faz cada
+--  atividade junto, em sequência. Só a Segurança e técnica de domingo
+--  continua em 2 grupos que trocam entre si.
+--  Arquivo gerado por pdf/fonte/gerar.js.
 -- =====================================================================
 
 truncate public.estacoes, public.rodizios, public.atividades, public.dias, public.requisitos, public.tarefas restart identity cascade;
 
 insert into public.dias (id, data, rotulo, titulo, subtitulo, ordem) values
-  (1, '2026-10-09', 'Sex 09/10', 'Sexta-feira, 09/10', 'Chegada à noite (o sábado já começou ~18h10)', 1),
-  (2, '2026-10-10', 'Sáb 10/10', 'Sábado, 10/10', '', 2),
+  (1, '2026-10-09', 'Sex 09/10', 'Sexta-feira, 09/10', 'Chegada à noite: o sábado já começou (pôr do sol por volta de 18h10)', 1),
+  (2, '2026-10-10', 'Sáb 10/10', 'Sábado, 10/10', 'Dia de adoração e natureza; a parte técnica só começa depois do pôr do sol', 2),
   (3, '2026-10-11', 'Dom 11/10', 'Domingo, 11/10', 'Dia de prática', 3),
   (4, '2026-10-12', 'Seg 12/10', 'Segunda-feira, 12/10 (feriado)', 'Encerramento', 4);
 select setval(pg_get_serial_sequence('public.dias','id'), (select max(id) from public.dias));
 
 insert into public.atividades (id, dia_id, inicio, fim, titulo, conducao, requisitos, classes, material, responsavel, sabado, status, ordem) values
   -- SEXTA
-  (1, 1, '19:00', '19:30', 'Chegada e check-in', 'Entregar fichas médicas e autorizações. Cada conselheiro confere a mochila dos seus desbravadores com a lista de equipamento pessoal.', 'Arrumar a mochila com o equipamento pessoal (Pioneiro); lista de equipamento, roupa e calçado (Pesquisador de Campo e Bosque)', 'PI, PE+', 'Lista de equipamento impressa, pranchetas', '', true, 'pendente', 1),
-  (2, 1, '19:30', '21:00', 'Montagem do acampamento por unidade', 'Ensinar a escolher o local: plano, sem galhos secos por cima, longe de formigueiro e de baixada que alaga. Montar as barracas com lanterna, esticar e estaquear direito, organizar a área da unidade (barracas, mochilas, lixo).', 'Montar barraca em local apropriado (Amigo); Acampamento I, II e III (escolha do local e montagem); Arte de Acampar', 'AM, AM+, CO, PE', 'Barracas, lonas, estacas, lanternas', '', true, 'pendente', 2),
-  (3, 1, '21:00', '21:45', 'Lanche e culto de recepção do sábado', 'Cânticos e mensagem curta ao redor das lanternas (sem cozinhar).', '', '', 'Lanche pronto', '', true, 'pendente', 3),
-  (4, 1, '21:45', '22:30', 'Roda sob as estrelas', '1) Achar o Cruzeiro do Sul e, a partir dele, o Sul; marcar os 4 pontos cardeais no chão. 2) Conversa: 10 regras para caminhada e o que fazer se estiver perdido (ficar parado, apito 3x, abrigo). 3) Cada unidade fala 1 ''segredo de um bom acampamento'' até completar 6.', 'Pontos cardeais sem bússola (Companheiro); 10 regras de caminhada e procedimento se perdido (Amigo); 6 segredos de um bom acampamento (Pesquisador)', 'AM, CO, PE', 'Lanternas, cartaz das regras', '', true, 'pendente', 4),
-  (5, 1, '22:30', '', 'Silêncio', '', '', '', '', '', true, 'pendente', 5),
+  (1, 1, '19:00', '19:30', 'Chegada e check-in', 'Receber as autorizações assinadas e as fichas de saúde (remédios e alergias). Conferir só o essencial para a noite: saco de dormir ou cobertor, agasalho, lanterna e remédios. O sábado já começou: nada de aula ou avaliação de requisito agora.', '', '', 'Pasta de segurança (autorizações, fichas de saúde, telefones dos pais), lista de presença', '', true, 'pendente', 1),
+  (2, 1, '19:30', '21:00', 'Montagem das barracas (só o essencial)', 'Montar apenas o necessário para dormir, com calma. Meninas e meninos em alas separadas, com as barracas dos líderes entre as alas. Nunca embaixo de árvore, em baixada ou perto de formigueiro. Móveis, portal e fogueiras ficam para depois do sábado.', 'A avaliação da barraca (Amigo; Acampamento I, II e III; Arte de Acampar) é feita no domingo, na inspeção das 08:30.', 'Todos', 'Barracas, lonas, estacas, martelo de borracha ou pedra, lanternas', 'henrique', true, 'pendente', 2),
+  (3, 1, '21:00', '21:45', 'Lanche e culto de recepção do sábado', 'Lanche pronto (sem cozinhar). Cânticos e mensagem curta para receber o sábado.', '', 'Todos', 'Lanche pronto, lanternas, Bíblia', '', true, 'pendente', 3),
+  (4, 1, '21:45', '22:30', 'Culto sob as estrelas', 'Sentados ou deitados olhando o céu: ler o Salmo 19:1-4 e o Salmo 8:3-4, cantar baixinho e orar por unidade. É um momento espiritual, sem aula de requisito. (Nesta época do ano o Cruzeiro do Sul já se pôs a esta hora.)', '', 'Todos', 'Bíblia, lanterna fraca', '', true, 'pendente', 4),
+  (5, 1, '22:30', '', 'Silêncio', 'Reunião rápida dos líderes depois do silêncio, para combinar o sábado.', '', '', '', '', true, 'pendente', 5),
 
   -- SÁBADO
-  (6, 2, '07:00', '', 'Alvorada', '', '', '', '', '', true, 'pendente', 1),
-  (7, 2, '07:30', '08:00', 'Devocional por unidade', '', '', 'Todos', '', '', true, 'pendente', 2),
-  (8, 2, '08:00', '08:45', 'Café da manhã', 'Cozinha do clube.', '', '', '', '', true, 'pendente', 3),
-  (9, 2, '08:45', '09:00', 'Cerimônia de abertura', 'Hasteamento das bandeiras e boas-vindas.', '', 'Todos', 'Bandeiras', '', true, 'pendente', 4),
+  (6, 2, '07:00', '', 'Alvorada', 'Alvorada e higiene pessoal.', '', '', '', '', true, 'pendente', 1),
+  (7, 2, '07:30', '08:00', 'Devocional por unidade', 'Cada conselheiro dirige com a sua unidade. Tema bíblico, curto e com aplicação prática.', '', 'Todos', '', '', true, 'pendente', 2),
+  (8, 2, '08:00', '08:45', 'Café da manhã', 'Cozinha do clube. No sábado, comida simples e, se possível, preparada na véspera.', '', '', '', '', true, 'pendente', 3),
+  (9, 2, '08:45', '09:00', 'Cerimônia de abertura', 'Hasteamento das bandeiras, Voto e Lei, Hino dos Desbravadores e boas-vindas.', '', 'Todos', 'Bandeiras e mastro', '', true, 'pendente', 4),
   (10, 2, '09:00', '10:30', 'Escola Sabatina', '', '', 'Todos', '', '', true, 'pendente', 5),
   (11, 2, '10:30', '12:00', 'Culto divino', '', '', 'Todos', '', '', true, 'pendente', 6),
-  (12, 2, '12:00', '14:00', 'Almoço e descanso', 'Cozinha do clube.', '', '', '', '', true, 'pendente', 7),
-  (13, 2, '14:00', '16:30', 'Caminhada ecológica (~6 km ida e volta)', 'Cada unidade leva um caderno de campo. Paradas para: identificar flores e insetos; procurar pegadas, tocas e sinais de animais; mostrar plantas comestíveis e tóxicas (só identificar, NÃO comer); observar o tipo de terreno. Mostrar como andar em subida, descida, mata fechada e travessia de riacho.', 'Vida Silvestre (parcial); 10 flores silvestres e 10 insetos (Amigo da Natureza); caminhada de 6 km (Comp. de Excursionismo); anotações de terreno, flora e fauna (Excursionista); plantas comestíveis x tóxicas e técnicas de trilha (Excursionista na Mata)', 'AM+, CO+, PI, EX, EX+', 'Caderno e lápis por unidade, lupa, água, apito, kit de primeiros socorros', '', true, 'pendente', 8),
-  (14, 2, '16:30', '17:15', 'Atividades de sábado à tarde', 'Cada unidade conduz uma atividade de natureza de 5–8 min para o clube (jogo de observação, caça ao tesouro da natureza, som dos pássaros, etc.). Com 5 unidades = 5 atividades.', 'Apresentar 5 atividades na natureza para o sábado à tarde (Excursionista na Mata)', 'EX+', '', '', true, 'pendente', 9),
-  (15, 2, '17:15', '17:50', 'Estudo: o dilúvio e os fósseis', 'Conversa com ilustrações ou um fóssil real: como o dilúvio explica as camadas de rocha e a fossilização.', 'Estudar a história do dilúvio e o processo de fossilização (Pioneiro)', 'PI', 'Imagens ou fóssil', '', true, 'pendente', 10),
-  (16, 2, '17:50', '18:20', 'Despedida do sábado (pôr do sol ~18h10)', '', '', 'Todos', '', '', true, 'pendente', 11),
-  (17, 2, '18:20', '19:15', 'Oficina do Fogo', '1) Mostrar os tipos de fogueira: pirâmide, cabana, estrela, caçador e refletor. 2) Cada unidade acende a SUA fogueira com UM fósforo e só materiais naturais (isca, graveto, lenha). 3) Uma unidade monta um fogo refletor com uma parede de toras e todos sentem o calor refletido. 4) Demonstração com lenha molhada: tirar a casca, lascar até achar a parte seca, base elevada, isca guardada em saco.', 'Fogueira; fogueira com um fósforo (Amigo da Natureza); fogo refletor (Pioneiro); tipos de fogueira e como manter com umidade; acender em dia de chuva (Pioneiro de Novas Fronteiras); Fogueiras e Cozinha ao Ar Livre', 'AM, AM+, PI, PI+', 'Fósforos, lenha seca e molhada, facão (só adulto), baldes de água', '', false, 'pendente', 12),
-  (18, 2, '19:15', '20:30', 'Jantar', 'Cozinha do clube, servido na fogueira central.', '', '', '', '', false, 'pendente', 13),
-  (19, 2, '20:30', '22:00', 'Fogo do conselho', 'Relatos da caminhada: cada unidade mostra o que anotou. Hino dos Desbravadores, histórias e premiação da fogueira mais bem feita.', 'Relato da caminhada (Comp. de Excursionismo)', 'CO+', '', '', false, 'pendente', 14),
+  (12, 2, '12:00', '14:00', 'Almoço e descanso', 'Cozinha do clube. Depois do almoço, uma hora de descanso de verdade.', '', '', '', '', true, 'pendente', 7),
+  (13, 2, '14:00', '16:30', 'Caminhada ecológica (~6 km, ritmo leve)', 'Passeio de contemplação, sem pressa: fila indiana com o menor na frente, um adulto abrindo e outro fechando. Paradas a cada 15 a 20 minutos para observar flores, insetos, aves, árvores e pegadas e anotar no caderno de campo. Nada de colher, matar ou comer plantas. No sábado a caminhada não pode ser cansativa: se o terreno for pesado, encurte o percurso.', 'Acompanhar uma caminhada de 5 km, do planejamento à execução (Amigo); 10 flores silvestres e 10 insetos (Amigo da Natureza); caminhada ecológica de 1 hora (Companheiro); caminhada de 6 km com relatório de 1 página (Companheiro de Excursionismo); plantas silvestres comestíveis x tóxicas (Excursionista na Mata); anotações de terreno, flora e fauna, como treino para a expedição de 20 km (Excursionista)', 'AM, AM+, CO, CO+, EX, EX+', 'Caderno de campo e lápis por unidade, lupa, água, lanche leve, apito, caixa de primeiros socorros, lenço', '', true, 'pendente', 8),
+  (14, 2, '16:30', '17:15', 'Atividades de natureza para o sábado', 'Cada unidade apresenta ao clube uma atividade de natureza de 5 a 8 minutos, preparada antes do acampamento (jogo de observação, sons do mato, caça ao tesouro de folhas, história bíblica ao ar livre). São 5 atividades ao todo.', 'Apresentar cinco atividades na natureza para o sábado à tarde (Excursionista na Mata)', 'EX+', 'Material simples de cada atividade', '', true, 'pendente', 9),
+  (15, 2, '17:15', '17:50', 'Estudo: o dilúvio e os fósseis', 'Estudo bíblico com imagens ou um fóssil: ler trechos de Gênesis 6 a 8 e conversar sobre como um soterramento rápido forma fósseis.', 'Estudar a história do dilúvio e o processo de fossilização (Pioneiro)', 'PI', 'Bíblia, imagens de fósseis e de camadas de rocha (ou um fóssil)', '', true, 'pendente', 10),
+  (16, 2, '17:50', '18:20', 'Culto do pôr do sol (despedida do sábado)', 'Começar alguns minutos antes do pôr do sol e terminar depois dele. Confirme o horário do pôr do sol do local (em São Paulo e Brasília, perto de 18h10).', '', 'Todos', '', '', true, 'pendente', 11),
+  (17, 2, '18:20', '19:15', 'Oficina do Fogo', 'Só começa depois do pôr do sol. 1) Regras de segurança e preparo do local. 2) Cada unidade acende a sua fogueira com um fósforo só e material natural. 3) Demonstração dos fogos estrela, caçador e refletor. 4) Como acender com lenha molhada. A lenha já vem separada pelos líderes.', 'Fogueiras da especialidade Acampamento I (Amigo); fogueira com um fósforo (Amigo da Natureza); fogos estrela, caçador e refletor da especialidade Acampamento III (Pesquisador); fogo refletor (Pioneiro); fogueira em dia de chuva e especialidade Fogueiras e Cozinha ao Ar Livre, parcial (Pioneiro de Novas Fronteiras)', 'AM, AM+, PE, PI, PI+', 'Fósforos, isca seca em saco plástico, gravetos e lenha seca já separados, um pouco de lenha molhada, toras para o refletor, 1 balde de água e 1 pá por unidade, pedras para cercar', '', false, 'pendente', 12),
+  (18, 2, '19:15', '20:30', 'Jantar', 'Cozinha do clube.', '', '', '', '', false, 'pendente', 13),
+  (19, 2, '20:30', '22:00', 'Fogo do conselho', 'Cânticos animados no começo e mais calmos no fim. Cada unidade conta uma descoberta da caminhada (2 a 3 minutos). Premiação da melhor fogueira. Termina com uma reflexão espiritual curta. No fogo do conselho não se cozinha nem se assa nada.', 'Relato da caminhada de 6 km, base do relatório (Companheiro de Excursionismo); fogo do conselho da especialidade Acampamento II (Companheiro)', 'CO, CO+', 'Lenha separada, balde de água, cadernos de campo, lista de cânticos', '', false, 'pendente', 14),
   (20, 2, '22:00', '', 'Silêncio', '', '', '', '', '', false, 'pendente', 15),
 
   -- DOMINGO
-  (21, 3, '06:30', '', 'Alvorada', '', '', '', '', '', false, 'pendente', 1),
-  (22, 3, '06:45', '07:15', 'Ordem Unida: treino', 'Todo o clube em formação: posições, voltas, marcha, comandos.', 'Ordem Unida (Excursionista na Mata)', 'EX+', 'Apito', '', false, 'pendente', 2),
+  (21, 3, '06:30', '', 'Alvorada', 'Alvorada e higiene pessoal.', '', '', '', '', false, 'pendente', 1),
+  (22, 3, '06:45', '07:15', 'Ordem Unida: treino', 'Clube formado por unidades. Treinar um comando de cada vez: sentido, descansar, cobrir, firme, direita, esquerda e meia-volta volver, marcar passo, ordinário marche e alto.', 'Especialidade de Ordem Unida, parte prática (Excursionista na Mata); comandos de ordem unida (Pesquisador de Campo e Bosque)', 'PE+, EX+', 'Espaço plano, apito', '', false, 'pendente', 2),
   (23, 3, '07:15', '07:45', 'Devocional', '', '', 'Todos', '', '', false, 'pendente', 3),
   (24, 3, '07:45', '08:30', 'Café da manhã', 'Cozinha do clube.', '', '', '', '', false, 'pendente', 4),
-  (25, 3, '08:30', '08:45', 'Inspeção de barracas e formatura', 'Pontuação por unidade (vale para o prêmio do acampamento).', 'Acampamento I/II/III (organização do acampamento)', 'Todos', 'Ficha de inspeção', '', false, 'pendente', 5),
-  (26, 3, '08:45', '09:30', 'Segurança e técnica (2 grupos trocam a cada 20 min)', 'Grupo A: uso correto da faca, do facão e da machadinha e 10 regras de segurança. Grupo B: nós e amarras (14 nós do Amigo, nós do Companheiro, e as amarras quadrada, diagonal, paralela e redonda). Depois os grupos trocam.', 'Faca, facão e machadinha (Amigo da Natureza); machadinha (Pioneiro de Novas Fronteiras); 14 nós (Amigo); nós (Companheiro); 4 amarras (Pesquisador de Campo e Bosque)', 'AM, AM+, CO, PE+, PI+', 'Cordas, sisal, facas, facão, machadinha, toco para corte', '', false, 'pendente', 6),
-  (27, 3, '09:30', '12:00', 'Grande pioneiria', 'Cada unidade constrói pelo menos 1 móvel de acampamento em tamanho real (mesa, cozinha elevada, porta-panelas, sapateira, lavatório, varal). No fim, todas as unidades juntas levantam o portal do clube. Os móveis serão usados no almoço.', 'Pioneirismo; Pioneirias (Excursionista); móvel em tamanho real com nós e amarras (Guia); construir um móvel (Pesquisador de Campo e Bosque); 5 móveis e um portal (Excursionista na Mata); acampamento com estrutura de pioneiria (Guia)', 'PI, PE+, EX, EX+, GU', 'Bambus ou varas, sisal (muito!), serrote, luvas', '', false, 'pendente', 7),
-  (28, 3, '12:00', '13:15', 'Almoço das unidades', 'Cada unidade cozinha na própria fogueira, usando o móvel que construiu, seguindo o cardápio planejado antes do acampamento. É a única refeição cozinhada pelas unidades no acampamento inteiro — conta pelas 3 refeições ao ar livre do Guia.', 'Cozinha ao ar livre; 3 refeições ao ar livre (Guia); refeição em fogueira (Comp. de Excursionismo); cozinhar refeições (Pesquisador e Guia)', 'AM, CO+, PE, GU', 'Ingredientes, panelas, luvas, pegadores', '', false, 'pendente', 8),
-  (29, 3, '13:15', '14:00', 'Descanso', 'Pausa depois do almoço.', '', '', '', '', false, 'pendente', 9),
-  (30, 3, '14:00', '14:50', 'Primeiros socorros', 'Avaliar a cena, chamar ajuda (192/193), sinais vitais, controle de hemorragia, curativo, imobilizar fratura com tala improvisada, queimadura, picada de inseto e cobra, e treino de RCP no boneco ou na almofada.', 'Primeiros Socorros – básico', 'PE', 'Kit, ataduras, talas, boneco ou almofada', '', false, 'pendente', 10),
-  (31, 3, '14:55', '15:45', 'Resgate básico', 'Simulado de acidente na trilha: isolar e avaliar a vítima, montar maca improvisada (2 varas + agasalhos ou cobertor), transporte com 1, 2 e 4 socorristas, arrastamento seguro e nós de resgate (lais de guia).', 'Resgate Básico (prático)', 'PI', '2 varas, cobertor, cordas, ''vítima'' maquiada', '', false, 'pendente', 11),
+  (25, 3, '08:30', '08:45', 'Inspeção e revisão das barracas', 'Formatura e inspeção por unidade (vale pontos). Em cada barraca, a unidade mostra por que o local é bom e reaperta estacas e tensores. É aqui que se avalia a montagem da barraca.', 'Montar uma barraca em local apropriado (Amigo); itens de barraca e organização das especialidades Acampamento I (Amigo), Arte de Acampar (Amigo da Natureza), Acampamento II (Companheiro) e Acampamento III (Pesquisador)', 'AM, AM+, CO, PE', 'Ficha de inspeção, prancheta', '', false, 'pendente', 5),
+  (26, 3, '08:45', '09:30', 'Segurança e técnica (2 grupos trocam aos 20 min)', 'Grupo A: 10 regras de segurança e uso correto de faca, facão e machadinha (um desbravador por vez). Grupo B: revisão dos nós e as 4 amarras. Aos 20 minutos os grupos trocam.', 'Faca, facão e machadinha com 10 regras de segurança (Amigo da Natureza); uso correto da machadinha (Pioneiro de Novas Fronteiras); 14 nós (Amigo); 9 nós (Companheiro); quatro amarras básicas (Pesquisador de Campo e Bosque)', 'AM, AM+, CO, PE+, PI+', '1 corda de 1,5 m por desbravador, varas e sisal para as amarras, faca, facão, machadinha, toco firme, lista dos nós', '', false, 'pendente', 6),
+  (27, 3, '09:30', '12:00', 'Grande pioneiria', 'Cada unidade constrói pelo menos 1 móvel de acampamento em tamanho real (mesa, bancada de cozinha, porta-panelas, sapateira, lavatório ou varal), só com bambu, sisal e amarras, sem prego nem arame. No fim, todos juntos levantam o portal do clube. Os móveis são usados no almoço.', 'Construir um móvel de acampamento com amarras (Pesquisador de Campo e Bosque); especialidade de Pioneirias, parcial (Excursionista); cinco móveis e um portal, parcial (Excursionista na Mata); móvel em tamanho real e acampamento com estrutura de pioneiria (Guia)', 'PE+, EX, EX+, GU', 'Bambus ou varas, bastante sisal, serrote ou serra de arco, luvas para carregar bambu, trena, desenho do móvel de cada unidade', '', false, 'pendente', 7),
+  (28, 3, '12:00', '13:15', 'Almoço das unidades', 'Cada unidade cozinha na própria fogueira o cardápio que planejou (sem carne), usando o móvel que construiu. É a única refeição feita pelas unidades. Se der, cada unidade também faz pão no espeto.', 'Preparar uma refeição em fogueira (Companheiro de Excursionismo); planejar e cozinhar duas refeições: faz 1 de 2 (Pesquisador); planejar, preparar e cozinhar três refeições ao ar livre: faz 1 de 3 (Guia); pão no espeto da especialidade Acampamento I (Amigo); Fogueiras e Cozinha ao Ar Livre, parcial (Pioneiro de Novas Fronteiras)', 'AM, CO+, PE, PI+, GU', 'Ingredientes e cardápio de cada unidade, panelas, colher de cabo comprido, pano ou luva para panela quente, água tratada, balde de água, sacos de lixo', '', false, 'pendente', 8),
+  (29, 3, '13:15', '14:00', 'Descanso', 'Pausa depois do almoço. Lavar a louça logo depois de comer.', '', '', '', '', false, 'pendente', 9),
+  (30, 3, '14:00', '14:50', 'Primeiros socorros', 'Noções básicas, com prática em duplas: avaliar a cena e pedir ajuda (192 e 193), sangramento, curativo, tala improvisada, queimadura, picada de cobra e de inseto. Reanimação e engasgo só são demonstrados no boneco ou na almofada.', 'Especialidade de Primeiros Socorros – básico, parcial (Pesquisador); procedimentos em ferimentos por animais peçonhentos, parcial (Excursionista na Mata)', 'PE, EX+', 'Caixa de primeiros socorros (gaze, atadura, esparadrapo, tesoura, luvas), talas improvisadas, panos, boneco ou almofada, cartaz com 192 e 193', '', false, 'pendente', 10),
+  (31, 3, '14:55', '15:45', 'Resgate básico', 'Treino com calma: antes de mexer na vítima, garantir a segurança e pedir ajuda. Montar maca improvisada (2 varas e cobertor ou casacos), carregar em 4 e praticar o transporte em cadeirinha. Nó de resgate: lais de guia.', 'Especialidade de Resgate Básico, parcial: maca improvisada e transporte de vítima (Pioneiro)', 'PI', '2 varas retas de 2 m, cobertor ou 3 casacos, cordas, terreno plano', '', false, 'pendente', 11),
   (32, 3, '15:45', '16:30', 'Banho', '', '', '', '', '', false, 'pendente', 12),
   (33, 3, '16:30', '17:45', 'Jantar', 'Cozinha do clube.', '', '', '', '', false, 'pendente', 13),
-  (34, 3, '17:45', '19:30', 'Culto ao redor da fogueira e noite de relatos', 'Cada unidade fala o que mais impressionou no acampamento (base do relatório escrito do Companheiro). Apresentação do portal e dos móveis.', 'Relatório do acampamento (Companheiro); discussão pós-expedição (Excursionista na Mata)', 'CO, EX+', '', '', false, 'pendente', 14),
-  (35, 3, '22:00', '', 'Silêncio', 'Fica um tempo livre entre o culto (19:30) e o silêncio.', '', '', '', '', false, 'pendente', 15),
+  (34, 3, '17:45', '19:30', 'Culto ao redor da fogueira e noite de relatos', 'Cânticos, testemunhos e mensagem. Cada unidade conta o que mais a impressionou no acampamento (é a base do relatório do Companheiro). Apresentação dos móveis e do portal. Conversa final: o que aprendemos e o que faríamos diferente.', 'Relatório do acampamento: o que mais impressionou (Companheiro); participação em culto de acampamento da especialidade Acampamento II (Companheiro); discussão de grupo depois da caminhada, como treino para a expedição de 20 km (Excursionista)', 'CO, EX', 'Lenha, balde de água, caderno e caneta', '', false, 'pendente', 14),
+  (49, 3, '19:30', '20:15', 'Roda de conversa: caminhada segura e bom acampamento', 'Conversa curta em roda, usando o que o clube viveu no sábado: 10 regras para uma caminhada, o que fazer se estiver perdido, os 6 segredos de um bom acampamento e como andar em cada tipo de terreno. (Veio da sexta à noite: nas horas do sábado não se dá instrução técnica.)', '10 regras para uma caminhada e o que fazer quando estiver perdido (Amigo); seis segredos para um bom acampamento (Pesquisador); itens da escolha do local das especialidades Acampamento II (Companheiro) e Acampamento III (Pesquisador); técnicas para percorrer trilhas em diferentes terrenos (Excursionista na Mata)', 'AM, CO, PE, EX+', 'Cartaz com as 10 regras, cartaz em branco e caneta, 1 apito', '', false, 'pendente', 15),
+  (35, 3, '22:00', '', 'Silêncio', 'Tempo livre entre a roda de conversa (20:15) e o silêncio.', '', '', '', '', false, 'pendente', 16),
 
   -- SEGUNDA
-  (36, 4, '06:30', '', 'Alvorada', '', '', '', '', '', false, 'pendente', 1),
+  (36, 4, '06:30', '', 'Alvorada', 'Alvorada e higiene pessoal.', '', '', '', '', false, 'pendente', 1),
   (37, 4, '07:00', '07:30', 'Devocional', '', '', 'Todos', '', '', false, 'pendente', 2),
   (38, 4, '07:30', '08:00', 'Café da manhã', 'Cozinha do clube.', '', '', '', '', false, 'pendente', 3),
-  (39, 4, '08:00', '08:30', 'Formatura: apresentação de Ordem Unida', 'Avaliação da Ordem Unida diante dos pais ou da liderança.', 'Ordem Unida (Excursionista na Mata)', 'EX+', '', '', false, 'pendente', 4),
-  (40, 4, '08:30', '09:10', 'Purificação de água', 'Demonstrar 4 formas: ferver por 1 min; filtro de garrafa PET (pano, areia fina, carvão, cascalho), e explicar que filtrar NÃO dispensa ferver ou tratar; hipoclorito (2 gotas por litro, esperar 30 min); SODIS (garrafa PET transparente 6 h ao sol).', 'Purificar água - 1 método (Amigo); demonstrar 3 formas de purificar água (Vida Silvestre, Excursionista na Mata)', 'AM+, EX+', 'Garrafas PET, areia, carvão, pano, fogareiro, hipoclorito', '', false, 'pendente', 5),
-  (41, 4, '09:10', '09:50', 'Orientação pelo sol', 'Método da sombra do graveto: marcar a ponta da sombra, esperar 15 min e marcar de novo; a linha vai de Oeste para Leste. Cada um desenha uma rosa dos ventos com os 8 pontos.', 'Pontos cardeais sem bússola e rosa dos ventos (Companheiro)', 'CO', 'Graveto, pedras, papel e lápis de cor', '', false, 'pendente', 6),
-  (42, 4, '09:50', '10:30', 'Quadro de nós', 'Cada unidade monta um quadro com 15 nós diferentes, com o nome de cada um. Revisão dos 14 nós do Amigo e dos nós do Companheiro. O quadro fica para a sala do clube.', 'Quadro com 15 nós (Comp. de Excursionismo); revisão de nós (Amigo, Companheiro)', 'CO+', 'Tábua ou papelão grosso, cordas, cola quente, etiquetas', '', false, 'pendente', 7),
-  (43, 4, '10:30', '11:20', 'Azimutes e pista', 'Como ler a bússola e marcar um azimute. Percurso com 3 azimutes (ex.: 40°→20 passos, 160°→15, 280°→25) que termina num ''tesouro''. Na volta, o grupo segue uma pista de 10 sinais montada por outro grupo e depois monta a sua.', 'Percurso com três azimutes; Mapa e Bússola - parcial (Pioneiro de Novas Fronteiras); sinais de pista (Amigo)', 'AM, PI+', '1 bússola por dupla, estacas numeradas, cartão do percurso', '', false, 'pendente', 8),
-  (44, 4, '11:20', '12:10', 'Abrigos', 'Mostrar 3 tipos: abrigo de lona em A, meia-água (lean-to) e abrigo de galhos e folhas encostado numa árvore caída. O grupo constrói um e fica 5 min dentro, avaliando se protegeria de chuva e vento. Local seguro e sem galhos soltos. Feito antes da desmontagem para ainda ter lona e corda à mão.', 'Projetar 3 tipos de abrigo e usar 1 (Guia de Exploração)', 'GU, GU+', 'Lonas, cordas, estacas, galhos e folhas secas', '', false, 'pendente', 9),
-  (45, 4, '12:10', '14:10', 'Desmontagem do acampamento', 'Desmontar os móveis e o portal (reaproveitar o sisal), as barracas e as fogueiras (apagar e espalhar as cinzas frias). Recolher o lixo e deixar o local MELHOR do que encontrou.', 'Acampamento I, II e III; Arte de Acampar', 'AM, AM+, CO, PE', 'Sacos de lixo', '', false, 'pendente', 10),
-  (46, 4, '14:10', '17:15', 'Almoço e tempo livre', 'Cozinha do clube (ou lanche frio). Depois, tempo livre para organização final, fotos e espera dos pais chegarem.', '', '', '', '', false, 'pendente', 11),
-  (47, 4, '17:15', '18:00', 'Encerramento', 'Assinatura dos requisitos nos cartões, prêmio de melhor unidade, oração final.', '', 'Todos', 'Cartões, canetas', '', false, 'pendente', 12),
+  (39, 4, '08:00', '08:30', 'Formatura: apresentação de Ordem Unida', 'Hasteamento e apresentação da Ordem Unida por unidade para a liderança (e para os pais, se estiverem). É a avaliação prática.', 'Especialidade de Ordem Unida, parte prática (Excursionista na Mata); comandos de ordem unida, Bandeira dos Desbravadores e bandeirim (Pesquisador de Campo e Bosque)', 'PE+, EX+', 'Bandeiras, bandeirins das unidades, apito', '', false, 'pendente', 4),
+  (40, 4, '08:30', '09:10', 'Purificação de água', 'Mostrar 3 maneiras: ferver (1 minuto de fervura forte), hipoclorito de sódio (2 gotas por litro, esperar 30 minutos) e SODIS (garrafa PET transparente 6 horas ao sol). O filtro de garrafa PET só tira a sujeira: depois dele ainda é preciso ferver ou tratar. Cada Amigo demonstra uma maneira e escreve o parágrafo sobre Jesus, a água da vida.', 'Demonstrar uma maneira de purificar a água e escrever um parágrafo sobre Jesus como a água da vida (Amigo); três maneiras de purificar água da especialidade Vida Silvestre, parcial (Excursionista na Mata)', 'AM, EX+', 'Panela e fogareiro, garrafas PET transparentes, pano limpo, areia, carvão, cascalho, água turva, hipoclorito de sódio 2,5% com conta-gotas, papel e lápis, Bíblia', '', false, 'pendente', 5),
+  (41, 4, '09:10', '09:50', 'Orientação pelo sol', 'Método da sombra: fincar uma vara reta, marcar a ponta da sombra, esperar 15 minutos e marcar de novo. A 1ª marca é o Oeste e a 2ª é o Leste. Enquanto espera, cada um desenha a rosa dos ventos e aprende os outros métodos (sol nascente, relógio de ponteiros e Cruzeiro do Sul).', 'Descobrir os pontos cardeais sem bússola e desenhar uma rosa dos ventos (Companheiro); três métodos de achar os pontos cardeais sem bússola da especialidade Vida Silvestre, parcial (Excursionista na Mata); direção sem bússola da especialidade Mapa e Bússola, parcial (Pioneiro de Novas Fronteiras)', 'CO, PI+, EX+', '1 vara reta de 1 m, pedrinhas, papel, lápis de cor, relógio de ponteiros, desenho do Cruzeiro do Sul', '', false, 'pendente', 6),
+  (42, 4, '09:50', '10:30', 'Quadro de nós', 'Cada unidade monta um quadro com 15 nós diferentes, cada um com o nome. Quem ainda deve nós do Amigo ou do Companheiro aproveita para mostrar ao instrutor. O quadro fica para a sala do clube.', 'Preparar um quadro com 15 nós diferentes (Companheiro de Excursionismo); revisão dos 14 nós (Amigo) e dos 9 nós (Companheiro)', 'AM, CO, CO+', '1 tábua ou papelão grosso por unidade, cordas finas, cola quente (só adulto usa), etiquetas, caneta', '', false, 'pendente', 7),
+  (43, 4, '10:30', '11:20', 'Azimutes e pista', 'Metade do tempo para cada parte. Bússola: como segurar, marcar o azimute e seguir um percurso de 3 azimutes até o tesouro. Pista: aprender os sinais, montar uma pista de 10 sinais para outro grupo seguir e depois desmanchar tudo.', 'Preparar e seguir uma pista de no mínimo 10 sinais (Amigo); aprender a usar uma bússola, parcial (Pesquisador); especialidade de Mapa e Bússola, parcial (Pioneiro de Novas Fronteiras); percurso com azimutes da especialidade Vida Silvestre, parcial (Excursionista na Mata)', 'AM, PE, PI+, EX+', '1 bússola por dupla, estacas numeradas, cartão do percurso, cartaz dos sinais de pista, gravetos e pedras soltos', '', false, 'pendente', 8),
+  (44, 4, '11:20', '12:10', 'Abrigos', 'Os Guias desenham 3 tipos de abrigo e explicam para que serve cada um. O grupo constrói um deles (lona em A ou meia-água) em local seguro. O abrigo fica montado e é usado como sombra no almoço e no tempo livre; desmonta antes do encerramento.', 'Projetar três tipos diferentes de abrigo, explicar seu uso e utilizar um deles em um acampamento (Guia de Exploração)', 'GU+', '2 ou 3 lonas, cordas de 5 m, estacas, varas, papel e lápis para os projetos', '', false, 'pendente', 9),
+  (45, 4, '12:10', '14:10', 'Desmontagem do acampamento', 'Desmontar móveis e portal (guardar o sisal), barracas e fogueiras (apagar com água, espalhar as cinzas frias e recolocar a grama). Cada um arruma a própria mochila do jeito certo. No fim, operação pente-fino: todos em linha recolhendo qualquer lixo. Deixar o local melhor do que estava.', 'Arrumar corretamente a mochila com o equipamento pessoal (Pioneiro); lista de equipamento, roupa e calçado, parcial: falta a caminhada de 10 km (Pesquisador de Campo e Bosque); itens de desmontagem e limpeza das especialidades Acampamento I (Amigo), Arte de Acampar (Amigo da Natureza), Acampamento II (Companheiro) e Acampamento III (Pesquisador)', 'AM, AM+, CO, PE, PE+, PI', 'Sacos de lixo, pá, balde, capas das barracas, papel e lápis', '', false, 'pendente', 10),
+  (46, 4, '14:10', '17:15', 'Almoço e tempo livre', 'Cozinha do clube ou lanche frio. Tempo livre, com o abrigo dos Guias como sombra. Conferência final do material do clube.', '', '', '', '', false, 'pendente', 11),
+  (47, 4, '17:15', '18:00', 'Encerramento', 'Arriamento das bandeiras, prêmio da melhor unidade, assinatura dos requisitos cumpridos por inteiro e oração final.', '', 'Todos', 'Cartões de classe, canetas, ficha de controle dos requisitos', '', false, 'pendente', 12),
   (48, 4, '18:00', '', 'Saída', '', '', '', '', '', false, 'pendente', 13);
 select setval(pg_get_serial_sequence('public.atividades','id'), (select max(id) from public.atividades));
 
@@ -81,1143 +84,1066 @@ select setval(pg_get_serial_sequence('public.atividades','id'), (select max(id) 
 -- As tabelas rodizios/estacoes ficam vazias (já foram limpas pelo truncate acima).
 
 insert into public.requisitos (id, item, tipo, quando, classes, instrutor, status, ordem) values
-  -- Amigo (AM)
-  (1, 'Montar barraca em local apropriado', 'Requisito', 'Sex 19:30', 'AM', '', 'pendente', 1),
-  (2, '10 regras de caminhada / o que fazer se perdido', 'Requisito', 'Sex 21:45', 'AM', '', 'pendente', 2),
-  (3, 'Fogueira', 'Requisito', 'Sáb 18:20', 'AM', '', 'pendente', 3),
-  (4, '14 nós (revisão)', 'Requisito', 'Dom 08:45 · Seg 09:50', 'AM', '', 'pendente', 4),
-  (5, 'Sinais de pista (10 sinais)', 'Requisito', 'Seg 10:30', 'AM', '', 'pendente', 5),
-  -- Amigo da Natureza (AM+)
-  (6, 'Arte de Acampar', 'Especialidade', 'Sex 19:30 · Seg 12:10', 'AM+', '', 'pendente', 6),
-  (7, 'Fogueira com 1 fósforo', 'Requisito', 'Sáb 18:20', 'AM+', '', 'pendente', 7),
-  (8, '10 flores e 10 insetos', 'Requisito', 'Sáb 14:00', 'AM+', '', 'pendente', 8),
-  (9, 'Faca, facão e machadinha (uso seguro)', 'Requisito', 'Dom 08:45', 'AM+', '', 'pendente', 9),
-  (10, 'Purificar água (1 método)', 'Requisito', 'Seg 08:30', 'AM+', '', 'pendente', 10),
-  -- Companheiro (CO)
-  (11, 'Pontos cardeais sem bússola / rosa dos ventos', 'Requisito', 'Sex 21:45 · Seg 09:10', 'CO', '', 'pendente', 11),
-  (12, '9 nós (revisão)', 'Requisito', 'Dom 08:45 · Seg 09:50', 'CO', '', 'pendente', 12),
-  (13, 'Acampamento II', 'Especialidade', 'Sex 19:30 · Dom 08:30 · Seg 12:10', 'CO', '', 'pendente', 13),
-  (14, 'Relatório do acampamento', 'Requisito', 'Dom 17:45', 'CO', '', 'pendente', 14),
-  -- Companheiro de Excursionismo (CO+)
-  (15, 'Refeição em fogueira', 'Requisito', 'Dom 12:00', 'CO+', '', 'pendente', 15),
-  (16, 'Quadro de 15 nós', 'Requisito', 'Seg 09:50', 'CO+', '', 'pendente', 16),
-  (17, 'Relato da caminhada', 'Requisito', 'Sáb 20:30', 'CO+', '', 'pendente', 17),
-  -- Pesquisador (PE)
-  (18, '6 segredos de um bom acampamento', 'Requisito', 'Sex 21:45', 'PE', '', 'pendente', 18),
-  (19, 'Acampamento III', 'Especialidade', 'Sex 19:30 · Dom 08:30 · Seg 12:10', 'PE', '', 'pendente', 19),
-  (20, 'Primeiros Socorros – básico', 'Especialidade', 'Dom 14:00', 'PE', '', 'pendente', 20),
-  (21, 'Cozinhar uma refeição', 'Requisito', 'Dom 12:00', 'PE', '', 'pendente', 21),
-  -- Pesquisador de Campo e Bosque (PE+)
-  (22, 'Lista de equipamento pessoal', 'Requisito', 'Sex 19:00', 'PE+', '', 'pendente', 22),
-  (23, '4 amarras e 1 móvel', 'Requisito', 'Dom 08:45 · Dom 09:30', 'PE+', '', 'pendente', 23),
-  -- Pioneiro (PI)
-  (24, 'Fogo refletor', 'Requisito', 'Sáb 18:20', 'PI', '', 'pendente', 24),
-  (25, 'Acampamento de fim de semana / mochila arrumada', 'Requisito', 'Sex 19:00', 'PI', '', 'pendente', 25),
-  (26, 'Resgate Básico (parcial: maca, imobilização e transporte)', 'Especialidade', 'Dom 14:55', 'PI', '', 'pendente', 26),
-  (27, 'Dilúvio e fossilização', 'Requisito', 'Sáb 17:15', 'PI', '', 'pendente', 27),
-  -- Pioneiro de Novas Fronteiras (PI+)
-  (28, 'Machadinha', 'Requisito', 'Dom 08:45', 'PI+', '', 'pendente', 28),
-  (29, 'Fogueira em dia de chuva / lenha úmida', 'Requisito', 'Sáb 18:20', 'PI+', '', 'pendente', 29),
-  (30, 'Mapa e Bússola (parcial: 1 azimute)', 'Especialidade', 'Seg 10:30', 'PI+', '', 'pendente', 30),
-  -- Excursionista (EX)
-  (31, 'Pioneirias', 'Especialidade', 'Dom 09:30', 'EX', '', 'pendente', 31),
-  -- Excursionista na Mata (EX+)
-  (32, 'Vida Silvestre (parcial)', 'Especialidade', 'Sáb 14:00 · Seg 08:30', 'EX+', '', 'pendente', 32),
-  (33, 'Ordem Unida', 'Especialidade', 'Dom 06:45 · Seg 08:00', 'EX+', '', 'pendente', 33),
-  (34, '5 móveis e 1 portal (parcial: 1 móvel + portal)', 'Requisito', 'Dom 09:30', 'EX+', '', 'pendente', 34),
-  (35, '5 atividades de sábado à tarde', 'Requisito', 'Sáb 16:30', 'EX+', '', 'pendente', 35),
-  (36, 'Técnicas de trilha', 'Requisito', 'Sáb 14:00', 'EX+', '', 'pendente', 36),
-  (37, 'Discussão pós-expedição', 'Requisito', 'Dom 17:45', 'EX+', '', 'pendente', 37),
-  -- Guia (GU)
-  (38, '3 refeições ao ar livre (parcial: 1 refeição)', 'Requisito', 'Dom 12:00', 'GU', '', 'pendente', 38),
-  (39, 'Móvel em tamanho real', 'Requisito', 'Dom 09:30', 'GU', '', 'pendente', 39),
-  (40, 'Acampamento com estrutura de pioneiria', 'Requisito', 'Dom 09:30', 'GU', '', 'pendente', 40),
-  (41, 'Cozinhar refeições', 'Requisito', 'Dom 12:00', 'GU', '', 'pendente', 41),
-  -- Guia de Exploração (GU+)
-  (42, 'Projetar 3 tipos de abrigo e usar 1 (parcial)', 'Especialidade', 'Seg 11:20', 'GU+', '', 'pendente', 42);
+  (1, 'Acompanhar, pela observação, todo o planejamento e a execução de uma caminhada de 5 km', 'Requisito', 'Sáb 14:00', 'AM', '', 'pendente', 1),
+  (2, 'Aprender e montar uma barraca em local apropriado', 'Requisito', 'Dom 08:30', 'AM', '', 'pendente', 2),
+  (3, 'Cuidar corretamente de uma corda; fazer e explicar o uso prático dos 14 nós', 'Requisito', 'Dom 08:45 · Seg 09:50', 'AM', '', 'pendente', 3),
+  (4, 'Apresentar 10 regras para uma caminhada e explicar o que fazer quando estiver perdido', 'Requisito', 'Dom 19:30', 'AM', '', 'pendente', 4),
+  (5, 'Aprender e demonstrar uma maneira de purificar a água e escrever um parágrafo destacando o significado de Jesus como a água da vida', 'Requisito', 'Seg 08:30', 'AM', '', 'pendente', 5),
+  (6, 'Aprender os sinais de pista; preparar e seguir uma pista de no mínimo 10 sinais, que outros também consigam seguir', 'Requisito', 'Seg 10:30', 'AM', '', 'pendente', 6),
+  (7, 'Especialidade Acampamento I (parcial)', 'Especialidade', 'Sáb 18:20 · Dom 08:30 · Dom 08:45 · Dom 12:00 · Dom 19:30 · Seg 12:10', 'AM', '', 'pendente', 7),
+  (8, 'Conhecer e identificar 10 flores silvestres e 10 insetos da região', 'Requisito', 'Sáb 14:00', 'AM+', '', 'pendente', 8),
+  (9, 'Começar uma fogueira com apenas um fósforo, usando materiais naturais, e mantê-la acesa', 'Requisito', 'Sáb 18:20', 'AM+', '', 'pendente', 9),
+  (10, 'Usar corretamente uma faca, um facão e uma machadinha e conhecer dez regras para usá-los com segurança', 'Requisito', 'Dom 08:45', 'AM+', '', 'pendente', 10),
+  (11, 'Especialidade Arte de Acampar (parcial)', 'Especialidade', 'Dom 08:30 · Seg 12:10', 'AM+', '', 'pendente', 11),
+  (12, 'Participar de uma caminhada ecológica em meio à natureza por uma hora', 'Requisito', 'Sáb 14:00', 'CO', '', 'pendente', 12),
+  (13, 'Aprender ou recapitular os 9 nós', 'Requisito', 'Dom 08:45 · Seg 09:50', 'CO', '', 'pendente', 13),
+  (14, 'Participar em um acampamento de fim de semana e fazer um relatório destacando o que mais lhe impressionou positivamente (fecha com a entrega)', 'Requisito', 'Dom 17:45', 'CO', '', 'pendente', 14),
+  (15, 'Descobrir os pontos cardeais sem a ajuda de uma bússola e desenhar uma rosa dos ventos', 'Requisito', 'Seg 09:10', 'CO', '', 'pendente', 15),
+  (16, 'Especialidade Acampamento II (parcial)', 'Especialidade', 'Sáb 20:30 · Dom 08:30 · Dom 17:45 · Dom 19:30 · Seg 12:10', 'CO', '', 'pendente', 16),
+  (17, 'Participar de uma caminhada de 6 km e preparar um relatório de uma página (fecha com a entrega)', 'Requisito', 'Sáb 14:00 · Sáb 20:30', 'CO+', '', 'pendente', 17),
+  (18, 'Identificar e descrever 12 aves nativas e 12 árvores nativas (parcial)', 'Requisito', 'Sáb 14:00', 'CO+', '', 'pendente', 18),
+  (19, 'Preparar uma refeição em uma fogueira durante um acampamento de clube ou unidade', 'Requisito', 'Dom 12:00', 'CO+', '', 'pendente', 19),
+  (20, 'Preparar um quadro com 15 nós diferentes', 'Requisito', 'Seg 09:50', 'CO+', '', 'pendente', 20),
+  (21, 'Apresentar seis segredos para um bom acampamento e participar de um acampamento de fim de semana, planejando e cozinhando duas refeições (parcial)', 'Requisito', 'Dom 12:00 · Dom 19:30', 'PE', '', 'pendente', 21),
+  (22, 'Aprender a usar uma bússola ou GPS e demonstrar a habilidade encontrando endereços em zona urbana (parcial)', 'Requisito', 'Seg 10:30', 'PE', '', 'pendente', 22),
+  (23, 'Especialidade Acampamento III (parcial)', 'Especialidade', 'Sáb 18:20 · Dom 08:30 · Dom 12:00 · Dom 19:30 · Seg 12:10', 'PE', '', 'pendente', 23),
+  (24, 'Especialidade Primeiros Socorros – básico (parcial)', 'Especialidade', 'Dom 14:00', 'PE', '', 'pendente', 24),
+  (25, 'Conhecer e saber usar a Bandeira dos Desbravadores, o bandeirim de unidade e os comandos de ordem unida', 'Requisito', 'Dom 06:45 · Seg 08:00', 'PE+', '', 'pendente', 25),
+  (26, 'Aprender a fazer quatro amarras básicas e construir um móvel de acampamento', 'Requisito', 'Dom 08:45 · Dom 09:30', 'PE+', '', 'pendente', 26),
+  (27, 'Participar de uma caminhada de 10 km e fazer uma lista dos equipamentos, incluindo roupa e calçado (parcial)', 'Requisito', 'Seg 12:10', 'PE+', '', 'pendente', 27),
+  (28, 'Estudar a história do dilúvio e o processo de fossilização', 'Requisito', 'Sáb 17:15', 'PI', '', 'pendente', 28),
+  (29, 'Fazer um fogo refletor e demonstrar seu uso', 'Requisito', 'Sáb 18:20', 'PI', '', 'pendente', 29),
+  (30, 'Participar de um acampamento de fim de semana, arrumando de forma apropriada a mochila com o equipamento pessoal', 'Requisito', 'Seg 12:10', 'PI', '', 'pendente', 30),
+  (31, 'Especialidade Resgate básico (parcial)', 'Especialidade', 'Dom 14:55', 'PI', '', 'pendente', 31),
+  (32, 'Acender uma fogueira em dia de chuva, saber como conseguir lenha seca e manter o fogo aceso', 'Requisito', 'Sáb 18:20', 'PI+', '', 'pendente', 32),
+  (33, 'Demonstrar habilidade no uso correto de uma machadinha', 'Requisito', 'Dom 08:45', 'PI+', '', 'pendente', 33),
+  (34, 'Especialidade Fogueiras e Cozinha ao Ar Livre (parcial)', 'Especialidade', 'Sáb 18:20 · Dom 12:00', 'PI+', '', 'pendente', 34),
+  (35, 'Especialidade Mapa e Bússola (parcial)', 'Especialidade', 'Seg 09:10 · Seg 10:30', 'PI+', '', 'pendente', 35),
+  (36, 'Expedição de 20 km com uma noite fora: planejamento, anotações de terreno, flora e fauna e discussão em grupo (treino)', 'Requisito', 'Sáb 14:00 · Dom 17:45', 'EX', '', 'pendente', 36),
+  (37, 'Especialidade Pioneirias (parcial)', 'Especialidade', 'Dom 09:30', 'EX', '', 'pendente', 37),
+  (38, 'Encontrar alimento em plantas silvestres da região e diferenciá-las das plantas tóxicas (parcial)', 'Requisito', 'Sáb 14:00', 'EX+', '', 'pendente', 38),
+  (39, 'Apresentar cinco atividades na natureza para serem realizadas no sábado à tarde', 'Requisito', 'Sáb 16:30', 'EX+', '', 'pendente', 39),
+  (40, 'Com sua unidade, construir cinco móveis de acampamento e um portal para o clube (parcial)', 'Requisito', 'Dom 09:30', 'EX+', '', 'pendente', 40),
+  (41, 'Demonstrar os procedimentos em caso de ferimentos por animais peçonhentos e não peçonhentos', 'Requisito', 'Dom 14:00', 'EX+', '', 'pendente', 41),
+  (42, 'Demonstrar técnicas para percorrer trilhas em diferentes tipos de terreno: desertos, florestas, pântanos e rios', 'Requisito', 'Dom 19:30', 'EX+', '', 'pendente', 42),
+  (43, 'Especialidade Ordem Unida (parcial)', 'Especialidade', 'Dom 06:45 · Seg 08:00', 'EX+', '', 'pendente', 43),
+  (44, 'Especialidade Vida Silvestre (parcial)', 'Especialidade', 'Seg 08:30 · Seg 09:10 · Seg 10:30', 'EX+', '', 'pendente', 44),
+  (45, 'Construir e utilizar um móvel de acampamento em tamanho real, com nós e amarras', 'Requisito', 'Dom 09:30', 'GU', '', 'pendente', 45),
+  (46, 'Participar com sua unidade de um acampamento com estrutura de pioneiria, planejando o que levar e o que vai acontecer', 'Requisito', 'Dom 09:30', 'GU', '', 'pendente', 46),
+  (47, 'Planejar, preparar e cozinhar três refeições ao ar livre (parcial)', 'Requisito', 'Dom 12:00', 'GU', '', 'pendente', 47),
+  (48, 'Projetar três tipos diferentes de abrigo, explicar seu uso e utilizar um deles em um acampamento', 'Requisito', 'Seg 11:20', 'GU+', '', 'pendente', 48);
 select setval(pg_get_serial_sequence('public.requisitos','id'), (select max(id) from public.requisitos));
 
 -- Guia do instrutor de cada atividade (reúne a orientação de todos os requisitos que ela cumpre)
-update public.atividades set guia_instrutor = $$Requisitos cumpridos nesta atividade:
-- Lista de equipamento pessoal (classe PE+)
-- Acampamento de fim de semana / mochila arrumada (classe PI)
+update public.atividades set guia_instrutor = $$Objetivo: Receber todo mundo com segurança e garantir que ninguém passe a noite sem o essencial.
 
-Material e preparo:
-- Lista de equipamento impressa (a mesma enviada aos pais), prancheta e caneta.
-- Balança ou uma mochila de exemplo bem arrumada, lista de equipamento.
+Material e preparo: Pasta de segurança (autorizações, fichas de saúde, telefones dos pais), lista de presença
 
-Tempo sugerido: 19:00 às 19:30 (30 min). Reparta o tempo entre os requisitos abaixo, na ordem em que aparecem.
+Tempo sugerido: 19:00 às 19:30
 
-▶ 1. Lista de equipamento pessoal (classe PE+)
-O que falar: "Antes do acampamento cada um organiza a própria mochila. Vamos conferir o que veio."
 Passo a passo:
-1. Peça a cada desbravador que abra a mochila e espalhe o conteúdo em um pano.
-2. Vá riscando cada item da lista: roupa, calçado, higiene, saco de dormir, lanterna, garrafa, capa de chuva, apito.
-3. Anote o que faltou e resolva na hora (empréstimo do clube, quando possível).
-4. Ajude a guardar de novo do jeito certo (item 25).
-Erros comuns: levar mochila cheia de coisa desnecessária; esquecer agasalho.
-Como avaliar: mochila com todos os itens da lista de equipamento pessoal.
+1. Um líder fica na entrada com a pasta de segurança e recebe de cada desbravador a autorização assinada e a ficha de saúde.
+2. Recolha os remédios e anote nome, dose e horário. Pergunte sobre alergias (comida, picada de inseto, remédio).
+3. Cada conselheiro confere com a sua unidade só 4 coisas: saco de dormir ou cobertor, agasalho, lanterna e garrafa de água.
+4. Faltou algo essencial? Resolva agora com material reserva do clube.
+5. Mostre onde ficam o banheiro, a água potável e a barraca dos líderes.
 
-▶ 2. Acampamento de fim de semana / mochila arrumada (classe PI)
-O que falar: "Arrumar a mochila do jeito certo evita dor nas costas e coisa perdida no meio do mato."
+Segurança:
+- Menor de idade sem autorização assinada pelo responsável não fica no acampamento (Manual Administrativo).
+- O seguro anual cobre só membros ativos e cadastrados. Confira se todos estão no cadastro.
+- Deixe anotado o hospital mais próximo e teste o sinal de celular no local.
+
+Como avaliar:
+- Nada é assinado agora. A mochila do Pioneiro é avaliada na segunda-feira, na desmontagem.$$ where id = 1;
+
+update public.atividades set guia_instrutor = $$Objetivo: Montar só o que é preciso para dormir. A aula sobre barraca fica para o domingo.
+
+Material e preparo: Barracas, lonas, estacas, martelo de borracha ou pedra, lanternas
+
+Tempo sugerido: 19:30 às 21:00
+
+O que falar: "Hoje a gente monta rápido e em paz, porque o sábado já começou. No domingo cada unidade vai me explicar por que escolheu este lugar."
+
 Passo a passo:
-1. Regra do peso: coisas pesadas embaixo e perto das costas; leves em cima e nas laterais.
-2. Saco de dormir no fundo (ou embaixo); roupas em sacos plásticos; itens que usa mais (capa, água, lanterna) em cima ou em bolsos.
-3. Confira o peso: idealmente até 10 a 15% do peso do desbravador.
-4. Ajuste alças e cinto: o peso deve ficar nos quadris, não só nos ombros.
-Erros comuns: mochila pesada demais; deixar coisa solta pendurada por fora.
-Como avaliar: mochila arrumada corretamente na chegada.$$ where id = 1;
-update public.atividades set guia_instrutor = $$Requisitos cumpridos nesta atividade:
-- Montar barraca em local apropriado (classe AM)
-- Arte de Acampar (classe AM+)
-- Acampamento II (classe CO)
-- Acampamento III (classe PE)
+1. Antes de soltar as unidades, dois líderes percorrem o terreno com lanterna e marcam onde cada barraca vai ficar.
+2. Meninas de um lado, meninos do outro. As barracas dos líderes ficam no meio, entre as duas alas.
+3. Cada unidade monta a sua barraca: lona no chão, varas, estacas inclinadas (apontando para fora) e sobreteto esticado, sem encostar na barraca de dentro.
+4. Dentro da barraca: mochilas no fundo, calçados na entrada, lanterna à mão.
+5. Nada de móveis, portal, fogueira ou corte de madeira hoje.
 
-Material e preparo:
-- 1 barraca por unidade (lona, varas, estacas, sobreteto), martelo ou pedra para as estacas, lanternas. Combine antes com os Guias quem leva cada barraca.
-- Cartão da especialidade Arte de Acampar impresso, caneta, prancheta.
-- Cartão da especialidade Acampamento II impresso, caneta.
-- Cartão da especialidade Acampamento III impresso, caneta.
+▶ Onde montar (Manual Administrativo)
+- Lugar alto, limpo e quase plano (uma inclinação leve ajuda a água a escorrer).
+- Nunca embaixo de árvore: galho pode cair, atrai raio e fica pingando depois da chuva.
+- Nunca em baixada, leito seco de rio ou no meio de uma trilha.
+- Protegido de vento forte e longe de formigueiro.
 
-Tempo sugerido: 19:30 às 21:00 (90 min). Reparta o tempo entre os requisitos abaixo, na ordem em que aparecem.
+▶ Por que só o essencial
+- O Manual pede que tudo esteja pronto antes do pôr do sol de sexta e que não se monte acampamento na sexta à noite.
+- Como a chegada é à noite, faça só o necessário para dormir e, nos próximos acampamentos, planeje chegar antes do pôr do sol.
 
-▶ 1. Montar barraca em local apropriado (classe AM)
-O que falar: "Antes de bater a primeira estaca, vamos escolher onde a barraca vai ficar. O lugar certo evita chuva dentro e noite ruim."
-Conteúdo pronto:
-Tipos de barraca do cartão do Amigo: iglu, canadense e bangalô. Mostre um exemplo se tiver.
-Como escolher o local (resumo das fontes):
-- Terreno sem desníveis e sem buracos, longe de rio ou riacho (pode encher e alagar).
-- Observe o vento e o sol: porta contra o vento e, se possível, sombra na parte quente do dia.
-- Nunca armar embaixo de árvore com galho seco ou fraco.
-- Conferir o entorno: formigueiro, trilha de animais, terreno em declive.
-Lembre: o requisito do Amigo é 'aprender e montar uma barraca em local apropriado'.
+Segurança:
+- Olhe para cima antes de escolher o lugar. Ninguém anda sozinho no escuro. Cuidado com estacas e cordas no caminho.
+
+Como avaliar:
+- Só observe quem participou da montagem. A conversa sobre o local e a assinatura são na inspeção de domingo, 08:30.$$ where id = 2;
+
+update public.atividades set guia_instrutor = $$Objetivo: Terminar o primeiro dia adorando a Deus sob o céu. É culto, não é aula.
+
+Material e preparo: Bíblia, lanterna fraca
+
+Tempo sugerido: 21:45 às 22:30
+
+O que falar: "Os céus proclamam a glória de Deus. Vamos ficar em silêncio um minuto e só olhar."
+
 Passo a passo:
-1. Ande pelo terreno com o grupo e mostre 3 locais ruins: baixada onde a água empoça, embaixo de galho seco e perto de formigueiro.
-2. Escolham juntos um local plano, limpo de pedras e galhos.
-3. Estenda a lona do chão e posicione a barraca com a porta contra o vento.
-4. Encaixem as varas e levantem a estrutura em 2 pessoas.
-5. Cravem as estacas inclinadas (uns 45 graus, apontando para fora) e prendam os tensores.
-6. Estiquem o sobreteto sem encostar na barraca de dentro.
-7. Organizem o interior: mochilas ao fundo, calçados na entrada, lanterna ao alcance.
-Erros comuns: estaca cravada reta (sai com o vento); sobreteto encostando na parede interna (pinga na chuva); montar em baixada.
-Segurança: olhar para cima antes de armar: galho seco pode cair.
-Como avaliar: o desbravador escolhe o local e monta a barraca sem você apontar onde. Assine o requisito quando a barraca estiver firme e esticada.
+1. Apaguem as lanternas por 2 minutos, para os olhos se acostumarem com o escuro.
+2. Um desbravador lê o Salmo 19:1-4. Pergunte: o que o céu está contando sobre Deus agora?
+3. Outro lê o Salmo 8:3-4. Cada unidade agradece a Deus por uma coisa da criação.
+4. Cântico calmo, oração e avisos para o sábado. Depois, silêncio.
 
-▶ 2. Arte de Acampar (classe AM+)
-O que falar: "Arte de Acampar é saber deixar o acampamento organizado e confortável. Vamos ver o que você já fez aqui."
-Conteúdo pronto:
-Lema do campista: 'Não levar nada além de fotos, não deixar nada além de pegadas, não matar nada além do tempo'.
-Higiene do acampamento: usar corretamente as instalações (ou cavar fossa adequada), usar só água potável, lavar as mãos antes de comer, guardar a comida para não atrair bichos e destinar corretamente o lixo.
-Ao revisar o cartão da especialidade, confira com o desbravador se cada item foi praticado.
+▶ Por que não procurar o Cruzeiro do Sul hoje
+- Em outubro o Cruzeiro do Sul se põe logo no começo da noite. Às 21:45 ele já está abaixo do horizonte em quase todo o Brasil.
+- Para ver: domingo ou segunda, por volta das 5 da manhã, baixo no horizonte a sudeste. Nessa hora Órion (as Três Marias) está bem alto, ao norte.
+- Os pontos cardeais sem bússola (Companheiro) são feitos na segunda, 09:10, pelo sol.
+
+Como avaliar:
+- Nada é assinado. As 10 regras de caminhada e os 6 segredos do bom acampamento foram para a roda de conversa de domingo, 19:30.$$ where id = 4;
+
+update public.atividades set guia_instrutor = $$Objetivo: Passeio de observação da natureza, em ritmo leve. Quem observa a criação conhece melhor o Criador.
+
+Requisitos cumpridos nesta atividade:
+- [AM] Acompanhar, pela observação, todo o planejamento e a execução de uma caminhada de 5 km. (Fecha aqui) Mostre o plano ao clube antes de sair.
+- [AM+] Conhecer e identificar 10 flores silvestres e 10 insetos da região. (Fecha aqui) Se não chegar a 10 de cada, continua nos outros dias.
+- [CO] Participar de uma caminhada ecológica em meio à natureza por uma hora. (Fecha aqui)
+- [CO+] Participar de uma caminhada de 6 km e preparar um relatório de uma página. (Fecha com a entrega) Só fecha com o relatório entregue. Confirme se o percurso tem mesmo 6 km.
+- [CO+] Identificar e descrever 12 aves nativas e 12 árvores nativas. (Parcial) Aqui só adianta: anote as que aparecerem.
+- [EX+] Encontrar alimento em plantas silvestres da região e diferenciá-las das plantas tóxicas. (Parcial) Só identificação. Ninguém come nada.
+- [EX] Anotações sobre terreno, flora e fauna durante a expedição de 20 km. (Treino) É treino. A expedição de 20 km com pernoite fica para outra saída.
+
+Material e preparo: Caderno de campo e lápis por unidade, lupa, água, lanche leve, apito, caixa de primeiros socorros, lenço
+
+Tempo sugerido: 14:00 às 16:30
+
+O que falar: "Hoje não é corrida. Vamos andar devagar, de olhos e ouvidos abertos. Não se colhe nem se mata nada."
+
 Passo a passo:
-1. Abra o cartão da especialidade e leia cada item.
-2. Marque o que foi cumprido no acampamento (escolher local, montar barraca, organizar a área, deixar o local limpo).
-3. Anote o que ainda falta e combine quando será feito (em reunião ou em outra saída).
-4. Assine somente os itens realmente cumpridos.
-Erros comuns: assinar item que só foi explicado e não praticado.
-Como avaliar: conferência do cartão da especialidade. Neste acampamento cobre parte dela, não necessariamente tudo.
+1. (10 min) Antes de sair, mostre o plano: por onde vamos, quantos quilômetros, a que horas voltamos, onde são as paradas e quem leva os primeiros socorros. É isso que o Amigo precisa acompanhar.
+2. Confira: calçado fechado e já usado, boné, lenço, água e 1 apito por unidade.
+3. Fila indiana, o menor na frente. Um adulto abre e outro fecha. Conte o grupo na saída e em toda parada.
+4. Ande no passo dos menores. A cada 15 ou 20 minutos, parada de 5 minutos: cada unidade encontra e anota 2 flores e 2 insetos (nome ou desenho, cor, onde estava).
+5. Nas paradas maiores, olhem também aves, árvores, pegadas e o tipo de terreno (seco, úmido, pedra, areia).
+6. Plantas: mostre só as que você conhece com certeza, 2 ou 3 comestíveis e 2 ou 3 tóxicas. Só olhar.
+7. Na metade do caminho, leia o Salmo 104:24 e faça uma oração curta.
+8. Na volta, conte o grupo e dê 5 minutos para as unidades completarem o caderno.
 
-▶ 3. Acampamento II (classe CO)
-O que falar: "Vamos ver o que você já fez da especialidade de Acampamento II durante o fim de semana."
+▶ Regras da caminhada (Manual Administrativo)
+- Fila indiana, do menor para o maior; em estrada, andar na contramão.
+- Mãos livres (ou um bastão). Calçado usado, nunca novo. Roupa clara.
+- Água em pequenos goles, sem esperar a sede. Nada de refrigerante. Lanche leve.
+- Sem gritaria. Caixa de primeiros socorros à mão. Caderninho para anotar.
+
+▶ O que anotar no caderno de campo
+- Hora e lugar.
+- Nome ou desenho do que viu.
+- Cor, tamanho e uma curiosidade.
+- Se não souber o nome, escreva "a identificar" e pesquise depois.
+
+Segurança:
+- No sábado a caminhada não pode ser exaustiva (Manual). Se o terreno for pesado ou o grupo cansar, encurte e avise que os 6 km do Companheiro de Excursionismo ficam para outro dia.
+- Quem tem alergia a picada avisa antes de sair. Ninguém toca em lagarta, aranha ou cobra.
+- Riacho: só no raso, com um adulto de cada lado. Ninguém sai da fila sem avisar.
+
+Como avaliar:
+- Amigo: conta com as próprias palavras como a caminhada foi planejada.
+- Amigo da Natureza: mostra no caderno 10 flores e 10 insetos e reconhece pelo menos metade ao vivo.
+- Companheiro de Excursionismo: entrega o relatório de uma página depois do acampamento.$$ where id = 13;
+
+update public.atividades set guia_instrutor = $$Objetivo: Mostrar que o sábado à tarde pode ser alegre e cheio de natureza.
+
+Requisitos cumpridos nesta atividade:
+- [EX+] Apresentar cinco atividades na natureza para serem realizadas no sábado à tarde. (Fecha aqui) O Excursionista na Mata entrega a lista das 5 por escrito e ajuda a conduzir pelo menos uma.
+
+Material e preparo: Material simples de cada atividade
+
+Tempo sugerido: 16:30 às 17:15
+
+O que falar: "Cada unidade preparou uma atividade. Depois de cada uma eu pergunto: o que isso mostra sobre Deus?"
+
 Passo a passo:
-1. Abra o cartão e leia cada item em voz alta.
-2. Marque o que foi cumprido (montagem, organização, inspeção, desmontagem).
-3. Anote o que falta para completar depois em reunião ou outra saída.
-4. Assine só os itens praticados de fato.
-Erros comuns: assinar item apenas 'explicado'.
-Como avaliar: conferência do cartão. Cobre parte da especialidade, não necessariamente tudo.
+1. Sorteie a ordem. Cada unidade tem 7 minutos: 1 para explicar e 6 para fazer com o clube.
+2. Depois de cada atividade, faça uma pergunta rápida: o que aprendemos? O que isso mostra sobre Deus?
+3. No fim, os Excursionistas na Mata escrevem em uma folha as 5 atividades: nome, objetivo, material e como conduzir.
 
-▶ 4. Acampamento III (classe PE)
-O que falar: "Vamos ver o que você já fez da especialidade de Acampamento III durante o fim de semana."
+▶ Ideias, se alguma unidade não preparou
+- Caça às cores: achar na natureza, sem arrancar, algo de 6 cores diferentes.
+- Um minuto de silêncio: contar quantos sons diferentes cada um ouviu.
+- Detetive da criação: achar algo que lembre cada dia da criação.
+- Folhas caídas: juntar 5 formatos diferentes e comparar.
+- História ao ar livre: os lírios do campo (Mateus 6:28-30) ou o Salmo 19.
+- Desenho da paisagem em 5 minutos.
+
+Segurança:
+- É sábado: nada de esporte, correria, brincadeira na água, fogo ou construção. Vale brincadeira que envolva a natureza (Manual).
+
+Como avaliar:
+- Excursionista na Mata: entregou a lista escrita com as 5 atividades e participou da condução.$$ where id = 14;
+
+update public.atividades set guia_instrutor = $$Objetivo: Entender, pela Bíblia e pela natureza, como o dilúvio se relaciona com os fósseis.
+
+Requisitos cumpridos nesta atividade:
+- [PI] Estudar a história do dilúvio e o processo de fossilização. (Fecha aqui)
+
+Material e preparo: Bíblia, imagens de fósseis e de camadas de rocha (ou um fóssil)
+
+Tempo sugerido: 17:15 às 17:50
+
+O que falar: "Como um bicho ou uma planta vira pedra? Vamos ver o que a Bíblia e as rochas contam."
+
 Passo a passo:
-1. Abra o cartão e leia cada item em voz alta.
-2. Marque o que foi cumprido (montagem, organização, inspeção, desmontagem).
-3. Anote o que falta para completar em outra oportunidade.
-4. Assine só o que foi praticado.
-Erros comuns: assinar item apenas 'explicado'.
-Como avaliar: conferência do cartão. Cobre parte da especialidade.
+1. Mostre a imagem ou o fóssil e pergunte: como isso se formou?
+2. Um desbravador lê Gênesis 7:11-12 e 7:17-23.
+3. Explique a fossilização em 3 passos: 1) o ser vivo é coberto depressa por lama ou areia; 2) sem ar, ele não apodrece; 3) com o tempo os minerais da água entram no lugar do corpo e ele endurece como pedra.
+4. Ligue os pontos: para formar tantos fósseis bem conservados é preciso muita água e muita lama cobrindo tudo rápido. O dilúvio descrito na Bíblia foi um acontecimento assim.
+5. Abra para perguntas. Se não souber responder, diga: vamos pesquisar juntos.
+6. Cada Pioneiro explica com as próprias palavras o que entendeu.
 
-Fontes:
-https://mda.wiki.br/cartao_de_amigo/
-https://desbrava7.com/2019/05/classe-de-amigo-respondida.html
-https://desbrava7.com/2018/03/especialidade-de-acampamento-1-respondida.html
-https://desbrava7.com/2018/03/especialidade-de-arte-de-acampar-respondida.html$$ where id = 2;
-update public.atividades set guia_instrutor = $$Requisitos cumpridos nesta atividade:
-- Pontos cardeais sem bússola / rosa dos ventos (classe CO)
-- 10 regras de caminhada / o que fazer se perdido (classe AM)
-- 6 segredos de um bom acampamento (classe PE)
+▶ Textos
+- Gênesis 6 a 8 (a história do dilúvio).
+- 2 Pedro 3:5-6.
+- Fóssil: resto ou marca de um ser vivo conservado na rocha.
 
-Material e preparo:
-- Sexta à noite: lanterna com feixe forte para apontar o céu. Segunda de manhã: 1 graveto reto (1 m) e pedras, papel e lápis de cor.
-- Cartaz ou folha com as 10 regras (imprimir antes), apito por unidade, lanterna.
-- Cartaz e caneta para escrever os 6 segredos.
+Como avaliar:
+- O Pioneiro conta a história do dilúvio e explica, do jeito dele, como um fóssil se forma.$$ where id = 15;
 
-Tempo sugerido: 21:45 às 22:30 (45 min). Reparta o tempo entre os requisitos abaixo, na ordem em que aparecem.
+update public.atividades set guia_instrutor = $$Objetivo: Aprender a fazer fogo com segurança: preparar, acender, usar e apagar.
 
-▶ 1. Pontos cardeais sem bússola / rosa dos ventos (classe CO)
-O que falar: "Dá para descobrir onde fica o Norte sem bússola nenhuma, só olhando para o céu ou para o sol."
-Conteúdo pronto:
-Como achar os pontos cardeais sem bússola:
-1) Pelo sol: de manhã cedo o sol nasce no Leste. Fique com o braço direito apontando para onde o sol nasce (Leste): à sua frente fica o Norte, à esquerda o Oeste, atrás o Sul. À tarde o sol se põe no Oeste (faça ao contrário).
-2) Pelo Cruzeiro do Sul (à noite): prolongue o braço maior da cruz cerca de 4 vezes e meia e desça uma linha até o horizonte: ali é o Sul.
-3) Pela sombra do graveto (dia de sol): a 1ª marca é Oeste e a 2ª (15 min depois) é Leste.
-Rosa dos ventos com 8 pontos: N (Norte), NE (Nordeste), L (Leste), SE (Sudeste), S (Sul), SO (Sudoeste), O (Oeste), NO (Noroeste).
+Requisitos cumpridos nesta atividade:
+- [AM+] Começar uma fogueira com apenas um fósforo, usando materiais naturais, e mantê-la acesa. (Fecha aqui) É individual: cada Amigo da Natureza acende a sua.
+- [PI] Fazer um fogo refletor e demonstrar seu uso. (Fecha aqui)
+- [PI+] Acender uma fogueira em dia de chuva, saber como conseguir lenha seca e manter o fogo aceso. (Fecha aqui) Fecha se o próprio desbravador fizer, não só assistir.
+- [AM] Especialidade Acampamento I: escolher o local e preparar uma fogueira, regras de segurança, uso do fósforo, fogueira com um fósforo e como proteger a lenha da chuva. (Parcial)
+- [PE] Especialidade Acampamento III: construir as fogueiras estrela, caçador e refletor e explicar o uso; revisar as regras de segurança. (Parcial)
+- [PI+] Especialidade Fogueiras e Cozinha ao Ar Livre: tipos de fogueira, começar com um fósforo, tempo chuvoso, regras de segurança. (Parcial)
+
+Material e preparo: Fósforos, isca seca em saco plástico, gravetos e lenha seca já separados, um pouco de lenha molhada, toras para o refletor, 1 balde de água e 1 pá por unidade, pedras para cercar
+
+Tempo sugerido: 18:20 às 19:15
+
+O que falar: "Fogo bem feito é fogo preparado. Quem arruma tudo antes acende com um fósforo só."
+
 Passo a passo:
-1. SEXTA (Cruzeiro do Sul): encontre a constelação em formato de cruz. Prolongue o braço maior da cruz por cerca de 4 vezes e meia o comprimento dela.
-2. Desça uma linha imaginária na vertical desse ponto até o horizonte: ali é o Sul. De frente para o Sul, o Norte fica às suas costas.
-3. SEGUNDA (sombra do graveto): finque o graveto reto no chão, num lugar de sol. Marque a ponta da sombra com uma pedra.
-4. Espere 15 minutos e marque a nova ponta da sombra. A 1ª marca é Oeste, a 2ª é Leste.
-5. Fique com o pé esquerdo na 1ª marca e o direito na 2ª: você está olhando para o Norte.
-6. Cada um desenha a rosa dos ventos com os 8 pontos (N, NE, L, SE, S, SO, O, NO).
-Erros comuns: graveto torto; esperar menos de 15 min; confundir Leste com Oeste.
-Como avaliar: o desbravador acha os 4 pontos cardeais sem ajuda e desenha a rosa dos ventos correta.
+1. (5 min) Local e segurança: círculo limpo de 2 metros, grama retirada em placas para recolocar depois, pedras em volta, balde de água e pá ao lado.
+2. (5 min) Cada unidade separa o material em 4 montes: isca, gravetos finos como lápis, gravetos médios como dedo e lenha grossa como pulso.
+3. (15 min) Desafio de um fósforo: a unidade monta a fogueira (cabana ou pirâmide) com a isca no meio. Você confere antes: tem isca seca? Tem espaço para o ar? Só então entrega 1 fósforo. Acende pelo lado de onde vem o vento.
+4. Os Amigos da Natureza acendem cada um a sua fogueirinha e mantêm acesa por 10 minutos, pondo graveto aos poucos.
+5. (15 min) Tipos de fogo: os Pioneiros montam o refletor e mostram o calor de um lado e do outro. Os Pesquisadores montam o estrela e o caçador.
+6. (10 min) Lenha molhada: o adulto racha um galho molhado e mostra o miolo seco. Lascas finas, base de gravetos para tirar o fogo do chão molhado, isca guardada em saco plástico.
+7. (5 min) Apagar: água, mexer as cinzas, mais água. Só está apagado quando dá para pôr a mão. Fica acesa apenas a fogueira que será usada no jantar ou no fogo do conselho.
 
-▶ 2. 10 regras de caminhada / o que fazer se perdido (classe AM)
-O que falar: "Se um dia você se perder na mata, essas regras podem salvar sua vida. A principal é: não entre em pânico e fique onde está."
-Conteúdo pronto:
-AS 10 REGRAS PARA UMA CAMINHADA (com a explicação de cada uma):
-1. Planejamento: a caminhada deve ser bem planejada. Defina rota, horário de saída e de volta, quem vai e o que levar, e avise um responsável.
-2. Calma: caminhada não é corrida. Ande no ritmo do mais lento do grupo e economize energia.
-3. Saúde: só vá se estiver bem de saúde. Avise o instrutor sobre alergias, asma, dor ou cansaço.
-4. Segurança: leve kit de primeiros socorros e apito. Ninguém se afasta do grupo.
-5. Vestimenta: roupa leve e adequada ao clima, calçado fechado e já usado, boné e capa de chuva.
-6. Obediência: siga o instrutor e as regras de segurança, mantendo a fila.
-7. Limpeza: leve saco plástico para o lixo e traga tudo de volta.
-8. Comida leve: leve lanche prático e leve (frutas, castanhas, pão), fácil de carregar e que não estraga.
-9. Água: leve sempre água suficiente e beba aos poucos; não beba água de origem desconhecida.
-10. Informar-se: conheça antes o percurso, a previsão do tempo e os pontos de apoio.
+▶ Tipos de fogo e para que servem
+- Estrela: toras em forma de raios, com as pontas no centro. Vai empurrando conforme queima. Gasta pouca lenha e dura a noite.
+- Caçador: duas toras lado a lado com o fogo no meio. A panela apoia em cima. É fogo de cozinhar.
+- Refletor: parede de toras grossas atrás do fogo. Joga o calor para um lado só. Serve para aquecer um abrigo ou secar roupa.
+- Fogo do conselho: fogueira maior, em pirâmide. Serve para iluminar a reunião da noite.
 
-O QUE FAZER QUANDO ESTIVER PERDIDO (PASOCOLA, 8 passos):
-P - Parar: pare de andar. Andar sem rumo cansa e piora a situação.
-A - Acalmar-se: respire fundo; o pânico é o pior inimigo de quem está perdido.
-S - Sentar-se: descanse e relaxe.
-O - Orar: peça a ajuda de Deus e acalme o coração.
-C - Comer: coma algo leve e beba água para recuperar energia e pensar melhor.
-O - Orientar-se: procure pontos de referência (morro, rio, torre, estrada).
-L - Lembrar-se: reconstrua mentalmente o caminho que fez.
-A - Andar: só volte a andar se tiver certeza do rumo; marque o caminho (estacas, galhos, sinais de pista) para poder voltar. Se não tiver certeza, fique parado e use o apito (3 apitos = socorro).
+▶ Regras de segurança do fogo
+- Só com adulto por perto. Fogueira nunca fica sozinha.
+- A 5 metros ou mais das barracas e sem galhos por cima.
+- Balde de água e pá sempre ao lado.
+- Nunca usar álcool, gasolina ou outro líquido para acender.
+- Nada de vela, lampião ou fogareiro dentro da barraca.
+- Ao sair ou dormir, apagar até esfriar.
+
+▶ Isca natural que funciona
+- Capim seco, folhas secas esfareladas, casca fina e seca, palha, fiapos de coco. Graveto bom é o que estala ao quebrar.
+
+Segurança:
+- Só começa depois do pôr do sol de sábado. A lenha é separada pelos líderes antes do sábado ou trazida de casa (no sábado não se apanha lenha).
+- Facão e machadinha: hoje só o adulto usa. Cabelo comprido preso. Ninguém pula nem corre perto do fogo.
+- Não faça fogueira maior que o necessário (Manual).
+
+Como avaliar:
+- Amigo da Natureza: acendeu com 1 fósforo e manteve aceso. Anote quantas tentativas precisou.
+- Pioneiro: montou o refletor e explicou para que serve.
+- Pioneiro de Novas Fronteiras: conseguiu lenha seca de um galho molhado e manteve o fogo.
+- Especialidades: marque na ficha de controle os itens feitos. Elas não ficam completas hoje.$$ where id = 17;
+
+update public.atividades set guia_instrutor = $$Objetivo: O momento mais esperado do acampamento: cantar, rir, contar a caminhada e tomar uma decisão ao lado de Jesus.
+
+Requisitos cumpridos nesta atividade:
+- [CO+] Relatório de uma página da caminhada de 6 km. (Fecha com a entrega) O relato no fogo do conselho é o ensaio. O requisito fecha com o relatório escrito.
+- [CO] Especialidade Acampamento II: conhecer o uso do fogo do conselho e rever as normas de segurança de fogueiras. (Parcial)
+
+Material e preparo: Lenha separada, balde de água, cadernos de campo, lista de cânticos
+
+Tempo sugerido: 20:30 às 22:00
+
 Passo a passo:
-1. Leia as 10 regras abaixo, uma por vez, explicando o porquê de cada uma (o conteúdo já está pronto acima).
-2. Ensine o PASOCOLA: as 8 letras do que fazer quando perdido.
-3. Faça o teste: dê um cenário ('você se perdeu na trilha, o que faz primeiro?') e deixe o grupo responder.
-4. Peça a cada desbravador que repita 2 regras sem olhar.
-Erros comuns: achar que 'andar mais um pouco' resolve; gritar sem parar em vez de usar o apito (cansa e não se ouve longe).
-Como avaliar: o desbravador recita pelo menos 5 das 10 regras e explica por que ficar parado é importante.
+1. Tenha o programa escrito, com hora para começar e para terminar. Dois adultos cuidam só do fogo.
+2. Comece animado: 2 ou 3 cânticos curtos e conhecidos.
+3. Relatos da caminhada: cada unidade tem 2 a 3 minutos para contar uma descoberta e mostrar o caderno. Mais de um da unidade deve falar.
+4. Premiação da melhor fogueira da Oficina do Fogo.
+5. Vá acalmando: cântico mais calmo, uma história e a reflexão espiritual final, com oração.
 
-▶ 3. 6 segredos de um bom acampamento (classe PE)
-O que falar: "Todo bom campista conhece 6 segredos. Vamos descobrir juntos."
-Conteúdo pronto:
-Os 6 segredos para um bom acampamento:
-1. Verificar a previsão do tempo antes de ir.
-2. Escolher bem o local da barraca (plano, seguro, longe de rio e de árvore com galho seco).
-3. Escolher o tamanho certo da barraca para o número de pessoas.
-4. Verificar os galhos das árvores em cima do local (podem cair com o vento).
-5. Saber usar o fogo: cozinhar, se aquecer, afastar insetos e animais.
-6. Cuidar da alimentação e ter água potável durante todo o acampamento.
-(O cartão do Pesquisador pede apresentar 6 segredos. Se o clube preferir outra lista, valem os 6 segredos do manual usado pelo clube.)
+▶ Regras do fogo do conselho (Manual Administrativo)
+- Dura de 30 minutos a 1 hora e meia. Respeite o cansaço dos juvenis.
+- Do mais animado para o mais reverente.
+- Sempre termina com um momento espiritual.
+- Não se cozinha nem se assa nada neste fogo.
+- Tenha músicas e uma história de reserva, caso alguma parte falhe.
+
+Segurança:
+- Todos sentados a uma distância segura. Ao terminar, apague o fogo até esfriar.
+
+Como avaliar:
+- Companheiro de Excursionismo: participou do relato. Combine o prazo do relatório (primeira reunião depois do acampamento).$$ where id = 19;
+
+update public.atividades set guia_instrutor = $$Objetivo: Treinar os movimentos básicos de Ordem Unida para a apresentação de segunda-feira.
+
+Requisitos cumpridos nesta atividade:
+- [EX+] Especialidade de Ordem Unida: executar os movimentos a pé firme e em deslocamento. (Parcial) Falta a teoria: 5 objetivos, 15 definições, cadência, 4 tipos de passo e cuidados com a Bandeira Nacional.
+- [PE+] Conhecer e saber usar a Bandeira dos Desbravadores, o bandeirim de unidade e os comandos de ordem unida. (Parcial) Hoje, os comandos. Bandeira e bandeirim entram na formatura de segunda.
+
+Material e preparo: Espaço plano, apito
+
+Tempo sugerido: 06:45 às 07:15
+
+O que falar: "Ordem Unida é o clube inteiro se movendo junto. Somos Desbravadores, não militares: é disciplina com alegria."
+
 Passo a passo:
-1. Puxe a conversa: 'o que um bom campista precisa saber?'.
-2. Cada unidade fala 1 segredo. Vá completando até 6 e anote no cartaz.
-3. Se o grupo não lembrar, complete com os 6 segredos acima.
-4. Releia todos em voz alta e peça que repitam sem olhar.
-Erros comuns: aceitar resposta vaga; não conferir com o cartão.
-Como avaliar: o desbravador cita os 6 segredos sem olhar.
+1. Forme o clube por unidades, o capitão na frente de cada coluna.
+2. Ensine um comando por vez: mostre, todos fazem devagar, depois no tempo certo.
+3. Ordem sugerida: sentido, descansar, cobrir e firme, direita volver, esquerda volver, meia-volta volver.
+4. Em marcha: marcar passo, ordinário marche e alto. Sempre rompe com o pé esquerdo.
+5. Nos últimos 5 minutos, repita a sequência inteira sem parar. É a mesma da apresentação de segunda.
 
-Fontes:
-https://mda.wiki.br/Cart%C3%A3o_de_Companheiro
-https://desbrava7.com/2019/06/classe-companheiro-respondida.html
-https://mda.wiki.br/cartao_de_amigo/
-https://desbrava7.com/2019/05/classe-de-amigo-respondida.html
-https://desbrava7.com/2018/03/especialidade-de-acampamento-1-respondida.html
-https://mda.wiki.br/Cart%C3%A3o_de_Pesquisador
-https://desbrava7.com/2019/07/classe-de-pesquisador-respondida-parte-4.html$$ where id = 4;
-update public.atividades set guia_instrutor = $$Requisitos cumpridos nesta atividade:
-- 10 flores e 10 insetos (classe AM+)
-- Técnicas de trilha (classe EX+)
-- Vida Silvestre (parcial) (classe EX+)
+▶ Voz de comando em 3 partes (Manual Administrativo)
+- Advertência: avisa o grupo. Exemplo: "Atenção, clube!"
+- Comando: diz o movimento. Exemplo: "Direita..."
+- Execução: marca o momento. Exemplo: "VOLVER!" Dê uma pequena pausa antes.
+- O instrutor comanda em posição de sentido, de frente para o grupo, com voz clara e firme.
 
-Material e preparo:
-- Caderno e lápis por unidade, lupa, guia de campo impresso ou celular para pesquisar depois. Não coletar nada vivo.
-- Calçado fechado, água, apito, kit de primeiros socorros na caminhada de sábado.
-- Caderno de campo, lupa, garrafas PET, panela, água sanitária pura (sem perfume), guia de campo.
+▶ Como é cada posição
+- Sentido: imóvel e em silêncio, calcanhares unidos, pontas dos pés abertas, mãos espalmadas nas coxas, olhando para a frente.
+- Descansar (só a partir do sentido): o pé esquerdo se afasta para o lado; a mão esquerda segura o punho direito na altura da cintura.
+- Cobrir: braço esquerdo estendido para a frente na altura do ombro, palma para baixo (o da frente estende para o lado). Firme: abaixa o braço e volta ao sentido.
+- Direita volver: gira 90 graus sobre o calcanhar direito e a planta do pé esquerdo, e une os calcanhares. Esquerda volver: o contrário.
+- Meia-volta volver: gira 180 graus pela esquerda.
 
-Tempo sugerido: 14:00 às 16:30 (150 min). Reparta o tempo entre os requisitos abaixo, na ordem em que aparecem.
+Segurança:
+- Ordem Unida não se treina nas horas do sábado (Manual). Por isso o treino é domingo cedo.
 
-▶ 1. 10 flores e 10 insetos (classe AM+)
-O que falar: "Vamos observar a natureza sem machucar nada. Quem observa bem descobre um mundo inteiro."
+Como avaliar:
+- Hoje é treino. A avaliação prática é a apresentação de segunda, 08:00.$$ where id = 22;
+
+update public.atividades set guia_instrutor = $$Objetivo: Conferir a organização do acampamento e avaliar a montagem das barracas.
+
+Requisitos cumpridos nesta atividade:
+- [AM] Aprender e montar uma barraca em local apropriado. (Fecha aqui) Montou na sexta; hoje explica o local e ajusta a barraca.
+- [AM] Especialidade Acampamento I: saber montar uma barraca, prevenção de incêndio depois de montada e higiene do acampamento. (Parcial)
+- [AM+] Especialidade Arte de Acampar: preparar o chão, montar corretamente a barraca e proteger o acampamento. (Parcial)
+- [CO] Especialidade Acampamento II: escolher o local das barracas e montar corretamente. (Parcial)
+- [PE] Especialidade Acampamento III: prender firmemente uma barraca, tipos de barraca e condensação. (Parcial)
+
+Material e preparo: Ficha de inspeção, prancheta
+
+Tempo sugerido: 08:30 às 08:45
+
 Passo a passo:
-1. Na trilha, faça paradas combinadas a cada 15 a 20 min.
-2. Peça a um desbravador diferente que aponte uma flor ou um inseto. Ele diz o nome ou descreve (cor, tamanho, onde estava).
-3. Cada um anota no caderno: nome (ou descrição), local e uma característica.
-4. Se não souberem o nome, desenhem e pesquisem depois; anote 'a identificar'.
-5. No fim, conte quantas flores e insetos cada um já registrou.
-Erros comuns: colher flores ou matar insetos; chegar perto demais de abelhas e vespas.
-Segurança: quem tiver alergia a picada avisa antes; nunca tocar em lagartas ou aranhas.
-Como avaliar: o desbravador identifica 10 flores e 10 insetos ao longo do dia (não precisa ser tudo de uma vez).
+1. Formatura: cada unidade em frente à sua barraca.
+2. Inspeção com a ficha: barraca esticada, estacas firmes, interior arrumado, calçados na entrada, lixo ensacado, área limpa. Dê os pontos.
+3. Em cada barraca, pergunte a um Amigo: por que este lugar é bom? O que nunca pode ter dentro ou perto da barraca? (fogo, vela, lampião)
+4. Peça que reapertem os tensores e recravem as estacas inclinadas.
+5. Pergunte a um Pesquisador: por que a barraca molha por dentro de manhã? (o ar quente da respiração encosta no teto frio e vira água; resolve abrindo a ventilação e não deixando o sobreteto encostar)
 
-▶ 2. Técnicas de trilha (classe EX+)
-O que falar: "Andar em trilha tem técnica: cada tipo de terreno pede um jeito diferente de pisar."
+▶ Local apropriado
+- Alto, limpo e quase plano.
+- Nunca embaixo de árvore, em baixada ou em leito seco de rio.
+- Protegido de vento forte, fora de trilha, com água potável perto.
+- Fogueira a 5 metros ou mais das barracas.
+
+▶ Tipos de barraca
+- Iglu: em forma de cúpula, com varetas flexíveis; fácil de montar.
+- Canadense: em forma de A, com 2 mastros.
+- Bangalô: alta, com paredes quase retas; para acampamento fixo e famílias.
+
+Como avaliar:
+- Amigo: explica por que o local é apropriado e ajusta a barraca sem ajuda. Pode assinar.
+- Especialidades: marque os itens feitos na ficha de controle.$$ where id = 25;
+
+update public.atividades set guia_instrutor = $$Objetivo: Duas oficinas ao mesmo tempo: ferramentas de corte com segurança, e nós e amarras. Aos 20 minutos os grupos trocam.
+
+Requisitos cumpridos nesta atividade:
+- [AM+] Usar corretamente uma faca, um facão e uma machadinha e conhecer dez regras para usá-los com segurança. (Fecha aqui)
+- [PI+] Demonstrar habilidade no uso correto de uma machadinha. (Fecha aqui)
+- [AM] Cuidar corretamente de uma corda; fazer e explicar o uso prático dos 14 nós. (Fecha aqui) Os nós são treinados antes. Aqui é conferência.
+- [CO] Aprender ou recapitular os 9 nós. (Fecha aqui)
+- [PE+] Aprender a fazer quatro amarras básicas e construir um móvel de acampamento. (Fecha com a entrega) Fecha na Grande Pioneiria, quando o móvel ficar pronto.
+- [AM] Especialidade Acampamento I: usar corretamente canivete e machadinha e conhecer 10 regras de segurança. (Parcial)
+
+Material e preparo: 1 corda de 1,5 m por desbravador, varas e sisal para as amarras, faca, facão, machadinha, toco firme, lista dos nós
+
+Tempo sugerido: 08:45 às 09:30
+
+O que falar: "Ferramenta de corte não é brinquedo. Quem brinca, perde o direito de usar."
+
 Passo a passo:
-1. SUBIDA: passos curtos, corpo levemente inclinado para frente, ritmo constante.
-2. DESCIDA: joelhos dobrados, pés levemente de lado, passos curtos, sem correr.
-3. MATA FECHADA: braço na frente do rosto, o líder da fila segura os galhos para o de trás.
-4. TRAVESSIA DE RIACHO: escolha pedras firmes, desafivele o cinto da mochila, teste com uma vara e passe em fila.
-5. Mostre a técnica em cada trecho e peça que cada um repita no trecho seguinte.
-Erros comuns: correr na descida; atravessar riacho de chinelo; puxar galho e soltar no colega.
-Segurança: só atravessar riacho raso e com adulto no início e no fim da fila.
-Como avaliar: o desbravador aplica a técnica certa em cada tipo de terreno.
+1. Divida o clube em 2 grupos. Deixe as duas oficinas afastadas uma da outra.
+2. OFICINA A (ferramentas): leia as 10 regras com o grupo sentado, longe do toco.
+3. Mostre você primeiro, devagar: faca tirando lascas de um graveto, facão cortando uma vara, machadinha rachando lenha no toco.
+4. Chame um desbravador por vez. Os outros esperam sentados, a 3 metros. Ele repete o corte e devolve a ferramenta na bainha antes de chamar o próximo.
+5. OFICINA B (nós e amarras): cada um com a sua corda. Chame os nós pelo nome, de 3 em 3. Cada um faz o seu; você olha e não faz por ele.
+6. Pergunte para que serve cada nó. Anote na lista quem fez todos.
+7. Últimos 8 minutos da oficina B: as 4 amarras, em duplas, com duas varas e sisal.
+8. Aos 20 minutos, troque os grupos.
 
-▶ 3. Vida Silvestre (parcial) (classe EX+)
-O que falar: "Vamos aprender a observar a natureza sem interferir nela e a tornar a água segura para beber."
-Conteúdo pronto:
-Vida Silvestre pede (resumo do MDAWiki): saber o que fazer quando perdido (8 procedimentos, veja PASOCOLA no requisito das 10 regras), conhecer 3 métodos de achar pontos cardeais sem bússola, explicar como encontrar água na mata e demonstrar 3 maneiras de purificar água para beber, entre outros itens.
-Neste acampamento cobrimos só uma parte: observação na caminhada, pontos cardeais e purificação de água.
-Passo a passo:
-1. Na caminhada de sábado, faça paradas e peça que identifiquem flora e fauna, sem coletar.
-2. Na segunda, demonstre 2 ou 3 formas de purificar água: ferver por 1 min; filtro de garrafa PET (pano, carvão, areia fina, areia grossa/cascalho, de cima para baixo na garrafa cortada); hipoclorito (2 gotas por litro, esperar 30 min); SODIS (garrafa PET transparente ao sol por 6 h).
-3. Deixe cada desbravador demonstrar 1 método para outro colega.
-4. Reforce: filtrar NÃO elimina microrganismos; sempre ferver ou tratar depois.
-Erros comuns: usar água sanitária com perfume; expor a garrafa ao sol sem estar transparente; beber sem tratar depois do filtro.
-Segurança: água fervendo só com adulto.
-Como avaliar: o desbravador identifica elementos da natureza e demonstra pelo menos 2 métodos de purificar água. É cobertura parcial da especialidade.
-
-Fontes:
-https://mda.wiki.br/Especialidade_de_Vida_Silvestre$$ where id = 13;
-update public.atividades set guia_instrutor = $$Requisitos cumpridos nesta atividade:
-- 5 atividades de sábado à tarde (classe EX+)
-
-Material e preparo:
-- Materiais simples de cada atividade (definidos pela unidade antes). Cartaz com as 5 atividades.
-
-Tempo sugerido: 16:30 às 17:15 (45 min). Reparta o tempo entre os requisitos abaixo, na ordem em que aparecem.
-
-▶ 1. 5 atividades de sábado à tarde (classe EX+)
-O que falar: "Sábado à tarde é hora de atividade de natureza, sem fogo e sem construção."
-Conteúdo pronto:
-Ideias de atividade de natureza para o sábado à tarde (sem fogo e sem construção): jogo de observação (achar 5 formas, 5 cores ou 5 texturas), escutar e anotar os sons do mato, caça ao tesouro de folhas e sementes, história bíblica contada ao ar livre (ex.: Salmo 19), roda de gratidão pela criação, desenho de uma paisagem.
-Passo a passo:
-1. Antes do acampamento, cada unidade escolhe uma atividade curta de natureza (jogo de observação, escutar sons, caça ao tesouro de folhas etc.).
-2. Ela prepara em uma folha: objetivo, material e como conduzir.
-3. No sábado, cada unidade apresenta em sequência ao clube todo.
-4. Depois de cada apresentação, faça 1 pergunta sobre o que aprenderam.
-Erros comuns: atividade com fogo ou construção (não combina com o sábado); passar do tempo.
-Como avaliar: 5 atividades apresentadas, uma por unidade.
-
-Fontes:
-https://mda.wiki.br/Cart%C3%A3o_de_Excursionista$$ where id = 14;
-update public.atividades set guia_instrutor = $$Requisitos cumpridos nesta atividade:
-- Dilúvio e fossilização (classe PI)
-
-Material e preparo:
-- Imagens impressas (camadas de rocha, fósseis) ou um fóssil real, Bíblia aberta em Gênesis 6 a 8.
-
-Tempo sugerido: 17:15 às 17:50 (35 min). Reparta o tempo entre os requisitos abaixo, na ordem em que aparecem.
-
-▶ 1. Dilúvio e fossilização (classe PI)
-O que falar: "Como o dilúvio bíblico explica as camadas de rocha e os fósseis que encontramos hoje?"
-Conteúdo pronto:
-Textos para ler: Gênesis 6 a 8 (o dilúvio) e 2 Pedro 3:5-6.
-Ideias para explicar: fossilização acontece quando um ser vivo é soterrado rapidamente (por lama ou sedimentos), sem tempo de se decompor. Milhares de fósseis de animais e plantas soterrados juntos apontam para um evento de grande escala. O relato bíblico descreve um evento assim.
-Tom da conversa: apresentar como fé e evidência, respeitando as perguntas e dúvidas do grupo.
-Passo a passo:
-1. Mostre as imagens ou o fóssil e pergunte: 'como isso foi parar aqui?'.
-2. Leia trechos de Gênesis 6 a 8 sobre o dilúvio.
-3. Explique a fossilização: um ser vivo é soterrado rápido, sem tempo de decompor, e os minerais preenchem o organismo.
-4. Conecte: um evento de grande escala explicaria muitas camadas empilhadas com fósseis.
-5. Abra para perguntas e respeite as dúvidas do grupo.
-Erros comuns: responder com certeza absoluta a tudo; desprezar perguntas.
-Como avaliar: o desbravador explica com as próprias palavras a ligação entre o dilúvio e os fósseis.$$ where id = 15;
-update public.atividades set guia_instrutor = $$Requisitos cumpridos nesta atividade:
-- Fogueira (classe AM)
-- Fogueira com 1 fósforo (classe AM+)
-- Fogo refletor (classe PI)
-- Fogueira em dia de chuva / lenha úmida (classe PI+)
-
-Material e preparo:
-- Lenha seca de vários tamanhos (isca, gravetos de lápis, gravetos de dedo, lenha grossa), fósforos, balde de água e pá por unidade, área de fogueira limpa.
-- 1 caixa de fósforos (só 1 fósforo por tentativa), isca bem seca guardada em saco plástico, gravetos finos, lenha, balde de água.
-- Toras grossas (2 a 4 empilhadas, ~1 m de largura), estacas, fósforos, lenha, balde de água.
-- Lenha úmida (ou molhada com um pouco de água), faca ou facão (só o adulto usa), saco plástico para a isca, gravetos, fósforos.
-
-Tempo sugerido: 18:20 às 19:15 (55 min). Reparta o tempo entre os requisitos abaixo, na ordem em que aparecem.
-
-▶ 1. Fogueira (classe AM)
-O que falar: "Toda fogueira segue a mesma ordem: isca, graveto fino, graveto grosso, lenha. Fogo bem-feito é fogo seguro."
-Conteúdo pronto:
-Regras de segurança da fogueira (8 pontos):
-- Apagar totalmente a fogueira antes de dormir e sempre que sair.
-- Manter a fogueira a mais de 5 m das barracas.
-- Nunca usar vela ou lampião dentro da barraca.
-- Guardar fósforos e isqueiros em lugar seguro, longe das crianças pequenas.
-- Limpar a vegetação ao redor (círculo de terra limpa).
-- Ter água e terra (ou areia) por perto para controlar o fogo.
-- Nunca deixar o fogo sem vigia.
-- Não usar gasolina, álcool ou outro líquido inflamável para acender.
-Tipos de fogueira mais usados: pirâmide, cabana (tenda), estrela, caçador e refletor (cada um com um uso).
-Passo a passo:
-1. Limpe um círculo de 2 m no chão, sem folhas nem mato seco, e deixe o balde de água por perto.
-2. Separe o material em 4 montinhos: isca (folha seca, casca fina, palha), gravetos finos, gravetos médios e lenha.
-3. Monte a fogueira escolhida: pirâmide (varas apoiadas em pirâmide sobre a isca) ou cabana (lenha em formato de casinha com a isca dentro).
-4. Deixe uma abertura para o ar entrar e acenda pelo lado contrário ao vento.
-5. Vá acrescentando gravetos finos, depois médios, depois lenha, sem abafar as chamas.
-6. No fim, apague com água, mexa as cinzas e confira com as costas da mão se esfriou.
-Erros comuns: usar lenha grossa logo de início; deixar a isca úmida; empilhar sem espaço para o ar.
-Segurança: sempre com um adulto por perto; nunca deixar fogueira sem vigia; ninguém joga líquido inflamável.
-Como avaliar: o desbravador monta a estrutura sozinho, na ordem certa, e sabe apagar corretamente.
-
-▶ 2. Fogueira com 1 fósforo (classe AM+)
-O que falar: "Agora o desafio: acender a fogueira com UM fósforo. Quem prepara bem, acende fácil."
-Conteúdo pronto:
-Materiais naturais para isca (o que pega fogo fácil): capim seco, folhas secas bem esfareladas, casca seca fina de árvore, fiapos de palha ou de fibra de coco.
-Gravetos: 'de lápis' (finos), 'de dedo' (médios) e 'de pulso' (grossos). Todos secos, que quebram com estalo.
-Regra de ouro: monte tudo antes de riscar o fósforo. Quem prepara bem acende com 1 fósforo.
-Atenção: o requisito é 'começar uma fogueira com apenas um fósforo, usando materiais naturais, e mantê-la acesa'. Confira se ela continuou acesa depois de acender.
-Passo a passo:
-1. Explique que 80% do sucesso está na preparação: isca bem seca e protegida do vento.
-2. Cada um monta a sua fogueira (cabana ou pirâmide) com a isca embaixo e bastante gravetos finos.
-3. Confira a montagem ANTES de acender e corrija: tem espaço para o ar? A isca está no centro?
-4. Entregue 1 fósforo. Proteja a chama com as mãos ao acender e encoste na isca pelo lado de onde vem o vento.
-5. Deixe cada um tentar. Se errar, ele remonta e tenta de novo com outro fósforo.
-Erros comuns: isca úmida; mexer na fogueira depois de acender (abafa); fósforo riscado com pressa e quebrado.
-Segurança: adulto junto; cabelos presos; balde por perto.
-Como avaliar: o desbravador acende com 1 fósforo. Registre quantas tentativas foram necessárias.
-
-▶ 3. Fogo refletor (classe PI)
-O que falar: "O fogo refletor joga o calor para um lado só, ótimo para esquentar sem gastar tanta lenha."
-Passo a passo:
-1. Escolha o lugar e limpe a área ao redor.
-2. Empilhe 3 ou 4 toras verdes ou grossas em forma de parede atrás de onde vai ficar o fogo, com cerca de 1 m de altura; prenda com estacas dos lados.
-3. Acenda a fogueira na frente da parede (30 a 50 cm de distância).
-4. Mostre o efeito: fique na frente da parede e sinta o calor refletido; depois fique atrás e sinta a diferença.
-5. Explique onde usar: dormir ao ar livre ou esquentar uma barraca ou lona.
-Erros comuns: parede muito perto do fogo (queima); toras muito finas (não refletem).
-Segurança: só adulto acende; ninguém encosta na parede quente.
-Como avaliar: o desbravador monta a estrutura e explica como ela funciona.
-
-▶ 4. Fogueira em dia de chuva / lenha úmida (classe PI+)
-O que falar: "Na chuva de verdade a fogueira não pode falhar. Vamos aprender o truque."
-Passo a passo:
-1. Pegue um galho grosso molhado: por dentro a madeira ainda está seca.
-2. O adulto tira a casca e racha a madeira em lascas finas até achar o miolo seco.
-3. Faça lascas bem finas, ou 'penas' (lascas que ficam presas na vara, em forma de pena), que pegam fogo fácil.
-4. Monte uma base elevada com gravetos (não coloque no chão molhado).
-5. Guarde a isca seca num saco plástico até a hora de acender.
-6. Acenda e vá acrescentando lascas finas, depois maiores.
-Erros comuns: usar lenha molhada por fora; montar no chão molhado; acender sem isca seca.
-Segurança: só o adulto usa a faca; fogo sob abrigo, sem árvores por cima.
-Como avaliar: o desbravador consegue montar a fogueira e explicar a técnica.
-
-Fontes:
-https://desbrava7.com/2018/03/especialidade-de-acampamento-1-respondida.html
-https://mda.wiki.br/cartao_de_amigo/$$ where id = 17;
-update public.atividades set guia_instrutor = $$Requisitos cumpridos nesta atividade:
-- Relato da caminhada (classe CO+)
-
-Material e preparo:
-- Caderno de campo de cada unidade (anotações da caminhada), fogueira do conselho.
-
-Tempo sugerido: 20:30 às 22:00 (90 min). Reparta o tempo entre os requisitos abaixo, na ordem em que aparecem.
-
-▶ 1. Relato da caminhada (classe CO+)
-O que falar: "Cada unidade vai contar ao clube o que anotou durante a caminhada de hoje."
-Passo a passo:
-1. Durante a caminhada, lembre cada unidade de anotar no caderno: o que viu, ouviu e aprendeu.
-2. No Fogo do conselho, chame cada unidade para contar uma descoberta (2 a 3 min).
-3. Diga que depois cada desbravador entrega um relatório de 1 página.
-4. Recolha os cadernos para conferir o que anotaram.
-Erros comuns: só um da unidade falar; relato sem ligação com a caminhada.
-Como avaliar: relato oral no conselho e relatório de 1 página entregue depois.$$ where id = 19;
-update public.atividades set guia_instrutor = $$Requisitos cumpridos nesta atividade:
-- Ordem Unida (classe EX+)
-
-Material e preparo:
-- Espaço plano e livre, apito, ordem de formação (por unidade).
-
-Tempo sugerido: 06:45 às 07:15 (30 min). Reparta o tempo entre os requisitos abaixo, na ordem em que aparecem.
-
-▶ 1. Ordem Unida (classe EX+)
-O que falar: "Ordem Unida é disciplina em grupo: todo mundo no mesmo tempo, no mesmo passo. É respeito e atenção."
-Conteúdo pronto:
-Movimentos a pé firme: Atenção, Sentido, Cobrir, Firme, Perfilar, Volver (direita, esquerda e meia-volta), Olhar (direita, frente, esquerda) e Descansar.
-Movimentos em deslocamento (passo ordinário): marchar para frente e parar, marcar passo, mudar de direção, executar voltas na marcha e trocar de passo.
-Voz de comando: tem 3 partes: preventiva (avisa o movimento, ex.: 'À direita'), pausa e executiva (manda executar, ex.: 'VOLVER!').
-Lembrete: a especialidade completa pede também definir 15 termos técnicos, explicar objetivos da ordem unida e manejo da bandeira; aqui treinamos os movimentos.
-Passo a passo:
-1. Forme o clube em fileiras por unidade.
-2. Treine 1 comando por vez: 'Sentido!' (corpo firme), 'Descansar!', 'À direita, volver!', 'À esquerda, volver!', 'Meia-volta, volver!'.
-3. Treine marcha no lugar e em deslocamento, sempre com voz de comando clara.
-4. Repita a sequência até ficar sincronizada.
-5. Segunda: apresente a formatura completa a pais e liderança.
-Erros comuns: comandos sem clareza; grupo desatento; apressar sem sincronizar.
-Como avaliar: apresentação coordenada do grupo na formatura.
-
-Fontes:
-https://mda.wiki.br/Especialidade_de_Ordem_unida$$ where id = 22;
-update public.atividades set guia_instrutor = $$Requisitos cumpridos nesta atividade:
-- Faca, facão e machadinha (uso seguro) (classe AM+)
-- Machadinha (classe PI+)
-- 14 nós (revisão) (classe AM)
-- 9 nós (revisão) (classe CO)
-- 4 amarras e 1 móvel (classe PE+)
-
-Material e preparo:
-- Faca, facão e machadinha em bom estado, luvas, toco para cortar, varas de madeira, área livre. Só o instrutor entrega a ferramenta.
-- Machadinha em bom estado, toco baixo, varas de madeira, luvas, área livre de 3 m.
-- 1 corda de 1,5 m por desbravador (sisal ou náilon), cartão com a lista dos nós do Amigo impresso.
-- 1 corda de 1,5 m por desbravador, cartão com os nós do Companheiro impresso.
-- Varas de bambu de 1,5 m (2 por dupla), sisal, cartão com a explicação das amarras.
-
-Tempo sugerido: 08:45 às 09:30 (45 min). Reparta o tempo entre os requisitos abaixo, na ordem em que aparecem.
-
-▶ 1. Faca, facão e machadinha (uso seguro) (classe AM+)
-O que falar: "Antes de cortar qualquer coisa, vamos falar de segurança. Isso é o mais importante hoje. Ferramenta é séria."
-Conteúdo pronto:
-As 10 regras de segurança com faca, facão e machadinha:
-1. Ferramenta não é brinquedo: nunca brincar com ela.
-2. Mantenha sempre afiada, limpa e seca, guardada na bainha.
-3. Mantenha pelo menos 3 metros de distância dos outros.
+▶ 10 regras de segurança com faca, facão e machadinha
+1. Ferramenta não é brinquedo.
+2. Mantenha afiada, limpa e seca. Lâmina cega escorrega e machuca.
+3. Ninguém a menos de 3 metros de quem está cortando.
 4. Corte sempre para longe do corpo.
-5. Use cortes em diagonal, nunca em ângulo reto.
-6. Corte sobre uma base firme (toco), nunca apoiando a peça no joelho ou na mão.
-7. Nunca use o cabo como martelo.
-8. Nunca corra com a ferramenta fora da bainha.
-9. Ao passar para alguém, entregue pelo cabo, com a lâmina para você.
-10. Guarde corretamente ao terminar.
-Passo a passo:
-1. Explique as 10 regras de segurança: distância de segurança de pelo menos 3 metros dos outros, corte sempre para longe do corpo, entregar pelo cabo, guardar na bainha, nunca correr com a ferramenta.
-2. Demonstre você mesmo o corte correto, devagar, primeiro.
-3. Chame 1 desbravador por vez. Ele repete os passos enquanto você olha só para ele.
-4. Só passe para o próximo quando o anterior devolver a ferramenta na bainha.
-Erros comuns: cortar em direção às pernas; segurar a peça com a outra mão perto da lâmina; distração com colegas em volta.
-Segurança: máximo de 5 a 6 desbravadores por adulto; luva obrigatória; ninguém entra no círculo de segurança de quem está cortando.
-Como avaliar: o desbravador usa a ferramenta corretamente e sabe repetir as regras de segurança.
+5. Com facão e machadinha, corte inclinado (em diagonal), nunca em ângulo reto.
+6. Apoie a madeira em um toco firme, nunca na perna ou na mão.
+7. Não use o cabo nem o lado da lâmina como martelo.
+8. Não ande nem corra com a ferramenta fora da bainha.
+9. Para entregar, segure pelas costas da lâmina (o lado sem corte) e ofereça o cabo. Só solte quando o outro disser "peguei".
+10. Terminou, limpou e guardou na bainha.
 
-▶ 2. Machadinha (classe PI+)
-O que falar: "A machadinha exige ainda mais cuidado que a faca. Vamos com calma."
-Passo a passo:
-1. Marque o círculo de segurança: um raio de cerca de 2 m livre de pessoas.
-2. Segurar com as duas mãos: uma perto da cabeça e outra no fim do cabo, com o joelho levemente dobrado.
-3. Corte a peça apoiada no toco, batendo em ângulo, sempre para longe das pernas.
-4. Demonstre 2 cortes primeiro, devagar.
-5. Cada desbravador tenta 2 ou 3 cortes com supervisão direta.
-6. Ao terminar, guarde com a lâmina coberta.
-Erros comuns: cortar com a peça segurada na mão; usar madeira muito grossa; distração.
-Segurança: 1 adulto por desbravador cortando; luva; ninguém dentro do círculo.
-Como avaliar: o desbravador usa a machadinha com segurança e correção.
+▶ Como usar a machadinha
+- De joelhos na frente do toco: se errar, a lâmina bate no chão e não na perna.
+- Uma mão no fim do cabo. A outra mão fica longe da linha do corte.
+- Para rachar lenha fina: encoste a lâmina na ponta da lenha e bata as duas juntas no toco.
 
-▶ 3. 14 nós (revisão) (classe AM)
-O que falar: "Nó é como uma ferramenta: cada um serve para uma coisa. Hoje é revisão: vou ver quem já domina."
-Conteúdo pronto:
-Como cuidar de uma corda: guarde seca e enrolada (em laçadas), longe de sol forte e de produtos químicos; não pise nem arraste no chão; confira desgaste e pontas desfiadas; queime ou amarre as pontas para não desfiar.
-Os 14 nós do cartão do Amigo (e para que servem):
-- Simples: nó básico que impede a corda de escapar; base de outros nós.
-- Direito: emenda duas cordas de mesma grossura; também serve para enfaixar.
-- Cirurgião: parecido com o direito, com uma volta a mais; não escorrega (usado em curativos e talas).
-- Lais de guia: laço fixo que não corre nem aperta; usado em resgate e para amarrar em um ponto firme.
-- Lais de guia duplo: dois laços fixos; serve para apoiar uma pessoa em resgate.
-- Escota: une cordas de grossuras diferentes.
+▶ Cuidados com a corda
+- Guardar seca e enrolada, longe do sol forte.
+- Não pisar nem arrastar no chão.
+- Arrematar as pontas para não desfiar.
+
+▶ 14 nós do Amigo e para que servem
+- Simples: trava a ponta da corda; é a base de outros nós.
+- Cego: nó inseguro, que ora desata sozinho, ora emperra. Aprende-se para nunca usar.
+- Direito: emenda duas cordas da mesma grossura; fecha ataduras.
+- Cirurgião: direito com uma volta a mais; não escorrega.
+- Lais de guia: laço que não corre nem aperta; nó de salvamento.
+- Lais de guia duplo: dois laços fixos; para sustentar uma pessoa.
+- Escota: emenda cordas de grossuras diferentes.
 - Catau: encurta a corda sem cortar.
-- Pescador: une cordas finas ou escorregadias (linhas de pesca).
-- Fateixa: prende a corda a uma argola, estaca ou âncora.
-- Volta do fiel: prende a corda em um poste, tronco ou vara; base das amarras.
-- Cego, Nó de gancho, Volta da ribeira e Ordinário: veja o uso prático no manual do Amigo (MDAWiki) e peça ao desbravador que explique para que serve cada um.
-Passo a passo:
-1. Use a lista dos 14 nós acima e chame de 3 a 4 por vez.
-2. Peça que cada um faça o nó na própria corda enquanto você observa. Não faça por ele.
-3. Se errar, mostre o nó devagar, 1 vez, e deixe repetir sozinho.
-4. Pergunte pra que serve cada nó (ex.: 'nó direito serve para emendar cordas de mesma grossura').
-5. Marque em uma lista quem fez todos e quem precisa treinar mais.
-Erros comuns: confundir nó direito com nó de vovó (dá a 2ª laçada para o lado errado); nó solto que desfaz ao puxar.
-Como avaliar: o desbravador faz os 14 nós corretamente e diz pra que servem os principais. Os nós são treinados antes do acampamento, aqui é só conferir.
-
-▶ 4. 9 nós (revisão) (classe CO)
-O que falar: "Vamos revisar os nós do nível Companheiro. Quem já treinou vai tirar de letra."
-Conteúdo pronto:
-Os 9 nós do cartão do Companheiro:
-Oito, Volta do salteador, Duplo, Caminhoneiro, Direito, Volta do fiel, Escota, Lais de guia e Simples.
-Usos que você pode ensinar: Oito (impede a corda de escapar de uma roldana ou furo); Volta do salteador (prende a corda e solta rápido, puxando a ponta); Caminhoneiro (estica bem uma corda, como um varal ou lona); Direito (emenda cordas iguais); Volta do fiel (prende em poste); Escota (une cordas de grossuras diferentes); Lais de guia (laço fixo); Simples (base). Para o Duplo, confira o uso no manual do Companheiro (MDAWiki).
-Passo a passo:
-1. Use a lista dos 9 nós acima.
-2. Chame de 3 em 3: cada um faz o nó na própria corda enquanto você observa.
-3. Corrija errando o mínimo: mostre o nó 1 vez, devagar, e deixe repetir sozinho.
-4. Pergunte pra que serve cada nó e em qual situação usaria.
-Erros comuns: fazer o nó por ele; aceitar nó que desfaz quando puxa.
-Como avaliar: o desbravador faz os 9 nós corretamente.
-
-▶ 5. 4 amarras e 1 móvel (classe PE+)
-O que falar: "Amarra é diferente de nó: ela junta duas varas, não só uma corda. É a base de toda pioneiria."
-Passo a passo:
-1. Mostre as 4 amarras do cartão: quadrada, diagonal, paralela e redonda.
-2. Regra geral de todas: começa com um nó (volta do fiel), dá voltas firmes e apertadas, faz a 'cintagem' (voltas entre as varas que apertam tudo) e termina com outro nó.
-3. Demonstre cada uma devagar e peça que a dupla repita na sequência.
-4. Deixe todos testarem puxando: amarra boa não balança.
-5. Escolha pelo menos 1 amarra para usar na Grande Pioneiria (móvel da unidade).
-Erros comuns: voltas frouxas; esquecer a cintagem; terminar sem nó e a amarra desfaz.
-Como avaliar: o desbravador faz as 4 amarras e usa pelo menos 1 na construção do móvel.
-
-Fontes:
-https://desbrava7.com/2018/03/especialidade-de-acampamento-1-respondida.html
-https://mda.wiki.br/cartao_de_amigo/
-https://desbrava7.com/2019/05/classe-de-amigo-respondida.html
-https://mda.wiki.br/Cart%C3%A3o_de_Companheiro$$ where id = 26;
-update public.atividades set guia_instrutor = $$Requisitos cumpridos nesta atividade:
-- Pioneirias (classe EX)
-- 5 móveis e 1 portal (parcial: 1 móvel + portal) (classe EX+)
-- Móvel em tamanho real (classe GU)
-
-Material e preparo:
-- Varas de bambu, sisal, serrote, luvas, projeto do móvel escolhido pela unidade (desenho a lápis).
-- Bambus grandes (2 postes de 2,5 m e 1 travessa de 2 m), sisal, cordas de vento, estacas, serrote, luvas.
-- Varas de bambu, sisal, serrote, luvas, projeto do móvel.
-
-Tempo sugerido: 09:30 às 12:00 (150 min). Reparta o tempo entre os requisitos abaixo, na ordem em que aparecem.
-
-▶ 1. Pioneirias (classe EX)
-O que falar: "Pioneiria é construir coisas úteis de acampamento com bambu, corda e nó, sem prego. Cada amarra conta."
-Passo a passo:
-1. Cada unidade desenha o móvel (mesa, porta-panelas, cozinha elevada, sapateira, lavatório ou varal) antes de começar.
-2. Separe as varas por tamanho e corte o que precisar (só o adulto usa o serrote).
-3. Monte a estrutura básica primeiro (pernas e travessas) com amarras firmes.
-4. Acrescente o tampo ou os apoios.
-5. Teste: sente, apoie peso ou balance para ver se aguenta.
-6. Se sobrar tempo, ajude no portal do clube.
-Erros comuns: amarra frouxa; móvel torto; deixar sem reforço diagonal.
-Segurança: serrote só com adulto; luva ao carregar bambu (farpas).
-Como avaliar: móvel construído e funcional, que aguenta o uso.
-
-▶ 2. 5 móveis e 1 portal (parcial: 1 móvel + portal) (classe EX+)
-O que falar: "Cada unidade faz um móvel; juntos fazemos o portal do clube. É a nossa entrada oficial."
-Passo a passo:
-1. Cada unidade termina o seu móvel (veja o guia da Pioneiria).
-2. Para o portal: enterre 2 postes bem fundos, de cada lado, a cerca de 2 m de distância.
-3. Levante a travessa e amarre nos postes, no alto, com amarras firmes.
-4. Reforce com cordas de vento presas nas estacas para o portal não cair.
-5. Decore com o nome e o símbolo do clube.
-Erros comuns: postes pouco enterrados; amarra da travessa frouxa; sem cordas de vento.
-Segurança: todo mundo longe enquanto se levanta o portal; trabalho em altura só com apoio.
-Como avaliar: portal de pé e pelo menos 1 móvel por unidade. Cobertura parcial: a especialidade pede 5 móveis.
-
-▶ 3. Móvel em tamanho real (classe GU)
-O que falar: "Um móvel de tamanho real precisa aguentar uso de verdade, não só ficar bonito."
-Passo a passo:
-1. O Guia da unidade organiza a equipe e o projeto.
-2. Acompanhe as amarras: firmes e com reforço diagonal onde precisar.
-3. Antes de liberar, teste: sente, apoie peso ou balance.
-4. Corrija o que estiver fraco e teste de novo.
-5. Use o móvel no almoço de domingo (é a prova real).
-Erros comuns: móvel bonito mas que balança; esquecer o teste.
-Segurança: teste com cuidado e sem subir em cima da estrutura.
-Como avaliar: móvel de pé e aguentando uso real.$$ where id = 27;
-update public.atividades set guia_instrutor = $$Requisitos cumpridos nesta atividade:
-- Refeição em fogueira (classe CO+)
-- Cozinhar uma refeição (classe PE)
-- 3 refeições ao ar livre (parcial: 1 refeição) (classe GU)
-- Cozinhar refeições (classe GU)
-
-Material e preparo:
-- Panelas, lenha para brasas, luvas de couro, pegadores, ingredientes da unidade, balde de água.
-- Ingredientes da unidade, panelas, facas de cozinha, tábuas, luvas, fogueira com brasas.
-- Ingredientes e panelas de cada unidade, luvas, fogueira com brasas, balde de água.
-- Ingredientes, panelas, luvas, fogueira com brasas.
-
-Tempo sugerido: 12:00 às 13:15 (75 min). Reparta o tempo entre os requisitos abaixo, na ordem em que aparecem.
-
-▶ 1. Refeição em fogueira (classe CO+)
-O que falar: "Cozinhar na fogueira é diferente de cozinhar em casa: o fogo não é constante. O segredo são as brasas."
-Passo a passo:
-1. Ajude a unidade a acender a fogueira uns 40 min antes de cozinhar, para formar brasas.
-2. Mostre como espalhar as brasas e apoiar a panela sobre elas (ou sobre 2 toras), sem chama alta embaixo.
-3. Deixe a unidade dividir tarefas: fogo, corte, tempero, panela e limpeza.
-4. Acompanhe sem fazer por eles: só intervenha em segurança.
-5. Na hora de servir, lavem as mãos e sirvam com concha e prato limpo.
-6. Ao final, apaguem o fogo com água e lavem as panelas.
-Erros comuns: cozinhar em chama alta (queima por fora e crua por dentro); esquecer de separar lixo.
-Segurança: só quem usa luva mexe em panela quente; crianças menores longe do fogo.
-Como avaliar: a unidade cozinha e serve a refeição sem depender do conselheiro para tudo.
-
-▶ 2. Cozinhar uma refeição (classe PE)
-O que falar: "Vamos cozinhar o almoço de hoje juntos, cada um com uma função. Equipe boa cozinha rápido e sem bagunça."
-Conteúdo pronto:
-Ideias de cardápio simples e rápido (adaptável a vegetariano): arroz com ovo cozido ou mexido; macarrão com molho de legumes; feijão com arroz e legumes refogados; sopa de legumes.
-O cartão do Pesquisador pede planejar e cozinhar 2 refeições no acampamento de fim de semana; neste acampamento a unidade cozinha 1, então a cobertura é parcial.
-Passo a passo:
-1. Antes, a unidade decide o cardápio e a lista de compras (tarefa 'antes' no site).
-2. Divida funções: fogo, corte de legumes, tempero, panela e limpeza.
-3. Todos lavam as mãos antes de mexer nos alimentos.
-4. Acompanhe do início ao fim, dando dicas de tempo e temperatura.
-5. Sirvam juntos e limpem tudo no fim.
-Erros comuns: todos querendo fazer a mesma coisa; esquecer de higiene das mãos.
-Segurança: faca de cozinha só com supervisão; panela quente só com luva.
-Como avaliar: o desbravador participa ativamente do preparo da refeição.
-
-▶ 3. 3 refeições ao ar livre (parcial: 1 refeição) (classe GU)
-O que falar: "Hoje vocês vão cozinhar de verdade, do fogo ao prato. E vocês, Guias, lideram a equipe."
-Conteúdo pronto:
-Ideias de cardápio simples e rápido (adaptável a vegetariano): arroz com ovo cozido ou mexido; macarrão com molho de legumes; feijão com arroz e legumes refogados; sopa de legumes; batata assada na brasa. Planeje quantidades por pessoa e leve tempero, óleo, sal e utensílios.
-O cartão do Guia pede: 'planejar, preparar e cozinhar três refeições ao ar livre'. Neste acampamento a unidade cozinha 1 refeição, que representa as 3 do requisito.
-Passo a passo:
-1. O Guia da unidade divide funções (fogo, corte, tempero, panela, limpeza).
-2. Acompanhe o preparo sem fazer por eles: só ajuda em segurança.
-3. Confira higiene: mãos lavadas e alimentos cobertos.
-4. Sirvam e limpem juntos.
-5. Lembre: como só há 1 refeição neste acampamento, ela representa as 3 do requisito.
-Erros comuns: Guia fazendo tudo sozinho em vez de liderar; esquecer de apagar o fogo.
-Segurança: luva para panela quente; balde de água ao lado.
-Como avaliar: refeição preparada e servida pela própria unidade.
-
-▶ 4. Cozinhar refeições (classe GU)
-O que falar: "Guia também lidera na cozinha: quem organiza a equipe garante que todos comam bem."
-Passo a passo:
-1. O Guia divide as funções da unidade.
-2. Ele confere se tudo está pronto antes de acender o fogo.
-3. Acompanhe sem fazer por ele: dê dicas de tempo e temperatura.
-4. Ele coordena o serviço e a limpeza no fim.
-Erros comuns: não delegar; ficar só cozinhando.
-Segurança: luva para panela quente.
-Como avaliar: o Guia coordena o preparo da refeição da unidade.
-
-Fontes:
-https://mda.wiki.br/Cart%C3%A3o_de_Pesquisador
-https://desbrava7.com/2019/07/classe-de-pesquisador-respondida-parte-4.html
-https://mda.wiki.br/Cart%C3%A3o_de_Guia$$ where id = 28;
-update public.atividades set guia_instrutor = $$Requisitos cumpridos nesta atividade:
-- Primeiros Socorros – básico (classe PE)
-
-Material e preparo:
-- Kit de primeiros socorros (gaze, atadura, esparadrapo, tesoura, luvas), 2 talas improvisadas (galhos retos), pano ou camiseta, boneco ou almofada. Cartaz com telefones 192 (SAMU) e 193 (Bombeiros).
-
-Tempo sugerido: 14:00 às 14:50 (50 min). Reparta o tempo entre os requisitos abaixo, na ordem em que aparecem.
-
-▶ 1. Primeiros Socorros – básico (classe PE)
-O que falar: "Hoje vamos aprender o básico para agir bem nos primeiros minutos de uma emergência, sem precisar ser médico. O mais importante é não piorar a situação e chamar ajuda."
-Conteúdo pronto:
-Conteúdo básico de primeiros socorros:
-- O que é: cuidados imediatos a uma vítima de acidente ou mal súbito antes da chegada do atendimento especializado. Objetivos: preservar a vida, evitar que piore, dar conforto e facilitar o atendimento.
-- Hemorragia externa: pressão direta com gaze ou pano limpo; elevar o membro se não houver suspeita de fratura; não retirar o primeiro curativo (se encharcar, coloque outro por cima); manter a vítima aquecida e em repouso; nunca retirar objeto cravado, apenas estabilizar.
-- Queimadura de 1º grau (só vermelhidão): água corrente fria por cerca de 20 min; sem gelo, manteiga ou pasta de dente.
-- Queimadura de 2º grau (bolhas): água corrente fria; não estourar bolhas; cobrir com gaze limpa e seca; procurar ajuda se for extensa.
-- Queimadura de 3º grau (pele branca ou carbonizada): ligar 192/193; não retirar roupa grudada; cobrir com pano limpo e seco; manter a vítima aquecida.
-- Envenenamento: afastar a vítima da fonte; ligar para emergência ou centro toxicológico; não provocar vômito sem orientação profissional; lavar pele ou olhos com água se houve contato.
-- Engasgo com vítima consciente (manobra de Heimlich): por trás, punho acima do umbigo e abaixo do esterno, compressões para dentro e para cima até expelir. Só demonstre em boneco, sem apertar colega.
-Observação: a especialidade completa é maior (choque, queimadura química, monóxido de carbono, traumatismo craniano, eletricidade). Neste acampamento cobrimos parte dela.
-Passo a passo:
-1. Avalie a cena antes de tudo: 'é seguro chegar?'. Depois chame ajuda: 192 (SAMU) ou 193 (Bombeiros).
-2. SANGRAMENTO: coloque gaze ou pano limpo sobre o ferimento e pressione com a mão por 10 minutos, sem levantar para olhar.
-3. CURATIVO: depois de estancar, cubra com gaze limpa e prenda com atadura, sem apertar demais.
-4. IMOBILIZAÇÃO: coloque 1 tala de cada lado do membro machucado, acolchoe com pano e amarre acima e abaixo do ferimento, nunca em cima. Confira se os dedos continuam com cor e calor normais.
-5. QUEIMADURA: água corrente fria por 10 a 20 min; não estourar bolhas nem passar pasta ou manteiga.
-6. PICADA DE COBRA: manter a pessoa calma e deitada, imobilizar o membro, NÃO cortar, NÃO sugar, NÃO fazer torniquete; levar a um hospital rápido.
-7. RCP: só demonstre no boneco ou na almofada: mãos sobrepostas no centro do peito, 100 a 120 compressões por minuto. Não pratique pressão em colega.
-8. Deixe cada um praticar curativo e tala em dupla, com você olhando.
-Erros comuns: amarrar a tala em cima do ferimento; apertar demais e cortar a circulação; esquecer de ligar 192.
-Segurança: se alguém quiser aprofundar, indique curso com socorrista qualificado. Os líderes aqui ensinam noções básicas, não substituem um profissional.
-Como avaliar: o desbravador faz um curativo e uma imobilização corretamente e sabe quando e como pedir ajuda.
-
-Fontes:
-https://desbrava7.com/2018/08/especialidade-de-primeiros-socorros-basico-respondida.html
-https://mda.wiki.br/Especialidade_de_Primeiros_socorros_-_b%C3%A1sico$$ where id = 30;
-update public.atividades set guia_instrutor = $$Requisitos cumpridos nesta atividade:
-- Resgate Básico (parcial: maca, imobilização e transporte) (classe PI)
-
-Material e preparo:
-- 2 varas retas de ~2 m, 1 cobertor (ou 2 a 3 casacos), 2 talas improvisadas, faixas de pano ou ataduras, 1 desbravador voluntário leve (a 'vítima'), terreno plano e sem obstáculos.
-
-Tempo sugerido: 14:55 às 15:45 (50 min). Reparta o tempo entre os requisitos abaixo, na ordem em que aparecem.
-
-▶ 1. Resgate Básico (parcial: maca, imobilização e transporte) (classe PI)
-O que falar: "Hoje vamos praticar um cenário de resgate: imobilizar e transportar um colega numa maca. É treino, com calma e segurança."
-Conteúdo pronto:
-Conteúdo do Resgate Básico (o que a especialidade pede saber):
-- Formas de chamar um resgate aéreo: S.O.S. feito no chão com pedras ou galhos, fumaça e sinalizador (ou espelho/lanterna).
-- Antes de remover uma vítima: garantir a própria segurança, avaliar o local e os perigos, eliminar os perigos se possível, decidir o meio de transporte e avaliar se é melhor esperar o socorro profissional.
-- Como ajudar: puxar a vítima, içar (levantar) e ajudar a andar.
-- Transporte com ajuda: cadeirinha (2 pessoas), em cobertor, em rede, por 3 ou 4 pessoas ou em maca improvisada.
-- Cordas: 3 nós para juntar cordas, 1 nó para diminuir corda (catau), 1 nó para usar ao redor de alguém (lais de guia) e lançar corda leve e pesada de 15 m.
-- Situações da especialidade: escolher 3 entre cabo elétrico, fumaça/gás, roupa em chamas, afogamento sem equipamento e acidente no gelo. Esta atividade NÃO cobre isso: cobre a parte de maca, imobilização e transporte.
-Passo a passo:
-1. Explique que numa emergência de verdade, quem não sabe socorrer NÃO move a vítima: chama 192/193 e espera. O treino é para conhecer a técnica.
-2. MACA (cobertor): estenda o cobertor no chão, coloque uma vara no meio e dobre o cobertor sobre ela; coloque a segunda vara a cerca de 30 cm da dobra e dobre o resto. O peso da vítima prende as varas.
-3. MACA (casacos): abotoe/feche 2 ou 3 casacos, vire as mangas para dentro e passe as varas pelas mangas.
-4. IMOBILIZAÇÃO: a 'vítima' simula machucar a perna: 1 tala de cada lado, acolchoada, amarrada acima e abaixo do ferimento com as faixas.
-5. TRANSPORTE: 4 carregadores, 2 por vara. Levantam juntos ao comando 'já!', andam em passo curto (pés na frente) sobre terreno plano.
-6. Revezem os papéis para todos passarem por vítima, socorrista e carregador.
-7. Comente: o que faria diferente numa trilha de verdade?
-Erros comuns: levantar sem combinar (a maca balança); carregar em terreno irregular; amarrar a tala sobre o machucado.
-Segurança: vítima leve; carregar só em terreno plano e por poucos metros; supervisão direta o tempo todo; ninguém 'brinca' de cair.
-Como avaliar: o grupo monta a maca, imobiliza e transporta com segurança. Essa atividade cobre só parte da especialidade de Resgate Básico.
-
-Fontes:
-https://mda.wiki.br/Especialidade_de_Resgate_b%C3%A1sico
-https://desbrava7.com/2018/05/especialidade-de-resgate-basico-respondida.html$$ where id = 31;
-update public.atividades set guia_instrutor = $$Requisitos cumpridos nesta atividade:
-- Relatório do acampamento (classe CO)
-- Discussão pós-expedição (classe EX+)
-
-Material e preparo:
-- Caderno e caneta para cada desbravador (ou folha para o relatório).
-- Fogueira do culto, cadeiras ou bancos, pauta com 3 perguntas.
-
-Tempo sugerido: 17:45 às 19:30 (105 min). Reparta o tempo entre os requisitos abaixo, na ordem em que aparecem.
-
-▶ 1. Relatório do acampamento (classe CO)
-O que falar: "Guarde na cabeça (ou no caderninho) o que mais marcou você aqui, porque isso vira o seu relatório."
-Conteúdo pronto:
-Modelo de relatório (1 página):
-1) Título e data do acampamento.
-2) O que fizemos (lista das atividades).
-3) O que mais me impressionou positivamente (o principal do requisito).
-4) O que aprendi.
-5) O que eu faria diferente.
-O cartão do Companheiro pede: 'participar de um acampamento de final de semana e fazer um relatório destacando o que mais lhe impressionou positivamente'.
-Passo a passo:
-1. No culto de domingo à noite, peça a cada unidade que fale o que mais impressionou.
-2. Explique como o relatório deve ficar: 1 página com o que fizeram, o que aprenderam e o que mais gostaram.
-3. Combine o prazo de entrega (ex.: na primeira reunião depois do acampamento).
-4. Guarde os relatórios na pasta do desbravador.
-Erros comuns: deixar para escrever semanas depois (esquece os detalhes).
-Como avaliar: relatório escrito entregue depois do acampamento.
-
-▶ 2. Discussão pós-expedição (classe EX+)
-O que falar: "Toda expedição termina com uma conversa: o que aprendemos e o que faríamos diferente?"
-Passo a passo:
-1. Sente o grupo em círculo.
-2. Faça 3 perguntas: 'o que mais gostei?', 'o que foi difícil?', 'o que faria diferente?'.
-3. Deixe cada unidade responder e evite interromper.
-4. Anote 2 ou 3 lições e agradeça a participação.
-Erros comuns: responder pelos desbravadores; conversa dominada por poucos.
-Como avaliar: participação do desbravador na discussão.
-
-Fontes:
-https://mda.wiki.br/Cart%C3%A3o_de_Companheiro$$ where id = 34;
-update public.atividades set guia_instrutor = $$Requisitos cumpridos nesta atividade:
-- Ordem Unida (classe EX+)
-
-Material e preparo:
-- Espaço plano e livre, apito, ordem de formação (por unidade).
-
-Tempo sugerido: 08:00 às 08:30 (30 min). Reparta o tempo entre os requisitos abaixo, na ordem em que aparecem.
-
-▶ 1. Ordem Unida (classe EX+)
-O que falar: "Ordem Unida é disciplina em grupo: todo mundo no mesmo tempo, no mesmo passo. É respeito e atenção."
-Conteúdo pronto:
-Movimentos a pé firme: Atenção, Sentido, Cobrir, Firme, Perfilar, Volver (direita, esquerda e meia-volta), Olhar (direita, frente, esquerda) e Descansar.
-Movimentos em deslocamento (passo ordinário): marchar para frente e parar, marcar passo, mudar de direção, executar voltas na marcha e trocar de passo.
-Voz de comando: tem 3 partes: preventiva (avisa o movimento, ex.: 'À direita'), pausa e executiva (manda executar, ex.: 'VOLVER!').
-Lembrete: a especialidade completa pede também definir 15 termos técnicos, explicar objetivos da ordem unida e manejo da bandeira; aqui treinamos os movimentos.
-Passo a passo:
-1. Forme o clube em fileiras por unidade.
-2. Treine 1 comando por vez: 'Sentido!' (corpo firme), 'Descansar!', 'À direita, volver!', 'À esquerda, volver!', 'Meia-volta, volver!'.
-3. Treine marcha no lugar e em deslocamento, sempre com voz de comando clara.
-4. Repita a sequência até ficar sincronizada.
-5. Segunda: apresente a formatura completa a pais e liderança.
-Erros comuns: comandos sem clareza; grupo desatento; apressar sem sincronizar.
-Como avaliar: apresentação coordenada do grupo na formatura.
-
-Fontes:
-https://mda.wiki.br/Especialidade_de_Ordem_unida$$ where id = 39;
-update public.atividades set guia_instrutor = $$Requisitos cumpridos nesta atividade:
-- Purificar água (1 método) (classe AM+)
-- Vida Silvestre (parcial) (classe EX+)
-
-Material e preparo:
-- 1 panela e fogareiro (ou fogueira), garrafa PET transparente, água turva para mostrar o efeito do filtro, água sanitária pura (sem perfume) e conta-gotas.
-- Caderno de campo, lupa, garrafas PET, panela, água sanitária pura (sem perfume), guia de campo.
-
-Tempo sugerido: 08:30 às 09:10 (40 min). Reparta o tempo entre os requisitos abaixo, na ordem em que aparecem.
-
-▶ 1. Purificar água (1 método) (classe AM+)
-O que falar: "Na mata, nem toda água que parece limpa é segura para beber. Vamos aprender como tornar a água segura."
-Conteúdo pronto:
-Métodos para purificar água:
-- Ferver: em fervura forte por 1 minuto (3 minutos acima de 2.000 m). Deixe esfriar tampada.
-- Filtro: pano limpo (e/ou carvão e areia) tira a sujeira; depois ferver para garantir a limpeza.
-- Hipoclorito de sódio (água sanitária pura): 2 gotas por litro e aguardar 30 minutos.
-- SODIS: garrafa PET transparente cheia, exposta ao sol por 6 horas.
-PARÁGRAFO ESPIRITUAL (também exigido no requisito): escreva um parágrafo sobre o significado de Jesus como a água da vida. Textos para ler: João 4:10-14 (a mulher samaritana) e João 7:37-38. Ideia: assim como o corpo precisa de água limpa para viver, a alma precisa de Jesus, que sacia a sede de forma completa.
-Passo a passo:
-1. Mostre a água de aparência suja e a limpa: as duas podem ter microrganismos.
-2. Escolha 1 método para o requisito do Amigo. O mais simples é ferver: leve a água até ferver forte e conte 1 minuto (3 minutos se estiver acima de 2.000 m).
-3. Deixe esfriar tampada e explique: o calor mata os microrganismos.
-4. Pergunte: 'por que só filtrar não basta?' (o filtro tira sujeira, mas não elimina tudo).
-Erros comuns: beber água sem esperar esfriar; achar que água clara já é segura.
-Segurança: cuidado com água fervente: só o adulto retira a panela do fogo.
-Como avaliar: o desbravador explica com as próprias palavras como e por que aquele método funciona.
-
-▶ 2. Vida Silvestre (parcial) (classe EX+)
-O que falar: "Vamos aprender a observar a natureza sem interferir nela e a tornar a água segura para beber."
-Conteúdo pronto:
-Vida Silvestre pede (resumo do MDAWiki): saber o que fazer quando perdido (8 procedimentos, veja PASOCOLA no requisito das 10 regras), conhecer 3 métodos de achar pontos cardeais sem bússola, explicar como encontrar água na mata e demonstrar 3 maneiras de purificar água para beber, entre outros itens.
-Neste acampamento cobrimos só uma parte: observação na caminhada, pontos cardeais e purificação de água.
-Passo a passo:
-1. Na caminhada de sábado, faça paradas e peça que identifiquem flora e fauna, sem coletar.
-2. Na segunda, demonstre 2 ou 3 formas de purificar água: ferver por 1 min; filtro de garrafa PET (pano, carvão, areia fina, areia grossa/cascalho, de cima para baixo na garrafa cortada); hipoclorito (2 gotas por litro, esperar 30 min); SODIS (garrafa PET transparente ao sol por 6 h).
-3. Deixe cada desbravador demonstrar 1 método para outro colega.
-4. Reforce: filtrar NÃO elimina microrganismos; sempre ferver ou tratar depois.
-Erros comuns: usar água sanitária com perfume; expor a garrafa ao sol sem estar transparente; beber sem tratar depois do filtro.
-Segurança: água fervendo só com adulto.
-Como avaliar: o desbravador identifica elementos da natureza e demonstra pelo menos 2 métodos de purificar água. É cobertura parcial da especialidade.
-
-Fontes:
-https://mda.wiki.br/cartao_de_amigo/
-https://desbrava7.com/2019/05/classe-de-amigo-respondida.html
-https://mda.wiki.br/Especialidade_de_Vida_Silvestre$$ where id = 40;
-update public.atividades set guia_instrutor = $$Requisitos cumpridos nesta atividade:
-- Pontos cardeais sem bússola / rosa dos ventos (classe CO)
-
-Material e preparo:
-- Sexta à noite: lanterna com feixe forte para apontar o céu. Segunda de manhã: 1 graveto reto (1 m) e pedras, papel e lápis de cor.
-
-Tempo sugerido: 09:10 às 09:50 (40 min). Reparta o tempo entre os requisitos abaixo, na ordem em que aparecem.
-
-▶ 1. Pontos cardeais sem bússola / rosa dos ventos (classe CO)
-O que falar: "Dá para descobrir onde fica o Norte sem bússola nenhuma, só olhando para o céu ou para o sol."
-Conteúdo pronto:
-Como achar os pontos cardeais sem bússola:
-1) Pelo sol: de manhã cedo o sol nasce no Leste. Fique com o braço direito apontando para onde o sol nasce (Leste): à sua frente fica o Norte, à esquerda o Oeste, atrás o Sul. À tarde o sol se põe no Oeste (faça ao contrário).
-2) Pelo Cruzeiro do Sul (à noite): prolongue o braço maior da cruz cerca de 4 vezes e meia e desça uma linha até o horizonte: ali é o Sul.
-3) Pela sombra do graveto (dia de sol): a 1ª marca é Oeste e a 2ª (15 min depois) é Leste.
-Rosa dos ventos com 8 pontos: N (Norte), NE (Nordeste), L (Leste), SE (Sudeste), S (Sul), SO (Sudoeste), O (Oeste), NO (Noroeste).
-Passo a passo:
-1. SEXTA (Cruzeiro do Sul): encontre a constelação em formato de cruz. Prolongue o braço maior da cruz por cerca de 4 vezes e meia o comprimento dela.
-2. Desça uma linha imaginária na vertical desse ponto até o horizonte: ali é o Sul. De frente para o Sul, o Norte fica às suas costas.
-3. SEGUNDA (sombra do graveto): finque o graveto reto no chão, num lugar de sol. Marque a ponta da sombra com uma pedra.
-4. Espere 15 minutos e marque a nova ponta da sombra. A 1ª marca é Oeste, a 2ª é Leste.
-5. Fique com o pé esquerdo na 1ª marca e o direito na 2ª: você está olhando para o Norte.
-6. Cada um desenha a rosa dos ventos com os 8 pontos (N, NE, L, SE, S, SO, O, NO).
-Erros comuns: graveto torto; esperar menos de 15 min; confundir Leste com Oeste.
-Como avaliar: o desbravador acha os 4 pontos cardeais sem ajuda e desenha a rosa dos ventos correta.
-
-Fontes:
-https://mda.wiki.br/Cart%C3%A3o_de_Companheiro
-https://desbrava7.com/2019/06/classe-companheiro-respondida.html$$ where id = 41;
-update public.atividades set guia_instrutor = $$Requisitos cumpridos nesta atividade:
-- Quadro de 15 nós (classe CO+)
-- 14 nós (revisão) (classe AM)
-- 9 nós (revisão) (classe CO)
-
-Material e preparo:
-- 1 tábua ou papelão grosso por unidade, cordas de vários tipos, cola quente e pistola, etiquetas e caneta, cartaz com o nome dos nós.
-- 1 corda de 1,5 m por desbravador (sisal ou náilon), cartão com a lista dos nós do Amigo impresso.
-- 1 corda de 1,5 m por desbravador, cartão com os nós do Companheiro impresso.
-
-Tempo sugerido: 09:50 às 10:30 (40 min). Reparta o tempo entre os requisitos abaixo, na ordem em que aparecem.
-
-▶ 1. Quadro de 15 nós (classe CO+)
-O que falar: "Esse quadro vai ficar exposto na sala do clube, então capriche. Cada nó vai ter o seu nome."
-Passo a passo:
-1. Distribua o material para cada unidade e mostre um exemplo pronto, se possível.
-2. Cada unidade escolhe 15 nós diferentes (os do Amigo e os do Companheiro servem).
-3. Faça o nó, fixe na tábua com cola quente ou prego e escreva a etiqueta com o nome.
-4. Organizem em linhas, do mais fácil para o mais difícil.
-5. Confira no final: 15 nós, todos identificados e firmes.
-Erros comuns: colar nó desfeito; etiqueta com nome errado; repetir o mesmo nó.
-Segurança: cola quente queima: adulto opera a pistola.
-Como avaliar: quadro pronto com 15 nós corretos e identificados.
-
-▶ 2. 14 nós (revisão) (classe AM)
-O que falar: "Nó é como uma ferramenta: cada um serve para uma coisa. Hoje é revisão: vou ver quem já domina."
-Conteúdo pronto:
-Como cuidar de uma corda: guarde seca e enrolada (em laçadas), longe de sol forte e de produtos químicos; não pise nem arraste no chão; confira desgaste e pontas desfiadas; queime ou amarre as pontas para não desfiar.
-Os 14 nós do cartão do Amigo (e para que servem):
-- Simples: nó básico que impede a corda de escapar; base de outros nós.
-- Direito: emenda duas cordas de mesma grossura; também serve para enfaixar.
-- Cirurgião: parecido com o direito, com uma volta a mais; não escorrega (usado em curativos e talas).
-- Lais de guia: laço fixo que não corre nem aperta; usado em resgate e para amarrar em um ponto firme.
-- Lais de guia duplo: dois laços fixos; serve para apoiar uma pessoa em resgate.
-- Escota: une cordas de grossuras diferentes.
-- Catau: encurta a corda sem cortar.
-- Pescador: une cordas finas ou escorregadias (linhas de pesca).
-- Fateixa: prende a corda a uma argola, estaca ou âncora.
-- Volta do fiel: prende a corda em um poste, tronco ou vara; base das amarras.
-- Cego, Nó de gancho, Volta da ribeira e Ordinário: veja o uso prático no manual do Amigo (MDAWiki) e peça ao desbravador que explique para que serve cada um.
-Passo a passo:
-1. Use a lista dos 14 nós acima e chame de 3 a 4 por vez.
-2. Peça que cada um faça o nó na própria corda enquanto você observa. Não faça por ele.
-3. Se errar, mostre o nó devagar, 1 vez, e deixe repetir sozinho.
-4. Pergunte pra que serve cada nó (ex.: 'nó direito serve para emendar cordas de mesma grossura').
-5. Marque em uma lista quem fez todos e quem precisa treinar mais.
-Erros comuns: confundir nó direito com nó de vovó (dá a 2ª laçada para o lado errado); nó solto que desfaz ao puxar.
-Como avaliar: o desbravador faz os 14 nós corretamente e diz pra que servem os principais. Os nós são treinados antes do acampamento, aqui é só conferir.
-
-▶ 3. 9 nós (revisão) (classe CO)
-O que falar: "Vamos revisar os nós do nível Companheiro. Quem já treinou vai tirar de letra."
-Conteúdo pronto:
-Os 9 nós do cartão do Companheiro:
-Oito, Volta do salteador, Duplo, Caminhoneiro, Direito, Volta do fiel, Escota, Lais de guia e Simples.
-Usos que você pode ensinar: Oito (impede a corda de escapar de uma roldana ou furo); Volta do salteador (prende a corda e solta rápido, puxando a ponta); Caminhoneiro (estica bem uma corda, como um varal ou lona); Direito (emenda cordas iguais); Volta do fiel (prende em poste); Escota (une cordas de grossuras diferentes); Lais de guia (laço fixo); Simples (base). Para o Duplo, confira o uso no manual do Companheiro (MDAWiki).
-Passo a passo:
-1. Use a lista dos 9 nós acima.
-2. Chame de 3 em 3: cada um faz o nó na própria corda enquanto você observa.
-3. Corrija errando o mínimo: mostre o nó 1 vez, devagar, e deixe repetir sozinho.
-4. Pergunte pra que serve cada nó e em qual situação usaria.
-Erros comuns: fazer o nó por ele; aceitar nó que desfaz quando puxa.
-Como avaliar: o desbravador faz os 9 nós corretamente.
-
-Fontes:
-https://mda.wiki.br/cartao_de_amigo/
-https://desbrava7.com/2019/05/classe-de-amigo-respondida.html
-https://mda.wiki.br/Cart%C3%A3o_de_Companheiro$$ where id = 42;
-update public.atividades set guia_instrutor = $$Requisitos cumpridos nesta atividade:
-- Mapa e Bússola (parcial: 1 azimute) (classe PI+)
-- Sinais de pista (10 sinais) (classe AM)
-
-Material e preparo:
-- 1 bússola por dupla, estacas numeradas ou fitas, cartão do percurso (ex.: 40 graus / 20 passos), terreno aberto e seguro. O percurso é montado antes do acampamento.
-- Cartão com os 10 sinais de pista impresso, gravetos, pedras, giz ou carvão, folhas.
-
-Tempo sugerido: 10:30 às 11:20 (50 min). Reparta o tempo entre os requisitos abaixo, na ordem em que aparecem.
-
-▶ 1. Mapa e Bússola (parcial: 1 azimute) (classe PI+)
-O que falar: "Um azimute é um ângulo que leva você a um rumo certo, mesmo sem enxergar o destino."
-Conteúdo pronto:
-O que é azimute: é o ângulo, medido em graus, entre o Norte e a direção que você quer seguir, contado no sentido horário. Referências: 0 ou 360 graus = Norte, 90 = Leste, 180 = Sul, 270 = Oeste.
-Regras para o percurso de azimutes: use estacas numeradas e um cartão do percurso (ex.: 40 graus por 20 passos, 160 graus por 15 passos, 280 graus por 25 passos). Cada dupla anda com a bússola na mão.
-Lembrete: para a especialidade Mapa e Bússola o percurso completo é maior (no mínimo 10 pontos de controle); aqui praticamos o uso básico da bússola.
-Passo a passo:
-1. Segure a bússola na altura da cintura, na horizontal.
-2. Gire o limbo (a parte com os graus) até o número do azimute ficar alinhado com a linha de fé (a seta de direção).
-3. Gire o corpo até a agulha (a ponta que aponta o Norte) ficar dentro da seta de orientação: a seta de direção agora aponta o rumo.
-4. Escolha um ponto fixo à frente (árvore, pedra) nessa direção e caminhe até ele.
-5. Conte os passos indicados no cartão e pare na estaca.
-6. Repita 1 azimute no percurso e volte contando os passos.
-Erros comuns: segurar a bússola inclinada; andar com ferro ou celular perto (desvia a agulha); perder a contagem.
-Segurança: o percurso é conferido antes; ninguém sai sozinho do percurso.
-Como avaliar: o desbravador chega ao ponto marcado seguindo o azimute. Cobre só 1 azimute, não os 3 da especialidade completa.
-
-▶ 2. Sinais de pista (10 sinais) (classe AM)
-O que falar: "Pista é um jeito de deixar mensagens no chão para quem vem atrás de você, sem usar palavra nenhuma."
-Conteúdo pronto:
-Os 10 sinais de pista (significado e como montar com material natural):
-1. Siga em frente: seta de gravetos (um graveto comprido com 2 menores na ponta).
-2. Vire à direita: seta apontando para a direita.
-3. Vire à esquerda: seta apontando para a esquerda.
-4. Caminho errado: X de 2 gravetos cruzados.
-5. Perigo ou obstáculo: 3 gravetos ou pedras em linha atravessando o caminho.
-6. Água potável: tufo de capim em pé perto do sinal (combinar antes).
-7. Água não potável: o mesmo sinal com um X ao lado.
-8. Carta escondida: quadrado de pedrinhas com uma seta (indica local e distância).
-9. Acampamento: seta grande com o número de passos até o destino.
-10. Fim da pista: círculo de pedras com um ponto no meio.
-Regras da pista:
-- Coloque cada sinal do lado direito da trilha, à altura dos olhos ou bem no chão, num ponto de passagem óbvio; altura máxima de 1 m.
-- Espaçamento sugerido: 2 m em terreno difícil, 5 m em terreno de pedras, 20 m em mata e 30 m em campo aberto. Marque sempre cruzamentos e bifurcações.
-- Use só material natural solto (gravetos caídos, pedras, folhas, capim). Nunca arranque planta viva nem use tinta, spray ou fita.
-- Na volta, desfaça todos os sinais e devolva os materiais ao chão.
-Passo a passo:
-1. Mostre os 10 sinais do cartão do Amigo (ex.: seta de gravetos, pedras empilhadas para 'direção certa', X de gravetos para 'caminho errado').
-2. Faça o exemplo: monte 3 sinais no chão e peça que o grupo diga o que cada um quer dizer.
-3. Divida em duplas: uma dupla monta uma pista curta com 5 a 10 sinais; a outra decifra.
-4. Troquem os papéis.
-Erros comuns: usar material vivo (galhos verdes, flores); deixar a pista sem limpar depois.
-Segurança: recolher tudo no final e deixar a natureza como estava.
-Como avaliar: o desbravador reconhece e monta pelo menos 8 dos 10 sinais.
-
-Fontes:
-https://desbrava7.com/2018/05/especialidade-de-mapa-e-bussola-respondida.html
-https://mda.wiki.br/Especialidade_de_Mapa_e_b%C3%BAssola
-https://desbravai.com.br/desbravadores/habilidades/sinais-de-pista/
-https://desbrava7.com/2022/10/sinais-de-pista.html
-https://mda.wiki.br/cartao_de_amigo/$$ where id = 43;
-update public.atividades set guia_instrutor = $$Requisitos cumpridos nesta atividade:
-- Projetar 3 tipos de abrigo e usar 1 (parcial) (classe GU+)
-
-Material e preparo:
-- 2 a 3 lonas ou plásticos grandes, cordas de 5 m, estacas, galhos e folhas secas, terreno plano e sem galhos secos por cima.
-
-Tempo sugerido: 11:20 às 12:10 (50 min). Reparta o tempo entre os requisitos abaixo, na ordem em que aparecem.
-
-▶ 1. Projetar 3 tipos de abrigo e usar 1 (parcial) (classe GU+)
-O que falar: "Um abrigo bem feito pode ser a diferença entre uma noite segura e uma noite ruim."
-Conteúdo pronto:
-Os 3 tipos de abrigo para mostrar: lona em A (corda entre 2 árvores, lona por cima e estacas nas laterais); meia-água ou lean-to (uma só água inclinada); abrigo de galhos e folhas (vara apoiada numa árvore caída, com costelas de galhos e folhas em camadas).
-Explique o uso de cada um: onde armar, o que protege (vento, chuva, sol) e em que ambiente serve melhor (floresta, área rochosa, pântano). O cartão do Guia de Exploração pede: 'projetar três tipos diferentes de abrigo, explicar seu uso e utilizar um deles em um acampamento'.
-Passo a passo:
-1. Mostre os 3 tipos: (1) lona em A: corda esticada entre duas árvores a ~1 m de altura, lona por cima e estacas nas laterais; (2) meia-água (lean-to): uma só água inclinada, apoiada numa corda alta; (3) galhos e folhas: vara principal apoiada numa árvore caída, com costelas de galhos e folhas em camadas.
-2. Escolham 1 tipo para construir de verdade.
-3. Montem em grupos: 1 cuida da corda, 1 da lona, 2 das estacas.
-4. Testem ficando 5 minutos dentro, com um colega jogando um pouco de água por cima para simular chuva.
-5. Desmontem e guardem o material antes da desmontagem do acampamento.
-Erros comuns: lona muito baixa (não cabe ninguém); armar embaixo de galho seco; esquecer a inclinação para a água escorrer.
-Segurança: checar o terreno antes: sem galhos soltos por cima.
-Como avaliar: o grupo constrói 1 abrigo funcional e sabe descrever os outros 2 tipos. Cobertura parcial: a especialidade pede projetar e usar.
-
-Fontes:
-https://mda.wiki.br/Cart%C3%A3o_de_Guia
-https://mda.wiki.br/Especialidade_de_Vida_Silvestre$$ where id = 44;
-update public.atividades set guia_instrutor = $$Requisitos cumpridos nesta atividade:
-- Arte de Acampar (classe AM+)
-- Acampamento II (classe CO)
-- Acampamento III (classe PE)
-
-Material e preparo:
-- Cartão da especialidade Arte de Acampar impresso, caneta, prancheta.
-- Cartão da especialidade Acampamento II impresso, caneta.
-- Cartão da especialidade Acampamento III impresso, caneta.
-
-Tempo sugerido: 12:10 às 14:10 (120 min). Reparta o tempo entre os requisitos abaixo, na ordem em que aparecem.
-
-▶ 1. Arte de Acampar (classe AM+)
-O que falar: "Arte de Acampar é saber deixar o acampamento organizado e confortável. Vamos ver o que você já fez aqui."
-Conteúdo pronto:
-Lema do campista: 'Não levar nada além de fotos, não deixar nada além de pegadas, não matar nada além do tempo'.
-Higiene do acampamento: usar corretamente as instalações (ou cavar fossa adequada), usar só água potável, lavar as mãos antes de comer, guardar a comida para não atrair bichos e destinar corretamente o lixo.
-Ao revisar o cartão da especialidade, confira com o desbravador se cada item foi praticado.
-Passo a passo:
-1. Abra o cartão da especialidade e leia cada item.
-2. Marque o que foi cumprido no acampamento (escolher local, montar barraca, organizar a área, deixar o local limpo).
-3. Anote o que ainda falta e combine quando será feito (em reunião ou em outra saída).
-4. Assine somente os itens realmente cumpridos.
-Erros comuns: assinar item que só foi explicado e não praticado.
-Como avaliar: conferência do cartão da especialidade. Neste acampamento cobre parte dela, não necessariamente tudo.
-
-▶ 2. Acampamento II (classe CO)
-O que falar: "Vamos ver o que você já fez da especialidade de Acampamento II durante o fim de semana."
-Passo a passo:
-1. Abra o cartão e leia cada item em voz alta.
-2. Marque o que foi cumprido (montagem, organização, inspeção, desmontagem).
-3. Anote o que falta para completar depois em reunião ou outra saída.
-4. Assine só os itens praticados de fato.
-Erros comuns: assinar item apenas 'explicado'.
-Como avaliar: conferência do cartão. Cobre parte da especialidade, não necessariamente tudo.
-
-▶ 3. Acampamento III (classe PE)
-O que falar: "Vamos ver o que você já fez da especialidade de Acampamento III durante o fim de semana."
-Passo a passo:
-1. Abra o cartão e leia cada item em voz alta.
-2. Marque o que foi cumprido (montagem, organização, inspeção, desmontagem).
-3. Anote o que falta para completar em outra oportunidade.
-4. Assine só o que foi praticado.
-Erros comuns: assinar item apenas 'explicado'.
-Como avaliar: conferência do cartão. Cobre parte da especialidade.
-
-Fontes:
-https://desbrava7.com/2018/03/especialidade-de-acampamento-1-respondida.html
-https://desbrava7.com/2018/03/especialidade-de-arte-de-acampar-respondida.html$$ where id = 45;
-update public.atividades set guia_instrutor = $$Requisitos cumpridos nesta atividade:
-- Assinatura dos requisitos nos cartões de todas as classes.
-
-Material e preparo:
-- Cartões dos desbravadores, canetas, lista de requisitos por classe (aba Requisitos do site) e as fichas de relatório entregues.
-Tempo sugerido: 17:15 às 18:00 (45 min).
-
-O que falar: "Chegamos ao fim do acampamento. Agora vamos registrar o que cada um cumpriu, com honestidade."
+- Pescador: emenda cordas finas ou lisas.
+- Fateixa: prende a corda em argola ou estaca.
+- Volta do fiel: prende a corda em poste ou vara; começa e termina as amarras.
+- Nó de gancho: prende a corda em um gancho.
+- Volta da ribeira: arrasta troncos; começa a amarra diagonal.
+- Ordinário: une duas cordas com firmeza, mas fica volumoso e é difícil de desatar molhado; também serve de enfeite.
+
+▶ 9 nós do Companheiro
+- Oito: trava a corda em um furo ou roldana.
+- Volta do salteador: prende e solta com um puxão.
+- Caminhoneiro: estica bem uma corda (varal, lona, carga).
+- Duplo: confira o desenho no manual de nós do clube.
+- Direito, volta do fiel, escota, lais de guia e simples: iguais aos do Amigo.
+
+▶ 4 amarras básicas
+- Quadrada: une duas varas em cruz (ângulo reto).
+- Diagonal: une duas varas em X, que tendem a se abrir.
+- Paralela (ou redonda): une duas varas lado a lado; com três varas faz o tripé.
+- Contínua: prende várias varinhas sobre duas varas, como tampo de mesa.
+- Toda amarra começa com um nó, tem voltas bem apertadas, o arremate entre as varas e termina com outro nó.
+
+Segurança:
+- Na oficina A, no máximo 6 desbravadores por adulto. Só o instrutor entrega e recebe a ferramenta.
+- Um desbravador cortando por vez, com o adulto olhando só para ele.
+- Ferramentas cortantes são tratadas como elemento de alto risco (Manual). Fora da oficina, ficam guardadas com os líderes.
+
+Como avaliar:
+- Amigo da Natureza: usa as 3 ferramentas do jeito certo e diz as 10 regras.
+- Pioneiro de Novas Fronteiras: usa a machadinha com segurança, sem precisar de correção.
+- Amigo e Companheiro: fazem todos os nós da sua lista sozinhos e dizem o uso. Faltou algum? Mostra de novo na segunda, 09:50.$$ where id = 26;
+
+update public.atividades set guia_instrutor = $$Objetivo: Construir móveis de verdade só com bambu, sisal e amarras, e levantar o portal do clube.
+
+Requisitos cumpridos nesta atividade:
+- [PE+] Aprender a fazer quatro amarras básicas e construir um móvel de acampamento. (Fecha aqui)
+- [GU] Construir e utilizar um móvel de acampamento em tamanho real, com nós e amarras. (Fecha aqui) O "utilizar" acontece no almoço.
+- [GU] Participar com sua unidade de um acampamento com estrutura de pioneiria, planejando o que levar e o que vai acontecer. (Fecha aqui) Vale para o Guia que ajudou no planejamento antes do acampamento.
+- [EX+] Com sua unidade, construir cinco móveis de acampamento e um portal para o clube. (Parcial) Aqui sai 1 móvel e o portal. Faltam 4 móveis.
+- [EX] Especialidade de Pioneirias: amarras, ferramentas e móveis. (Parcial)
+
+Material e preparo: Bambus ou varas, bastante sisal, serrote ou serra de arco, luvas para carregar bambu, trena, desenho do móvel de cada unidade
+
+Tempo sugerido: 09:30 às 12:00
+
+O que falar: "Móvel bom é o que aguenta uso. Vamos comer nele daqui a pouco."
 
 Passo a passo:
-1. Abra a aba Requisitos do site e mostre, por classe, o que foi trabalhado.
-2. Chame os desbravadores por classe e confira, requisito por requisito, se ele foi cumprido (use o 'Como avaliar' de cada atividade da Programação).
-3. Assine somente o que foi realmente praticado. Nos itens marcados como 'parcial', assine só a parte cumprida e anote no cartão o que falta.
-4. Lembre os relatórios que serão entregues depois (relatório do acampamento e relatório da caminhada de 6 km).
-5. Entregue o prêmio de melhor unidade e faça a oração final.
+1. (15 min) Projeto: cada unidade mostra o desenho do móvel com as medidas e separa as varas por tamanho. O Guia da unidade coordena.
+2. (85 min) Construção: primeiro as pernas e travessas, com amarra quadrada. Depois os reforços em X, com amarra diagonal. Por último o tampo.
+3. (10 min) Teste: balance, apoie peso, sente (se for banco). Balançou? Reaperte ou ponha reforço diagonal.
+4. (35 min) Portal: todos juntos. Dois postes bem enterrados, travessa amarrada no alto e cordas de sustentação presas em estacas.
+5. (5 min) Recolher sobras de sisal e bambu. Guardar as ferramentas com os líderes.
 
-Erros comuns: assinar item que só foi explicado; esquecer de anotar o que ficou parcial.$$ where id = 47;
+▶ Móveis que cabem no tempo
+- Mesa ou bancada de cozinha.
+- Porta-panelas ou escorredor.
+- Sapateira.
+- Lavatório (tripé com bacia).
+- Varal ou porta-toalhas.
+- Lixeira com tripé.
+
+▶ Regras da pioneiria
+- Sem prego, parafuso ou arame: só nós e amarras.
+- Use bambu e não corte árvores nem arbustos (Manual).
+- Amarra boa não se mexe quando você torce as varas.
+
+Segurança:
+- Serrote e serra só com adulto, ou com Guia treinado e adulto ao lado. Luva para carregar bambu (farpas).
+- Ninguém sobe nas estruturas. Na hora de levantar o portal, quem não está ajudando fica longe.
+- Confira o portal todos os dias. Portal bambo se desmonta.
+
+Como avaliar:
+- Pesquisador de Campo e Bosque: fez as amarras do móvel com as próprias mãos.
+- Guia: liderou a equipe, e o móvel aguentou o uso no almoço.
+- Excursionista na Mata: não assina ainda. Anote 1 móvel e o portal; faltam 4 móveis.$$ where id = 27;
+
+update public.atividades set guia_instrutor = $$Objetivo: Cada unidade cozinha o próprio almoço na fogueira, do fogo ao prato, e come no móvel que construiu.
+
+Requisitos cumpridos nesta atividade:
+- [CO+] Preparar uma refeição em uma fogueira durante um acampamento de clube ou unidade. (Fecha aqui)
+- [PE] Apresentar seis segredos para um bom acampamento e participar de um acampamento de fim de semana, planejando e cozinhando duas refeições. (Parcial) Aqui faz 1 das 2 refeições. Os seis segredos são na roda de conversa das 19:30.
+- [GU] Planejar, preparar e cozinhar três refeições ao ar livre. (Parcial) Aqui faz 1 das 3. Não assina ainda.
+- [AM] Especialidade Acampamento I: fazer e comer pão no espeto; manter limpos os utensílios de cozinha. (Parcial)
+- [PE] Especialidade Acampamento III: cozinhar uma refeição com alimentos frescos ou secos. (Parcial)
+- [PI+] Especialidade Fogueiras e Cozinha ao Ar Livre: cozinhar, assar pão no espeto, preparo seguro, lixo e limpeza. (Parcial)
+
+Material e preparo: Ingredientes e cardápio de cada unidade, panelas, colher de cabo comprido, pano ou luva para panela quente, água tratada, balde de água, sacos de lixo
+
+Tempo sugerido: 12:00 às 13:15
+
+O que falar: "O segredo de cozinhar na fogueira é a brasa, não a chama. E a cozinha só acaba quando a louça está lavada."
+
+Passo a passo:
+1. Por volta das 11:20, ainda na pioneiria, um desbravador de cada unidade acende o fogo com um adulto, para ter brasa ao meio-dia.
+2. Todos lavam as mãos. O Guia (ou o capitão) divide as funções: fogo, corte, panela, tempero e limpeza.
+3. Panela apoiada em duas toras ou pedras, sobre a brasa. Chama alta queima por fora e deixa cru por dentro.
+4. Enquanto a panela cozinha, façam o pão no espeto.
+5. Oração e almoço no móvel da unidade.
+6. Logo depois de comer: lavar a louça, enterrar o lixo orgânico e ensacar o lixo seco.
+7. Apagar o fogo com água até esfriar.
+
+▶ Cardápio (Manual Administrativo)
+- Sem carne: é a recomendação da Igreja e vale para o clube.
+- Um pouco de cada grupo: cereal ou massa, feijão ou outra proteína vegetal, legumes e fruta.
+- Não junte macarrão, arroz e batata na mesma refeição.
+- Água para cozinhar e beber: filtrada ou fervida.
+- Ideias: arroz com lentilha e legumes; macarrão com molho de tomate e legumes; arroz, feijão e ovo mexido; sopa de legumes com macarrão.
+
+▶ Pão no espeto
+- Massa: 2 xícaras de farinha de trigo, 1 colher (sopa) de fermento químico, 1 pitada de sal, 1 colher (sopa) de açúcar, 1 colher (sopa) de óleo e água aos poucos, até dar ponto de enrolar.
+- Enrole uma tira da massa na ponta de uma vara verde descascada.
+- Asse sobre a brasa, girando devagar, por uns 10 minutos, até dourar.
+
+▶ Lixo e louça (Manual Administrativo)
+- Lixo orgânico: buraco de 20 cm de largura por 40 cm de fundura, coberto com terra.
+- Lixo seco: volta para casa, em saco bem fechado.
+- Louça: lavar logo depois da refeição, com pouco sabão e longe do riacho.
+
+▶ Para fechar as refeições do Pesquisador e do Guia neste acampamento
+- Deixe que eles planejem e cozinhem também, ao ar livre e com a cozinha do clube, o jantar de domingo e o café de segunda. Com o almoço de hoje, o Pesquisador fecha 2 e o Guia fecha 3.
+
+Segurança:
+- Faca de cozinha só com um adulto olhando. Panela quente só com pano ou luva.
+- Colher de cabo comprido. Cabelo preso. Ninguém corre perto do fogo.
+- Comida que estraga fácil (maionese, queijo, leite, iogurte) não fica fora do gelo.
+
+Como avaliar:
+- Companheiro de Excursionismo: ajudou de verdade a preparar a refeição. Pode assinar.
+- Pesquisador e Guia: anote "1 refeição feita". Só assina quando completar 2 (Pesquisador) ou 3 (Guia).
+- Guia: observe se ele liderou a equipe em vez de fazer tudo sozinho.$$ where id = 28;
+
+update public.atividades set guia_instrutor = $$Objetivo: Saber o que fazer nos primeiros minutos de um acidente, sem piorar a situação, e pedir ajuda certo.
+
+Requisitos cumpridos nesta atividade:
+- [PE] Especialidade de Primeiros Socorros – básico. (Parcial) Hoje: o que são primeiros socorros, hemorragia, queimaduras, picada de cobra, de inseto e de aranha, mordida de animal, desidratação e insolação, engasgo (demonstração).
+- [EX+] Demonstrar os procedimentos em caso de ferimentos por animais peçonhentos e não peçonhentos. (Fecha aqui) Fecha se o desbravador explicar os dois casos.
+
+Material e preparo: Caixa de primeiros socorros (gaze, atadura, esparadrapo, tesoura, luvas), talas improvisadas, panos, boneco ou almofada, cartaz com 192 e 193
+
+Tempo sugerido: 14:00 às 14:50
+
+O que falar: "Primeiro socorro é o que se faz até a ajuda chegar. A regra número um é: não vire a segunda vítima."
+
+Passo a passo:
+1. (5 min) As 3 perguntas de toda emergência: o lugar é seguro para mim? A pessoa responde e respira? Quem vai ligar para o 192 ou 193?
+2. (10 min) Sangramento, em duplas: pano limpo em cima do ferimento, apertar firme por 10 minutos sem levantar para olhar. Depois, curativo com gaze e atadura, sem apertar demais.
+3. (10 min) Tala, em duplas: uma tala de cada lado do braço ou da perna, pano para acolchoar, amarrar acima e abaixo do machucado. Conferir se os dedos continuam rosados e quentes.
+4. (5 min) Queimadura: água fria corrente por 20 minutos. Nada de gelo, manteiga ou pasta de dente. Não estourar bolha.
+5. (10 min) Animais: cobra, aranha e escorpião, abelha, mordida de cachorro. Use o quadro abaixo.
+6. (5 min) Calor: diferença entre desidratação e insolação.
+7. (5 min) Demonstração no boneco ou na almofada: compressões no peito e manobra para engasgo. Ninguém treina em colega.
+
+▶ Telefones
+- 192 SAMU. 193 Bombeiros.
+- Diga: o que aconteceu, onde está, quantas vítimas e como elas estão. Só desligue quando mandarem.
+
+▶ Animais peçonhentos
+- Cobra: acalmar e deitar a pessoa, lavar o local com água e sabão, tirar anel e relógio, não deixar andar e levar ao hospital. NÃO amarrar, NÃO cortar, NÃO chupar. Se der, fotografe a cobra de longe.
+- Aranha e escorpião: lavar com água e sabão e levar ao hospital. Em criança é urgente.
+- Abelha e vespa: tirar o ferrão raspando com a unha ou um cartão, sem espremer. Lavar e pôr compressa fria. Inchaço no rosto ou falta de ar: ligar 192 na hora.
+
+▶ Animais não peçonhentos
+- Mordida de cachorro, gato, morcego ou animal do mato: lavar com bastante água e sabão por 15 minutos, cobrir com pano limpo e ir ao posto de saúde no mesmo dia, por causa da raiva.
+
+▶ Calor
+- Desidratação (falta de água): sede, boca seca, xixi escuro, tontura. Sombra, descanso e água aos poucos.
+- Insolação (o corpo esquentou demais): pele muito quente, dor de cabeça forte, confusão ou desmaio. É emergência: sombra, molhar o corpo com água fresca e ligar 192.
+
+▶ Sangramento e queimadura grave
+- Encharcou o pano? Ponha outro por cima, sem tirar o primeiro. Objeto cravado não se arranca.
+- Queimadura grande, funda ou com a roupa grudada: cobrir com pano limpo, não tirar a roupa e ligar 192 ou 193.
+
+Segurança:
+- Os líderes ensinam noções básicas e não substituem um profissional. Em caso real, ligue 192 ou 193.
+- Compressão no peito e manobra de engasgo só no boneco ou na almofada.
+
+Como avaliar:
+- Pesquisador: faz um curativo e uma tala e sabe pedir ajuda. Marque os itens feitos; a especialidade não fica completa hoje.
+- Excursionista na Mata: explica o que fazer com picada de cobra e com mordida de cachorro.$$ where id = 30;
+
+update public.atividades set guia_instrutor = $$Objetivo: Treinar, sem pressa, como tirar alguém de um lugar de perigo e levar até a ajuda.
+
+Requisitos cumpridos nesta atividade:
+- [PI] Completar a especialidade de Resgate básico. (Parcial) Hoje: cuidados antes de mover a vítima, maca improvisada, transporte com ajuda, nós de resgate e sinais para resgate aéreo. Faltam os resgates em eletricidade, fumaça, fogo e água, e a busca de desaparecidos.
+
+Material e preparo: 2 varas retas de 2 m, cobertor ou 3 casacos, cordas, terreno plano
+
+Tempo sugerido: 14:55 às 15:45
+
+O que falar: "Na vida real, quem não sabe socorrer não mexe na vítima: chama ajuda e espera. O que vamos fazer aqui é treino."
+
+Passo a passo:
+1. (8 min) Converse sobre o que fazer antes de mover alguém (quadro abaixo).
+2. (12 min) Maca de cobertor: estenda o cobertor, ponha uma vara a um terço da largura e dobre o cobertor sobre ela. Ponha a segunda vara sobre a parte dobrada, perto da borda, e dobre o resto do cobertor por cima das duas varas. O peso da pessoa trava tudo.
+3. Maca de casacos: feche 3 casacos, vire as mangas para dentro e passe as varas por dentro das mangas.
+4. Teste a maca com um adulto segurando antes de pôr alguém.
+5. (12 min) Transporte em 4: dois de cada lado, levantam juntos ao comando e andam em passos curtos, com os pés da vítima na frente. Poucos metros, em terreno plano.
+6. (10 min) Sem maca: cadeirinha de 2 pessoas (com 2 e com 4 mãos) e ajudar a vítima a andar apoiada no ombro.
+7. (8 min) Nós de resgate: lais de guia em volta da cintura de um colega; emendar cordas com direito, escota e pescador; encurtar com catau.
+
+▶ Antes de mover uma vítima
+1. Sua segurança vem primeiro.
+2. Olhe os perigos do lugar: fogo, fio, água, barranco.
+3. Se der, afaste o perigo em vez de mover a pessoa.
+4. Veja se ela responde e respira.
+5. Chame ajuda: 192 ou 193.
+6. Só mova se ficar ali for mais perigoso. Com suspeita de machucado no pescoço ou nas costas, não mova.
+
+▶ 3 maneiras de chamar um resgate aéreo
+- Sinal grande no chão, em lugar aberto: SOS ou um X com pedras, galhos ou roupas.
+- Fumaça de dia e fogo de noite.
+- Reflexo de espelho, lanterna piscando ou pano colorido agitado.
+
+Segurança:
+- A "vítima" é um desbravador leve, e sempre há um adulto junto à cabeça dele.
+- Carregar só em terreno plano e por poucos metros. Ninguém brinca de cair ou de soltar.
+
+Como avaliar:
+- O grupo monta a maca, levanta junto e transporta sem balançar. Marque os itens feitos; a especialidade não fica completa hoje e o requisito do Pioneiro não é assinado ainda.$$ where id = 31;
+
+update public.atividades set guia_instrutor = $$Objetivo: Agradecer a Deus pelo acampamento e ouvir de cada unidade o que mais marcou.
+
+Requisitos cumpridos nesta atividade:
+- [CO] Participar em um acampamento de fim de semana e fazer um relatório destacando o que mais lhe impressionou positivamente. (Fecha com a entrega) Fecha com o relatório escrito, entregue depois.
+- [CO] Especialidade Acampamento II: tomar parte em um culto no acampamento (história, testemunho ou cânticos). (Parcial)
+- [EX] Discussão em grupo, dirigida pelo conselheiro, depois da expedição de 20 km. (Treino) É treino. A expedição de 20 km fica para outra saída.
+
+Material e preparo: Lenha, balde de água, caderno e caneta
+
+Tempo sugerido: 17:45 às 19:30
+
+O que falar: "Guarde na memória o que mais marcou você aqui. É isso que vai para o seu relatório."
+
+Passo a passo:
+1. Cânticos e oração. Um ou dois Companheiros podem dirigir os cânticos ou contar um testemunho (combine antes).
+2. Mensagem curta, ligada ao tema do acampamento.
+3. Relatos: cada unidade responde "o que mais nos impressionou?". Mais de um fala.
+4. Cada unidade apresenta o seu móvel; todos juntos, o portal.
+5. Conversa final em 3 perguntas: o que mais gostei? O que foi difícil? O que eu faria diferente? Anote as respostas para a avaliação do acampamento.
+6. Explique o relatório do Companheiro e combine o prazo de entrega.
+
+▶ Modelo de relatório do Companheiro (1 página)
+- Nome, unidade, data e local do acampamento.
+- O que fizemos (lista curta).
+- O que mais me impressionou e por quê. É a parte principal.
+- O que aprendi.
+- O que eu faria diferente.
+
+Segurança:
+- Não peça a uma unidade, na hora, para dirigir o culto. Isso se combina com pelo menos 3 semanas de antecedência (Manual).
+
+Como avaliar:
+- Companheiro: só assina quando entregar o relatório escrito por ele mesmo.$$ where id = 34;
+
+update public.atividades set guia_instrutor = $$Objetivo: Transformar a experiência da caminhada de sábado em aprendizado: andar com segurança, não se perder e acampar bem.
+
+Requisitos cumpridos nesta atividade:
+- [AM] Apresentar 10 regras para uma caminhada e explicar o que fazer quando estiver perdido. (Fecha aqui)
+- [EX+] Demonstrar técnicas para percorrer trilhas em diferentes tipos de terreno: desertos, florestas, pântanos e rios. (Fecha aqui) Fecha para quem explicar e mostrar.
+- [PE] Apresentar seis segredos para um bom acampamento (primeira parte do requisito). (Parcial) O requisito só fecha com as duas refeições cozinhadas.
+- [AM] Especialidade Acampamento I: saber oito coisas a fazer quando se está perdido. (Parcial)
+- [CO] Especialidade Acampamento II: itens que afetam a escolha de um bom local de acampamento. (Parcial)
+- [PE] Especialidade Acampamento III: revisar seis pontos importantes na escolha do local. (Parcial)
+
+Material e preparo: Cartaz com as 10 regras, cartaz em branco e caneta, 1 apito
+
+Tempo sugerido: 19:30 às 20:15
+
+O que falar: "Ontem a gente caminhou. Hoje vamos descobrir quais regras usamos sem perceber."
+
+Passo a passo:
+1. (5 min) Pergunte: na caminhada de ontem, o que fizemos certo? O que poderia ter dado errado?
+2. (12 min) 10 regras: entregue 2 regras para cada unidade. Ela lê e explica o porquê de cada uma. Depois cada Amigo diz 3 regras sem olhar.
+3. (10 min) Perdido: um Amigo faz de conta que se perdeu. O grupo vai dizendo o que ele deve fazer, até completar as 8 atitudes. Treinem os 3 apitos.
+4. (8 min) Seis segredos: cada unidade diz um. Escreva no cartaz até completar os 6.
+5. (8 min) Terrenos: os Excursionistas na Mata mostram como andar em floresta, brejo, rio e areia.
+6. (2 min) Oração e boa-noite.
+
+▶ 10 regras para uma caminhada (do Manual Administrativo)
+1. Planeje antes: caminho, distância, horário e o que fazer em emergência. Os pais autorizam.
+2. Fila indiana, o menor na frente. Ninguém se afasta do grupo.
+3. Ande no passo do mais lento e faça paradas para descansar.
+4. Em estrada, ande na contramão, de frente para os carros.
+5. Roupa clara e adequada ao clima.
+6. Calçado confortável e já usado, nunca novo.
+7. Mãos livres e mochila bem arrumada.
+8. Água em pequenos goles, sem esperar a sede, e lanche leve.
+9. Caixa de primeiros socorros e apito sempre junto.
+10. Sem gritaria, sem lixo no chão, sem estragar a natureza.
+
+▶ 8 atitudes de quem está perdido
+1. Pare. Andar sem rumo afasta você de quem está procurando.
+2. Acalme-se e ore.
+3. Sente, beba água e pense: por onde eu vim? Qual foi a última coisa que eu vi?
+4. Fique onde está. Se estiver com outros, fiquem juntos.
+5. Faça sinal: 3 apitos, espere, escute e repita. Três de qualquer coisa é pedido de socorro.
+6. Fique visível: lugar aberto, perto de onde parou, com uma roupa colorida à mostra.
+7. Proteja-se do frio, da chuva e do sol. Poupe água e energia.
+8. Só ande se tiver certeza do caminho, marcando por onde passa. De noite, não ande.
+
+▶ 6 segredos para um bom acampamento
+- O cartão não traz uma lista fixa. Use os 6 pontos de escolha do local das especialidades Acampamento II e III:
+- Vento: lugar protegido de vento forte.
+- Água: potável e por perto, mas sem risco de enchente.
+- Vida silvestre: longe de formigueiro, ninho, toca e trilha de animais.
+- Madeira: ter lenha e bambu, sem destruir árvores.
+- Tempo: olhar a previsão e para onde a água da chuva corre.
+- Boa vontade: ter a autorização do dono e respeitar os vizinhos.
+
+▶ Como andar em cada terreno
+- Floresta: fila indiana, um braço protegendo o rosto. Segure o galho até o de trás pegar. Olhe onde pisa e onde põe a mão.
+- Subida e descida: passos curtos e ritmo constante. Na descida, joelhos dobrados e nada de correr.
+- Pântano ou brejo: teste o chão com um bastão, pise em raízes e touceiras e mantenha distância do colega.
+- Rio: só no raso e onde a água corre devagar. Solte o cinto da mochila, use um bastão, não tire o calçado. Correnteza forte: não atravesse.
+- Deserto ou areia com sol forte: ande cedo ou no fim da tarde, cubra a cabeça e a nuca, beba água aos poucos e descanse na sombra.
+
+Como avaliar:
+- Amigo: diz pelo menos 8 das 10 regras e explica por que quem se perde deve ficar parado. Pode assinar.
+- Excursionista na Mata: mostra a técnica de cada terreno. Pode assinar.
+- Pesquisador: diz os 6 segredos. Anote que a primeira parte está feita.$$ where id = 49;
+
+update public.atividades set guia_instrutor = $$Objetivo: Apresentar a Ordem Unida treinada no domingo. É a avaliação prática.
+
+Requisitos cumpridos nesta atividade:
+- [EX+] Especialidade de Ordem Unida: executar os movimentos a pé firme e em deslocamento. (Parcial) Falta a parte teórica e os cuidados com a Bandeira Nacional.
+- [PE+] Conhecer e saber usar a Bandeira dos Desbravadores, o bandeirim de unidade e os comandos de ordem unida. (Fecha aqui) Fecha se o desbravador participar do hasteamento, portar o bandeirim e executar os comandos.
+
+Material e preparo: Bandeiras, bandeirins das unidades, apito
+
+Tempo sugerido: 08:00 às 08:30
+
+Passo a passo:
+1. Hasteamento das bandeiras, Voto e Lei.
+2. Cada unidade se apresenta, comandada pelo seu capitão, com o bandeirim à frente.
+3. Sequência: sentido, descansar, cobrir, firme, direita volver, esquerda volver, meia-volta volver, ordinário marche, alto.
+4. Um líder avalia com uma ficha simples: todos juntos? Posição correta? Silêncio?
+5. Deixe um Excursionista na Mata comandar o clube inteiro por um minuto.
+
+▶ Lembretes
+- Voz de comando: advertência, comando e execução, com uma pequena pausa antes da execução.
+- Bandeirim: vai com o capitão, à frente da unidade.
+- Bandeiras: a Nacional é hasteada primeiro e arriada por último, e nunca toca o chão.
+
+Como avaliar:
+- Excursionista na Mata: marque a parte prática na ficha; a especialidade fica completa quando ele fizer a teoria.
+- Pesquisador de Campo e Bosque: pode assinar se cumpriu as três partes.$$ where id = 39;
+
+update public.atividades set guia_instrutor = $$Objetivo: Aprender a deixar a água segura para beber e lembrar que Jesus é a água da vida.
+
+Requisitos cumpridos nesta atividade:
+- [AM] Aprender e demonstrar uma maneira de purificar a água e escrever um parágrafo destacando o significado de Jesus como a água da vida. (Fecha aqui) Precisa das duas coisas: demonstrar e entregar o parágrafo.
+- [EX+] Especialidade Vida Silvestre: demonstrar três maneiras de purificar água para beber. (Parcial)
+
+Material e preparo: Panela e fogareiro, garrafas PET transparentes, pano limpo, areia, carvão, cascalho, água turva, hipoclorito de sódio 2,5% com conta-gotas, papel e lápis, Bíblia
+
+Tempo sugerido: 08:30 às 09:10
+
+O que falar: "Água clarinha pode estar cheia de micróbios. Na dúvida, trate antes de beber."
+
+Passo a passo:
+1. (5 min) Mostre dois copos: água turva e água clara do riacho. Qual dá para beber? Nenhuma das duas, sem tratar.
+2. (8 min) Ferver: deixe a água em fervura forte por 1 minuto. Tampe e espere esfriar.
+3. (5 min) Hipoclorito de sódio 2,5%: 2 gotas para cada litro, misture e espere 30 minutos.
+4. (5 min) Sol: garrafa PET transparente, de até 2 litros, cheia e deitada ao sol forte por 6 horas.
+5. (5 min) Filtro de garrafa PET: pano, areia, carvão e cascalho. Mostre que a água sai mais clara, mas explique que o filtro não mata micróbios. Depois dele ainda é preciso ferver ou usar o hipoclorito.
+6. (12 min) Cada Amigo demonstra uma maneira para um colega. Depois leiam João 4:13-14 e cada Amigo escreve o seu parágrafo (4 ou 5 linhas).
+
+▶ Jesus, a água da vida
+- João 4:13-14: quem bebe da água que Jesus dá nunca mais terá sede.
+- João 7:37: se alguém tem sede, venha a Mim e beba.
+- Ideia para o parágrafo: sem água limpa o corpo adoece e morre; sem Jesus o coração fica vazio. Ele limpa, renova e nunca falta.
+
+▶ Erros comuns
+- Beber a água do filtro sem tratar.
+- Usar água sanitária com perfume ou colorida.
+- Garrafa verde, riscada ou opaca no método do sol.
+
+Segurança:
+- Só o adulto mexe na panela com água fervendo e pinga o hipoclorito.
+
+Como avaliar:
+- Amigo: demonstra uma maneira, explica por que funciona e entrega o parágrafo. Pode assinar.$$ where id = 40;
+
+update public.atividades set guia_instrutor = $$Objetivo: Descobrir onde ficam o Norte, o Sul, o Leste e o Oeste usando só o sol.
+
+Requisitos cumpridos nesta atividade:
+- [CO] Descobrir os pontos cardeais sem a ajuda de uma bússola e desenhar uma rosa dos ventos. (Fecha aqui)
+- [EX+] Especialidade Vida Silvestre: conhecer três métodos de identificar os pontos cardeais sem bússola. (Parcial)
+- [PI+] Especialidade Mapa e Bússola: direção sem bússola e os 8 pontos com seus graus. (Parcial)
+
+Material e preparo: 1 vara reta de 1 m, pedrinhas, papel, lápis de cor, relógio de ponteiros, desenho do Cruzeiro do Sul
+
+Tempo sugerido: 09:10 às 09:50
+
+O que falar: "O sol é uma bússola que nunca fica sem pilha."
+
+Passo a passo:
+1. (3 min) Finque a vara bem reta em um lugar plano e com sol. Marque a ponta da sombra com uma pedra: é a 1ª marca.
+2. (15 min de espera) Enquanto isso, ensine os outros métodos (quadro abaixo) e comecem a rosa dos ventos no papel.
+3. (5 min) Marque a nova ponta da sombra: é a 2ª marca. Risque uma linha ligando as duas. A 1ª marca é o Oeste e a 2ª é o Leste.
+4. Ponha o pé esquerdo na 1ª marca e o direito na 2ª: você está olhando para o Norte. Atrás de você fica o Sul.
+5. (12 min) Cada Companheiro aponta os 4 pontos cardeais sem ajuda e termina a rosa dos ventos com os 8 pontos.
+6. (5 min) Jogo rápido: você grita um ponto ("Sudeste!") e todos apontam.
+
+▶ Outros métodos
+- Sol nascente: de manhã cedo, aponte o braço direito para onde o sol nasceu (Leste). À sua frente está o Norte.
+- Relógio de ponteiros (no hemisfério sul): aponte o número 12 para o sol. O Norte fica no meio do caminho entre o 12 e o ponteiro das horas. É um método aproximado: perto do meio-dia, e no Norte e Nordeste do Brasil, prefira a sombra da vara.
+- Cruzeiro do Sul (de noite): estique o braço maior da cruz 4 vezes e meia, na direção do pé da cruz. Desse ponto, desça em linha reta até o horizonte: ali é o Sul.
+
+▶ Rosa dos ventos: 8 pontos e graus
+- N Norte 0°, NE Nordeste 45°, L Leste 90°, SE Sudeste 135°.
+- S Sul 180°, SO Sudoeste 225°, O Oeste 270°, NO Noroeste 315°.
+
+Segurança:
+- Nunca olhe direto para o sol. Se o dia estiver nublado, faça a parte da rosa dos ventos e deixe a sombra para quando o sol abrir.
+
+Como avaliar:
+- Companheiro: aponta os 4 pontos cardeais sem ajuda e entrega a rosa dos ventos certa. Pode assinar.$$ where id = 41;
+
+update public.atividades set guia_instrutor = $$Objetivo: Montar um quadro bonito com 15 nós, para ficar na sala do clube.
+
+Requisitos cumpridos nesta atividade:
+- [CO+] Preparar um quadro com 15 nós diferentes. (Fecha aqui) O quadro é da unidade, mas o Companheiro de Excursionismo precisa ter feito os nós com as próprias mãos.
+- [AM] Fazer e explicar o uso dos 14 nós (segunda chance para quem ficou devendo). (Fecha aqui)
+- [CO] Aprender ou recapitular os 9 nós (segunda chance). (Fecha aqui)
+
+Material e preparo: 1 tábua ou papelão grosso por unidade, cordas finas, cola quente (só adulto usa), etiquetas, caneta
+
+Tempo sugerido: 09:50 às 10:30
+
+Passo a passo:
+1. (5 min) Mostre um quadro pronto, ou um desenho, e distribua o material.
+2. (5 min) A unidade escolhe os 15 nós e divide quem faz qual. Os nós do Amigo e do Companheiro juntos já passam de 15.
+3. (20 min) Cada um faz os seus nós com corda fina, confere com o instrutor e só depois fixa na tábua.
+4. (5 min) Etiqueta com o nome embaixo de cada nó. Em cima, o nome da unidade e a data.
+5. (5 min) Conferência final: 15 nós diferentes, certos e firmes.
+6. Enquanto isso, quem ficou devendo nós de domingo mostra para o instrutor.
+
+▶ Dicas
+- Nós que prendem em alguma coisa (volta do fiel, fateixa) ficam melhores amarrados em um palito ou graveto.
+- Organize do mais fácil para o mais difícil.
+- Corda de duas cores ajuda a enxergar as emendas (direito, escota, pescador).
+
+Segurança:
+- Cola quente queima: só o adulto usa a pistola.
+
+Como avaliar:
+- Quadro com 15 nós diferentes, corretos e com nome. O Companheiro de Excursionismo fez a parte dele sozinho.$$ where id = 42;
+
+update public.atividades set guia_instrutor = $$Objetivo: Duas técnicas para não se perder: seguir um rumo com a bússola e deixar sinais de pista.
+
+Requisitos cumpridos nesta atividade:
+- [AM] Aprender os sinais de pista; preparar e seguir uma pista de no mínimo 10 sinais, que outros também consigam seguir. (Fecha aqui)
+- [PE] Aprender a usar uma bússola ou GPS e demonstrar a habilidade encontrando endereços em zona urbana. (Parcial) Aqui aprende a bússola. A parte na cidade fica para depois.
+- [PI+] Completar a especialidade de Mapa e Bússola. (Parcial) Aqui: partes da bússola, azimute e contra-azimute.
+- [EX+] Especialidade Vida Silvestre: seguir um percurso com 3 azimutes e mais de 1.200 metros. (Treino) O percurso daqui é curto. Vale como treino.
+
+Material e preparo: 1 bússola por dupla, estacas numeradas, cartão do percurso, cartaz dos sinais de pista, gravetos e pedras soltos
+
+Tempo sugerido: 10:30 às 11:20
+
+O que falar: "Azimute é o número que diz para que lado ir. Pista é um recado deixado no chão para quem vem atrás."
+
+Passo a passo:
+1. Divida em 2 grupos: um começa na bússola e o outro na pista. Aos 25 minutos, trocam.
+2. BÚSSOLA (25 min): mostre as partes. Bússola deitada na palma da mão, na altura do peito, longe de celular e de ferro.
+3. Gire o anel até o número do azimute ficar na marca. Depois gire o corpo inteiro até a agulha vermelha entrar na seta do fundo. A seta de direção aponta o caminho.
+4. Escolha uma árvore ou pedra nessa direção, ande até ela contando os passos do cartão e repita nos 3 azimutes, até o tesouro.
+5. Para voltar, use o contra-azimute: some 180 se o azimute for menor que 180; tire 180 se for maior.
+6. PISTA (25 min): mostre os sinais do cartaz e monte 3 no chão para o grupo decifrar.
+7. Cada metade do grupo monta uma pista de 10 sinais, com material solto do chão, e a outra metade segue. Depois trocam.
+8. No fim, quem montou desmancha todos os sinais.
+
+▶ Azimute
+- É o ângulo, em graus, contado a partir do Norte no sentido do relógio.
+- Norte 0°, Leste 90°, Sul 180°, Oeste 270°.
+- Exemplo de percurso: 40° por 20 passos, 160° por 15 passos, 280° por 25 passos.
+
+▶ 10 sinais de pista
+1. Seta: siga por aqui.
+2. Seta dobrada para a direita: vire à direita.
+3. Seta dobrada para a esquerda: vire à esquerda.
+4. X: caminho errado, não siga.
+5. Seta com um traço atravessado: obstáculo à frente.
+6. Seta com duas pontas abertas (Y): o grupo se divide.
+7. Quadrado com seta e pedrinhas: mensagem escondida a tantos passos (uma pedrinha por passo).
+8. Linhas onduladas com seta: água boa para beber nessa direção. Com um X em cima: água ruim.
+9. Triângulo com seta: acampamento nessa direção.
+10. Círculo com um ponto no meio: fim da pista.
+- Os desenhos mudam um pouco de um manual para outro. Use um só padrão no clube: o do cartaz impresso.
+
+▶ Regras da pista
+- Sinais do lado direito do caminho, em lugar bem visível.
+- Sempre marcar os cruzamentos.
+- Só material solto: gravetos caídos, pedras, folhas. Nada de arrancar planta, pintar ou riscar árvore.
+
+Segurança:
+- O percurso é montado e conferido antes pelos líderes, em área aberta e à vista. Ninguém sai sozinho.
+
+Como avaliar:
+- Amigo: reconhece os sinais, monta a pista com o grupo e segue a pista do outro grupo até o fim. Pode assinar.
+- Pioneiro de Novas Fronteiras: chega ao tesouro pelos 3 azimutes e sabe calcular o contra-azimute. Marque na ficha.$$ where id = 43;
+
+update public.atividades set guia_instrutor = $$Objetivo: Saber improvisar um abrigo contra chuva, vento e sol, e usar um de verdade.
+
+Requisitos cumpridos nesta atividade:
+- [GU+] Projetar três tipos diferentes de abrigo, explicar seu uso e utilizar um deles em um acampamento. (Fecha aqui) O Guia de Exploração desenha os 3, explica e usa o abrigo montado.
+
+Material e preparo: 2 ou 3 lonas, cordas de 5 m, estacas, varas, papel e lápis para os projetos
+
+Tempo sugerido: 11:20 às 12:10
+
+O que falar: "Um abrigo bem feito é a diferença entre uma noite ruim e uma noite segura."
+
+Passo a passo:
+1. (10 min) Cada Guia de Exploração desenha em uma folha os 3 tipos de abrigo e escreve embaixo para que serve cada um. Os outros acompanham.
+2. (5 min) Os Guias apresentam os desenhos ao clube.
+3. (5 min) Escolham o local: plano, sem galho seco por cima, fora de baixada.
+4. (20 min) Construção, com os Guias liderando: corda bem esticada entre duas árvores, lona por cima, pontas presas com estacas e caimento para a água escorrer.
+5. (5 min) Teste: o grupo entra, e um líder joga um pouco de água em cima para ver se escorre.
+6. (5 min) O abrigo fica montado. Será a sombra do almoço e do tempo livre. Desmonta antes do encerramento.
+
+▶ 3 tipos de abrigo
+- Lona em A: corda entre duas árvores, lona por cima caindo para os dois lados. Protege de chuva e vento dos dois lados. Bom em mata e bosque.
+- Meia-água: lona presa no alto de um lado e no chão do outro, de costas para o vento. Rápido de montar. Com um fogo refletor na frente, aquece bem.
+- Galhos e folhas: uma vara comprida apoiada em um tronco, galhos encostados dos dois lados e uma camada grossa de folhas secas. Para quando não há lona. Bom em floresta.
+- Em lugar de pedra: use um paredão como parede e feche o outro lado. Em brejo: durma fora do chão, em cama de varas.
+
+Segurança:
+- Sem galhos soltos por cima. Não cortar galhos verdes: use material caído. Corda na altura do peito, não do pescoço.
+
+Como avaliar:
+- Guia de Exploração: entregou os 3 projetos, explicou o uso de cada um e usou o abrigo montado. Pode assinar.$$ where id = 44;
+
+update public.atividades set guia_instrutor = $$Objetivo: Desmontar com ordem, arrumar bem a mochila e deixar o lugar melhor do que estava.
+
+Requisitos cumpridos nesta atividade:
+- [PI] Participar de um acampamento de fim de semana, arrumando de forma apropriada a mochila com o equipamento pessoal. (Fecha aqui)
+- [PE+] Participar de uma caminhada de 10 km e fazer uma lista dos equipamentos, incluindo roupa e calçado. (Parcial) Aqui faz só a lista. A caminhada de 10 km fica para outra saída.
+- [AM] Especialidade Acampamento I: praticar o lema "não levar nada além de fotos, não deixar nada além de pegadas, não matar nada além do tempo". (Parcial)
+- [AM+] Especialidade Arte de Acampar: deixar o local como se ninguém tivesse estado ali. (Parcial)
+- [CO] Especialidade Acampamento II: limpar, secar e guardar uma barraca; enrolar saco de dormir. (Parcial)
+- [PE] Especialidade Acampamento III: itens de barraca e de cuidado com o local. (Parcial)
+
+Material e preparo: Sacos de lixo, pá, balde, capas das barracas, papel e lápis
+
+Tempo sugerido: 12:10 às 14:10
+
+O que falar: "Desbravador não deixa rastro. Só vamos embora quando ninguém conseguir dizer que acampamos aqui."
+
+Passo a passo:
+1. (20 min) Móveis e portal: desfazer as amarras, enrolar o sisal e empilhar os bambus.
+2. (15 min) Fogueiras: apagar com água, espalhar as cinzas frias, recolocar as placas de grama e tampar os buracos de lixo orgânico.
+3. (30 min) Mochila: cada um arruma a sua. Os Pioneiros mostram ao instrutor como arrumaram.
+4. (30 min) Barracas: tirar tudo de dentro, varrer, deixar secar ao sol, dobrar e guardar com as estacas contadas.
+5. (10 min) Os Pesquisadores de Campo e Bosque escrevem a lista de equipamento, roupa e calçado para uma caminhada.
+6. (15 min) Operação pente-fino: todos em linha, lado a lado, atravessando o terreno e recolhendo qualquer lixo, mesmo o que não é nosso.
+
+▶ Mochila bem arrumada
+- Saco de dormir no fundo.
+- Coisas pesadas no meio, encostadas nas costas.
+- Roupas em sacos plásticos, por tipo.
+- Em cima e nos bolsos, o que se usa toda hora: capa de chuva, lanterna, água e lanche.
+- Nada pendurado por fora. O peso vai no quadril, com o cinto fechado.
+- Peso total: no máximo 15% do peso do desbravador.
+
+▶ Regras de saída (Manual Administrativo)
+- Fazer o pente-fino depois de tudo carregado.
+- Lixo seco volta com o clube.
+- Fechar as porteiras e deixar o local limpo, se possível melhor que antes.
+
+Segurança:
+- Fogo só está apagado quando dá para pôr a mão nas cinzas. Estacas e ferramentas são contadas antes de guardar.
+
+Como avaliar:
+- Pioneiro: mochila arrumada do jeito certo, sem ajuda. Pode assinar.
+- Pesquisador de Campo e Bosque: guarde a lista; o requisito só fecha com a caminhada de 10 km.$$ where id = 45;
+
+update public.atividades set guia_instrutor = $$Objetivo: Registrar com honestidade o que cada um cumpriu e encerrar agradecendo a Deus.
+
+Material e preparo: Cartões de classe, canetas, ficha de controle dos requisitos
+
+Tempo sugerido: 17:15 às 18:00
+
+O que falar: "A assinatura no cartão diz que você fez de verdade. Por isso a gente só assina o que foi cumprido por inteiro."
+
+Passo a passo:
+1. Arriamento das bandeiras.
+2. Abra a tabela "Requisitos por classe" (no fim deste guia) e chame os desbravadores por classe.
+3. Requisito marcado como "fecha aqui" e cumprido pelo desbravador: o instrutor assina no cartão.
+4. Requisito "parcial" ou "treino": não assina. Anote na ficha de controle o que foi feito e o que falta.
+5. Requisito que "fecha depois": lembre o prazo do relatório ou do parágrafo.
+6. Prêmio da melhor unidade, agradecimentos e oração final.
+7. Antes de sair: contagem dos desbravadores e entrega de cada um ao seu responsável.
+
+▶ Regra de assinatura (Manual Administrativo)
+- O instrutor só assina depois que o requisito foi cumprido e avaliado.
+- A assinatura atesta o cumprimento integral do requisito.
+- Assinar por assinar ensina que a classe pode ser feita de qualquer jeito.
+- A investidura depende da avaliação final do regional ou distrital.
+
+Como avaliar:
+- Em até uma semana, a liderança se reúne para avaliar o acampamento nas áreas física, mental e espiritual (Manual).$$ where id = 47;
 
 insert into public.tarefas (id, fase, descricao, requisitos, feito, ordem) values
-  (1, 'ANTES', 'Cada unidade planeja o cardápio da única refeição que vai cozinhar (almoço de domingo) e faz a lista de compras.', 'Planejar a refeição (Pesquisador, Guia)', false, 1),
-  (2, 'ANTES', 'Os Guias planejam o acampamento com a liderança: o que levar e a programação (usar este roteiro).', 'Planejar o acampamento (Guia)', false, 2),
-  (3, 'ANTES', 'Entregar a lista de equipamento pessoal para os pais e para os desbravadores.', 'Mochila (Pioneiro); lista de equipamento (Pesquisador de Campo e Bosque)', false, 3),
-  (4, 'ANTES', 'Treinar os nós nas reuniões de sábado antes do acampamento, para que no acampamento seja só revisão e avaliação.', 'Nós (Amigo, Companheiro)', false, 4),
-  (5, 'ANTES', 'Liderança: separar bambus e sisal, reconhecer a trilha de 6 km, e montar o percurso dos azimutes (pode ser antes do acampamento).', '', false, 5),
-  (6, 'DEPOIS', 'Relatório escrito do acampamento e do que mais impressionou.', 'Relatório (Companheiro)', false, 6),
-  (7, 'DEPOIS', 'Relatório de uma página da caminhada de 6 km.', 'Comp. de Excursionismo', false, 7),
-  (8, 'FORA', 'Caminhada de 10 km (Pesquisador de Campo e Bosque, Pioneiro de Novas Fronteiras); expedição de 20 km com pernoite (Excursionista); bússola ou GPS em zona urbana (Pesquisador); Excursionismo pedestre com mochila; mestrado em Vida Campestre.', 'Programar uma saída específica', false, 8);
+  (1, 'ANTES', 'Cada unidade planeja o cardápio (sem carne) da refeição que vai cozinhar no domingo e faz a lista de compras.', 'Planejar a refeição (Pesquisador, Guia)', false, 1),
+  (2, 'ANTES', 'Os Guias planejam o acampamento com a liderança: o que levar e o que vai acontecer.', 'Acampamento com estrutura de pioneiria (Guia)', false, 2),
+  (3, 'ANTES', 'Enviar aos pais o comunicado e a lista do que levar. Recolher a autorização de saída assinada e a ficha de saúde de cada desbravador.', 'Manual Administrativo', false, 3),
+  (4, 'ANTES', 'Conferir o seguro anual de todos os participantes e a aprovação da saída pela comissão da igreja.', 'Manual Administrativo', false, 4),
+  (5, 'ANTES', 'Treinar os nós e a fogueira nas reuniões antes do acampamento, para que lá seja só prática e avaliação.', 'Nós (Amigo, Companheiro); fogueiras (Manual Administrativo)', false, 5),
+  (6, 'ANTES', 'Liderança: separar bambus, sisal e lenha seca (no sábado não se apanha lenha), reconhecer a trilha de 6 km e montar o percurso dos azimutes.', '', false, 6),
+  (7, 'ANTES', 'Cada unidade prepara a sua atividade de natureza para o sábado à tarde. Quem vai dirigir devocional ou culto é avisado com 3 semanas de antecedência.', 'Excursionista na Mata; Manual Administrativo', false, 7),
+  (8, 'ANTES', 'Imprimir: lista dos nós, 10 regras das ferramentas, cartaz dos sinais de pista, 10 regras de caminhada, ficha de inspeção e ficha de controle dos requisitos.', '', false, 8),
+  (9, 'DEPOIS', 'Relatório escrito do acampamento, destacando o que mais impressionou.', 'Companheiro', false, 9),
+  (10, 'DEPOIS', 'Relatório de uma página da caminhada de 6 km.', 'Companheiro de Excursionismo', false, 10),
+  (11, 'DEPOIS', 'Parágrafo sobre Jesus, a água da vida, para quem não entregou no acampamento.', 'Amigo', false, 11),
+  (12, 'DEPOIS', 'Reunião da liderança, em até uma semana, para avaliar o acampamento (áreas física, mental e espiritual).', 'Manual Administrativo', false, 12),
+  (13, 'FORA', 'Caminhada de 10 km (Pesquisador de Campo e Bosque, Pioneiro de Novas Fronteiras); expedição de 20 km com pernoite (Excursionista); refeições que faltarem ao Pesquisador (2) e ao Guia (3); os outros 4 móveis (Excursionista na Mata); bússola ou GPS em zona urbana (Pesquisador); Excursionismo pedestre com mochila (Companheiro de Excursionismo); mestrado em Vida Campestre (Guia de Exploração); parte teórica de Ordem Unida; itens restantes das especialidades iniciadas no acampamento.', 'Programar uma saída específica', false, 13);
 select setval(pg_get_serial_sequence('public.tarefas','id'), (select max(id) from public.tarefas));

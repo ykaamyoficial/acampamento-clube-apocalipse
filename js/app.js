@@ -43,7 +43,7 @@
   const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   const nl = s => esc(s).replace(/\n/g, '<br>');
   const fmtGuia = s => esc(s)
-    .replace(/^(Requisitos cumpridos nesta atividade|Material e preparo|Tempo sugerido|Conteúdo pronto|O que falar|Passo a passo|Erros comuns|Segurança|Como avaliar|Fontes):/gm, '<strong>$1:</strong>')
+    .replace(/^(Objetivo|Requisitos cumpridos nesta atividade|Material e preparo|Tempo sugerido|Conteúdo pronto|O que falar|Passo a passo|Erros comuns|Segurança|Como avaliar|Fontes):/gm, '<strong>$1:</strong>')
     .replace(/^(▶ .*)$/gm, '<strong class="guia-req">$1</strong>')
     .replace(/(https?:\/\/[^\s<]+)/g, '<a href="$1" target="_blank" rel="noopener">$1</a>')
     .replace(/\n/g, '<br>');

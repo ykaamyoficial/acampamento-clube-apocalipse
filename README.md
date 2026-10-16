@@ -16,6 +16,8 @@ site/
 ├── js/config.js            → ⚙️ ÚNICO arquivo que você precisa editar
 ├── js/app.js               → funcionamento do site
 ├── js/dados-exemplo.js     → cronograma usado no modo demonstração
+├── pdf/                    → PDFs para imprimir: cronograma resumido e completo com o guia do instrutor
+│   └── fonte/              → conteúdo revisado; `node pdf/fonte/gerar.js` refaz os PDFs e os dados do site
 └── supabase/
     ├── 01_estrutura.sql    → cria as tabelas e a segurança
     ├── 02_cronograma.sql   → carrega todo o cronograma planejado
